@@ -80,6 +80,7 @@ void testService()
 	assert(removeProductService(&service, "123") == 1);
 	
 	assert(findProduct(service.productRepository, 123) == -1);
+
 }
 
 void testAll()

@@ -5,7 +5,7 @@ ProductService createService(ProductRepository* productRepository)
 {
 	ProductService productService;
 	productService.productRepository = productRepository;
-
+	return productService;
 }
 
 int storeProductService(ProductService* productService, char catalogueNumber[], char state[], char type[], char value[])

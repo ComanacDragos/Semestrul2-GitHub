@@ -1,2 +1,6 @@
-﻿  tests.c
+﻿  main.c
+  repository.c
+  service.c
+  tests.c
+  Generating Code...
   BranchingOut.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\Debug\BranchingOut.exe
