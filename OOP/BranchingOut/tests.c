@@ -4,6 +4,7 @@
 #include "tests.h"
 #include "domain.h"
 #include "repository.h"
+#include "service.h"
 
 void testProduct()
 {
@@ -61,10 +62,30 @@ void testRepository()
 
 }
 
+void testService()
+{
+	ProductRepository repo = createProductRepository();
+	ProductService service = createService(&repo);
+	assert(storeProductService(&service, "123", "state", "type", "1") == 0);
+
+	assert(storeProductService(&service, "123", "state", "type", "1") == 1);
+	Product product = getProductFromRepository(&service, 0);
+
+	assert(getCatalogueNumber(&product) == 123);
+	assert(getValue(&product) == 1);
+	assert(strcmp(getState(&product), "state") == 0);
+	assert(strcmp(getType(&product), "type") == 0);
+
+	assert(removeProductService(&service, "123")==0);
+	assert(removeProductService(&service, "123") == 1);
+	
+	assert(findProduct(service.productRepository, 123) == -1);
+}
 
 void testAll()
 {
 	testProduct();
 	testRepository();
+	testService();
 	printf("\nThe tests were succesfull!\n");
 }

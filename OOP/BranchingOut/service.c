@@ -1,21 +1,27 @@
 #include "service.h"
 
+
 ProductService createService(ProductRepository* productRepository)
 {
-	return ProductService();
+	ProductService productService;
+	productService.productRepository = productRepository;
+
 }
 
-int storeProduct(ProductService* productService, int catalogueNumber, char state[], char type[], int value)
+int storeProductService(ProductService* productService, char catalogueNumber[], char state[], char type[], char value[])
 {
-	return 0;
+	Product newProduct = createProduct(atoi(catalogueNumber), state, type, atoi(value));
+
+	return storeProduct(productService->productRepository, newProduct);
 }
 
-int removeProduct(ProductService* productService, int catalogueNumber)
+int removeProductService(ProductService* productService, char catalogueNumber[])
 {
-	return 0;
+	return removeProduct(productService->productRepository, atoi(catalogueNumber));
 }
 
 Product getProductFromRepository(ProductService* productService, int index)
 {
-	return Product();
+	return *getProduct(productService->productRepository, index);
 }
+

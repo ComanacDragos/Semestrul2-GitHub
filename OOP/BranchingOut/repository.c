@@ -45,8 +45,8 @@ int findProduct(ProductRepository* productRepository, int catalogueNumber)
 Product* getProduct(ProductRepository* productRepository, int index)
 {
 	if (index < 0 || index > productRepository->lenght)
-	
 		return NULL;
+
 	return &productRepository->products[index];
 }
 
