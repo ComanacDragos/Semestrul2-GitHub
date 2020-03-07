@@ -34,3 +34,8 @@ int findProduct(ProductRepository* productRepository, int catalogueNumber);
 Returns the address of a product with a given index in repository and NULL if the index is invalid
 */
 Product* getProduct(ProductRepository* productRepository, int index);
+
+/*
+Updates the state, type and value of a product identified by a catalogue number
+*/
+void updateProduct(ProductRepository* productRepository,int catalogueNumber, char newState[], char newType[], int newValue);

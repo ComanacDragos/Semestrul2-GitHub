@@ -143,12 +143,14 @@
     <ClCompile Include="repository.c" />
     <ClCompile Include="service.c" />
     <ClCompile Include="tests.c" />
+    <ClCompile Include="UserInterface.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="domain.h" />
     <ClInclude Include="repository.h" />
     <ClInclude Include="service.h" />
     <ClInclude Include="tests.h" />
+    <ClInclude Include="UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

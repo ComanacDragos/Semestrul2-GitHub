@@ -23,4 +23,9 @@ int removeProductService(ProductService* productService, char catalogueNumber[])
 /*
 Returns the product at the index i in repository
 */
-Product getProductFromRepository(ProductService* productService, int index);
+Product* getProductFromRepository(ProductService* productService, int index);
+
+/*
+Updates the statem type and value of a product
+*/
+void updateProductService(ProductService* productService, char catalogueNumber[], char state[], char type[], char value[]);

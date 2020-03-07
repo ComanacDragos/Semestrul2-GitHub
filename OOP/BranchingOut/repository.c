@@ -50,3 +50,14 @@ Product* getProduct(ProductRepository* productRepository, int index)
 	return &productRepository->products[index];
 }
 
+void updateProduct(ProductRepository* productRepository, int catalogueNumber, char newState[], char newType[], int newValue)
+{
+	int index = findProduct(productRepository, catalogueNumber);
+	Product* product = getProduct(productRepository, index);
+	updateState(product, newState);
+	updateType(product, newType);
+	updateValue(product, newValue);
+}
+
+
+
