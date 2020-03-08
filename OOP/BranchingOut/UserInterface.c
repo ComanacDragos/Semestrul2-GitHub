@@ -137,6 +137,5 @@ void updateProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfP
 	}
 	updateProductService(commandUI->productService, parameters[1], parameters[2], parameters[3], parameters[4]);
 	printf("The product was updated succesfully\n");
-
 }
 
