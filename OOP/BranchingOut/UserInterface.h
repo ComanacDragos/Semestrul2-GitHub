@@ -9,12 +9,12 @@ typedef struct
 CommandBasedUI createUI(ProductService* productService);
 
 
-void startProgram();
+void startProgram(CommandBasedUI* commandUI);
 
-void storeProductUI();
+void storeProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);
 
-void removeProductUI(char parameters[],int numberOfParameters);
+void removeProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);
 
-void listProductsUI(char parameters[],int numberOfParameters);
+void listProductsUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);
 
-void listProductsByType(char parameters[],int numberOfParameters);
+void updateProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);

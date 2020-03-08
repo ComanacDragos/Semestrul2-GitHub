@@ -1,2 +1,9 @@
-﻿  main.c
+﻿  UserInterface.c
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\UserInterface.c(23,7): warning C4013: 'gets' undefined; assuming extern returning int
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\UserInterface.c(29,1): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(440): message : see declaration of 'strtok'
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\UserInterface.c(50,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\UserInterface.c(51,1): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(440): message : see declaration of 'strtok'
   BranchingOut.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\Debug\BranchingOut.exe

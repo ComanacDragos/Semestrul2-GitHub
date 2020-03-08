@@ -5,7 +5,7 @@
 typedef struct
 {
 	Product products[50];
-	int lenght, capacity;
+	int length, capacity;
 
 }ProductRepository;
 
@@ -39,3 +39,8 @@ Product* getProduct(ProductRepository* productRepository, int index);
 Updates the state, type and value of a product identified by a catalogue number
 */
 void updateProduct(ProductRepository* productRepository,int catalogueNumber, char newState[], char newType[], int newValue);
+
+/*
+Returns the number of elements in the repository
+*/
+int repositoryLenght(ProductRepository* productRepository);

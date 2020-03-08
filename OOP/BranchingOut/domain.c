@@ -51,5 +51,5 @@ void updateValue(Product* product, int newValue)
 
 void printProduct(Product* product)
 {
-	printf("%d %s %s %d", product->catalogueNumber, product->state, product->type, product->value);
+	printf("%d %s %s %d\n", product->catalogueNumber, product->state, product->type, product->value);
 }

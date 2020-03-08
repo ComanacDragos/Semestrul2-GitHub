@@ -20,9 +20,9 @@ int removeProductService(ProductService* productService, char catalogueNumber[])
 	return removeProduct(productService->productRepository, atoi(catalogueNumber));
 }
 
-Product* getProductFromRepository(ProductService* productService, int index)
+Product getProductFromRepository(ProductService* productService, int index)
 {
-	return getProduct(productService->productRepository, index);
+	return *getProduct(productService->productRepository, index);
 }
 
 void updateProductService(ProductService* productService, char catalogueNumber[], char state[], char type[], char value[])
@@ -30,3 +30,7 @@ void updateProductService(ProductService* productService, char catalogueNumber[]
 	updateProduct(productService->productRepository, atoi(catalogueNumber), state, type, atoi(value));
 };
 
+int repositoryLengthService(ProductService* productService)
+{
+	return repositoryLength(productService->productRepository);
+}

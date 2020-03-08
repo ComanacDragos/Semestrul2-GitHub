@@ -29,7 +29,7 @@ void testRepository()
 	Product product = createProduct(123, "abc", "def", 456);
 	
 	assert(storeProduct(&productRepo, product) == 0);
-	assert(productRepo.lenght == 1);
+	assert(productRepo.length == 1);
 
 	assert(getCatalogueNumber(&productRepo.products[0]) == 123);
 	assert(getValue(&productRepo.products[0]) == 456);
@@ -65,7 +65,7 @@ void testRepository()
 	
 	assert(removeProduct(&productRepo, 123)==0);
 
-	assert(productRepo.lenght == 0);
+	assert(productRepo.length == 0);
 
 	assert(removeProduct(&productRepo, 123) == 1);
 
@@ -78,19 +78,21 @@ void testService()
 	assert(storeProductService(&service, "123", "state", "type", "1") == 0);
 
 	assert(storeProductService(&service, "123", "state", "type", "1") == 1);
-	Product* product = getProductFromRepository(&service, 0);
+	Product product = getProductFromRepository(&service, 0);
 
-	assert(getCatalogueNumber(product) == 123);
-	assert(getValue(product) == 1);
-	assert(strcmp(getState(product), "state") == 0);
-	assert(strcmp(getType(product), "type") == 0);
+	assert(getCatalogueNumber(&product) == 123);
+	assert(getValue(&product) == 1);
+	assert(strcmp(getState(&product), "state") == 0);
+	assert(strcmp(getType(&product), "type") == 0);
 
 	updateProductService(&service, "123", "newState", "newType", "5");
 
-	assert(getCatalogueNumber(product) == 123);
-	assert(getValue(product) == 5);
-	assert(strcmp(getState(product), "newState") == 0);
-	assert(strcmp(getType(product), "newType") == 0);
+	product = getProductFromRepository(&service, 0);
+
+	assert(getCatalogueNumber(&product) == 123);
+	assert(getValue(&product) == 5);
+	assert(strcmp(getState(&product), "newState") == 0);
+	assert(strcmp(getType(&product), "newType") == 0);
 	
 	assert(removeProductService(&service, "123")==0);
 	assert(removeProductService(&service, "123") == 1);
