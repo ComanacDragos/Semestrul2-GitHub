@@ -3,14 +3,15 @@
 ProductRepository createProductRepository()
 {
 	ProductRepository productRepository;
-	productRepository.capacity = 50;
+	productRepository.capacity = RepositoryCapacity;
 	productRepository.length = 0;
 	return productRepository;
 }
 
 int storeProduct(ProductRepository* productRepository, Product product)
 {
-	if (findProduct(productRepository, getCatalogueNumber(&product)) == -1)
+	int productIndex = findProduct(productRepository, getCatalogueNumber(&product));
+	if (productIndex == -1)
 	{
 		productRepository->products[productRepository->length] = product;
 		productRepository->length += 1;
@@ -36,7 +37,7 @@ int removeProduct(ProductRepository* productRepository, int catalogueNumber)
 int findProduct(ProductRepository* productRepository, int catalogueNumber)
 {
 	int i;
-	for(i=0; i<productRepository->length;i++)
+	for(i=0; i < productRepository->length; i++)
 		if(getCatalogueNumber(&productRepository->products[i]) == catalogueNumber)
 			return i;
 	return -1;

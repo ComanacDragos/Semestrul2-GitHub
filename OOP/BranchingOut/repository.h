@@ -2,9 +2,12 @@
 #include "domain.h"
 #include <stdlib.h>
 
+#define RepositoryCapacity 50
+//the number of elements the repository can hold
+
 typedef struct
 {
-	Product products[50];
+	Product products[RepositoryCapacity];
 	int length, capacity;
 
 }ProductRepository;
@@ -31,7 +34,7 @@ int findProduct(ProductRepository* productRepository, int catalogueNumber);
 
 
 /*
-Returns the address of a product with a given index in repository and NULL if the index is invalid
+Returns the address of a product with a given index in repository or NULL if the index is invalid
 */
 Product* getProduct(ProductRepository* productRepository, int index);
 
@@ -41,6 +44,6 @@ Updates the state, type and value of a product identified by a catalogue number
 void updateProduct(ProductRepository* productRepository,int catalogueNumber, char newState[], char newType[], int newValue);
 
 /*
-Returns the number of elements in the repository
+Returns the length of the repository(number of products)
 */
-int repositoryLenght(ProductRepository* productRepository);
+int repositoryLength(ProductRepository* productRepository);

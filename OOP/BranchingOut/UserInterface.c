@@ -9,12 +9,14 @@ CommandBasedUI createUI(ProductService* productService)
 	return commandBasedUI;
 }
 
+//the maximum lenght of a command
 #define CommandLenght 20
+
 #define WordInCommandLenght 20
+//the maximum length in a word in a command
 
 void startProgram(CommandBasedUI* commandUI)
 {
-	
 	while (1)
 	{
 		char userInput[100];
@@ -25,7 +27,6 @@ void startProgram(CommandBasedUI* commandUI)
 		if (strcmp(userInput, "exit") == 0)
 			break;
 
-		
 		char* splitPointer = strtok(userInput, " ,");
 		
 		char** parameters = (char**)malloc(sizeof(char*) * CommandLenght);
@@ -68,9 +69,7 @@ void startProgram(CommandBasedUI* commandUI)
 		for (i = 0; i < numberOfParameters; i++)
 			free(parameters[i]);
 		free(parameters);
-
 	}
-
 }
 
 void storeProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters)
@@ -95,6 +94,7 @@ void removeProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfP
 		printf("bad command\n");
 		return;
 	}
+
 	int succes = removeProductService(commandUI->productService, parameters[1]);
 	if (succes == 0)
 		printf("The product was succesfully removed\n");
@@ -117,7 +117,6 @@ void listProductsUI(CommandBasedUI* commandUI, char** parameters,int numberOfPar
 	else
 		if (numberOfParameters == 2)
 		{
-
 			int i, numberOfProducts = repositoryLengthService(commandUI->productService);
 			for (i = 0; i < numberOfProducts; i++)
 			{

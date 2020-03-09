@@ -1,10 +1,14 @@
 #pragma once
 
+#define StringLength 256
+// the maximum lenghth of state and type of a product
+
 typedef struct {
 	int catalogueNumber, value;
-	char state[256], type[256];
+	char state[StringLength], type[StringLength];
 }Product;
 
+//returns a product with the given properties
 Product createProduct(int catalogueNumber, char state[], char type[], int value);
 
 int getCatalogueNumber(Product* product);
