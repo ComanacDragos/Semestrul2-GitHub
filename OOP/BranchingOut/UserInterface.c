@@ -10,16 +10,16 @@ CommandBasedUI createUI(ProductService* productService)
 }
 
 //the maximum lenght of a command
-#define CommandLenght 20
+#define CommandLenght 50
 
-#define WordInCommandLenght 20
+#define WordInCommandLenght 50
 //the maximum length in a word in a command
 
 void startProgram(CommandBasedUI* commandUI)
 {
 	while (1)
 	{
-		char userInput[100];
+		char userInput[CommandLenght];
 		userInput[0] = '\0';
 		printf("> ");
 		gets(userInput);
