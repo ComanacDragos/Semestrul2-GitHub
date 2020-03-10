@@ -30,9 +30,9 @@ void startProgram(CommandBasedUI* commandUI)
 
 		char* splitPointer = strtok(userInput, " ,");
 		
-		char** parameters = (char**)malloc(sizeof(char*) * CommandLenght);
+		char** commandParameters = (char**)malloc(sizeof(char*) * CommandLenght);
 		
-		if (parameters == '\0')
+		if (commandParameters == '\0')
 		{
 			printf("something went wrong");
 			return;
@@ -41,35 +41,35 @@ void startProgram(CommandBasedUI* commandUI)
 		
 		while (splitPointer != NULL)
 		{
-			parameters[i] = (char*)malloc(sizeof(char) * (strlen(splitPointer) + 1));
+			commandParameters[i] = (char*)malloc(sizeof(char) * (strlen(splitPointer) + 1));
 
-			if (parameters[i] == '\0')
+			if (commandParameters[i] == '\0')
 			{
 				printf("something went wrong");
 				return;
 			}
 
-			strcpy(parameters[i], splitPointer);
+			strcpy(commandParameters[i], splitPointer);
 			splitPointer = strtok(NULL, " ,");
 			i++;
 		}
 		numberOfParameters = i;
 		
-		if (strcmp(parameters[0], "add") == 0)
-			storeProductUI(commandUI, parameters, numberOfParameters);
+		if (strcmp(commandParameters[0], "add") == 0)
+			storeProductUI(commandUI, commandParameters, numberOfParameters);
 		
-		if (strcmp(parameters[0], "list") == 0)
-			listProductsUI(commandUI, parameters, numberOfParameters);
+		if (strcmp(commandParameters[0], "list") == 0)
+			listProductsUI(commandUI, commandParameters, numberOfParameters);
 
-		if (strcmp(parameters[0], "delete") == 0)
-			removeProductUI(commandUI, parameters, numberOfParameters);
+		if (strcmp(commandParameters[0], "delete") == 0)
+			removeProductUI(commandUI, commandParameters, numberOfParameters);
 
-		if (strcmp(parameters[0], "update") == 0)
-			updateProductUI(commandUI, parameters, numberOfParameters);
+		if (strcmp(commandParameters[0], "update") == 0)
+			updateProductUI(commandUI, commandParameters, numberOfParameters);
 
 		for (i = 0; i < numberOfParameters; i++)
-			free(parameters[i]);
-		free(parameters);
+			free(commandParameters[i]);
+		free(commandParameters);
 	}
 }
 

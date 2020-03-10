@@ -4,15 +4,16 @@
 typedef int TElem;
 #define NULL_TELEM 0
 
-typedef struct {
+struct Node {
 	int line, column;
 	TElem value;
-	Node* next;
-}Node;
-
+	struct Node* next;
+};
 class Matrix {
 
 private:
+
+	 
 	//TODO - Representation
 	int length, lines, columns;
 	Node* head;
