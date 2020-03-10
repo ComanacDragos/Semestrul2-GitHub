@@ -12,8 +12,9 @@ CommandBasedUI createUI(ProductService* productService)
 //the maximum lenght of a command
 #define CommandLenght 50
 
-#define WordInCommandLenght 50
+
 //the maximum length in a word in a command
+#define WordInCommandLenght 50
 
 void startProgram(CommandBasedUI* commandUI)
 {
@@ -30,7 +31,7 @@ void startProgram(CommandBasedUI* commandUI)
 		char* splitPointer = strtok(userInput, " ,");
 		
 		char** parameters = (char**)malloc(sizeof(char*) * CommandLenght);
-
+		
 		if (parameters == '\0')
 		{
 			printf("something went wrong");

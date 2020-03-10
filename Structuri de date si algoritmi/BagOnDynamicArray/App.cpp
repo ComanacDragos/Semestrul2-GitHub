@@ -1,23 +1,19 @@
 #include "Bag.h"
+#include "BagIterator.h"
 #include "ShortTest.h"
 #include "ExtendedTest.h"
 #include <iostream>
+
+#include<vector>
+#include <assert.h>
 
 using namespace std;
 
 int main() {
 
-	//testAll();
+	testAll();
 	cout << "Short tests over" << endl;
-	//testAllExtended();
-
-	cout << "All test over" << endl;
-	Bag b;
-	b.add(3);
-	b.add(0);
-	b.isEmpty();
-	b.remove(0);
-	b.isEmpty();
-
-
+	testAllExtended();
+	
+	return 0;
 }

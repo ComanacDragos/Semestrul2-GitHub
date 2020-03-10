@@ -18,6 +18,7 @@ Bag::Bag() {
 }
 
 
+//complexity O(n)
 void Bag::add(TElem elem) {
 	//TODO - Implementation
 	if (lenght == 0)
@@ -62,7 +63,7 @@ void Bag::add(TElem elem) {
 	lenght++;
 }
 
-
+//complexity O(n)
 bool Bag::remove(TElem elem) {
 	//TODO - Implementation
 	if(elem<min || elem>max || frequencies[elem-min] == 0)
@@ -71,13 +72,33 @@ bool Bag::remove(TElem elem) {
 	lenght--;
 	if (lenght == 0)
 		return true;
-	int left = 0, right=capacity-1;//TO CONTINUE
+	int left = 0, right=capacity-1;
 
+	while (frequencies[left] == 0)
+		left++;
+
+	while (frequencies[right] == 0)
+		right--;
+
+	if (left != 0 || right != capacity - 1)
+	{
+		min += left;
+		max -= capacity-1-right;
+		capacity = right - left + 1;
+
+		TElem* new_frequencies = new TElem[capacity];
+	
+		for (int i = left; i <= right; i++)
+			new_frequencies[i - left] = frequencies[i];
+	
+		delete frequencies;
+		frequencies = new_frequencies;
+	}
 
 	return true;
 }
 
-
+// Complexity: theta(1);
 bool Bag::search(TElem elem) const {
 	//TODO - Implementation
 	if (frequencies[elem - min] == 0 || elem > max || elem < min)
@@ -85,6 +106,7 @@ bool Bag::search(TElem elem) const {
 	return true;
 }
 
+// Complexity: theta(1);
 int Bag::nrOccurrences(TElem elem) const {
 	//TODO - Implementation
 	if (elem < min || elem > max || lenght == 0)
@@ -92,18 +114,15 @@ int Bag::nrOccurrences(TElem elem) const {
 	return frequencies[elem - min];
 }
 
-
+// Complexity: theta(1);
 int Bag::size() const {
 	//TODO - Implementation
 	return lenght;
 }
 
-
+// Complexity: theta(1);
 bool Bag::isEmpty() const {
 	//TODO - Implementation
-	for (int i = 0; i < capacity; i++)
-		cout << frequencies[i] << ' ';
-	cout << '\n';
 	return lenght == 0;
 }
 
