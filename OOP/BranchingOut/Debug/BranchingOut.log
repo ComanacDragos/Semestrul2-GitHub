@@ -1,9 +1,11 @@
-﻿  UserInterface.c
-E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\UserInterface.c(26,7): warning C4013: 'gets' undefined; assuming extern returning int
-E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\UserInterface.c(31,1): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(440): message : see declaration of 'strtok'
-E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\UserInterface.c(52,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+﻿  domain.c
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\domain.c(11,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
-E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\UserInterface.c(53,1): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(440): message : see declaration of 'strtok'
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\domain.c(12,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\domain.c(39,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\domain.c(44,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\domain.c(54,8): warning C4013: 'printf' undefined; assuming extern returning int
   BranchingOut.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\Debug\BranchingOut.exe

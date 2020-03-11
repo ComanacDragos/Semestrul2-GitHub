@@ -38,7 +38,7 @@ TElem Matrix::element(int i, int j) const {
 			return p->value;
 		p = p->next;
 	}
-	return 0;
+	return NULL_TELEM;
 }
 
 TElem Matrix::modify(int i, int j, TElem e) {
@@ -46,8 +46,40 @@ TElem Matrix::modify(int i, int j, TElem e) {
 	if (i < 0 || j < 0 || i >= lines || j >= columns)
 		throw exception("Bad position");
 
+
+	Node* new_node = new Node;
+	new_node->line = i;
+	new_node->column = j;
+	new_node->value = e;
+	new_node->next = NULL;
+
+	if (head == NULL)
+	{
+		head = new_node;
+		return 0;
+	}
+
 	Node* p = head;
-	while (p!=NULL && (p->next->line < i || p->next->column < j))
+	while (p->next != NULL && p->line != i)
+	{
+		p = p->next;
+	}
+
+	if (p->line == i && p->column == j)
+	{
+		TElem aux = p->value;
+		p->value = e;
+		return aux;
+	}
+
+	while (p->next != NULL && p->next->line == i && p->next->column < j)
+		p = p->next;
+
+
+    	
+	
+	/*
+	while (p->next!=NULL && (p->next->line < i || p->next->column < j))
 	{
 		if (p->line == i && p->column == j)
 		{
@@ -63,24 +95,11 @@ TElem Matrix::modify(int i, int j, TElem e) {
 		p->next->value = e;
 		return aux;
 	}
-
-	Node* new_node = new Node;
-	new_node->line = i;
-	new_node->column = j;
-	new_node->value = e;
-	new_node->next = NULL;
-
-	if (head == NULL)
-	{
-		head = new_node;
-		return;
-	}
-
-
-
-	
-	
-
+	*/
+	Node* aux = p->next;
+	p->next = new_node;
+	new_node->next = aux;
+	return NULL_TELEM;
 }
 
 

@@ -135,7 +135,12 @@ void updateProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfP
 		printf("Bad command\n");
 		return;
 	}
-	updateProductService(commandUI->productService, parameters[1], parameters[2], parameters[3], parameters[4]);
+	char* ID, state, type, value;
+	strcpy(ID, parameters[1]);
+	strcpy(state, parameters[2]);
+	strcpy(type, parameters[3]);
+	strcpy(value, parameters[4]);
+	updateProductService(commandUI->productService, ID, state, type, value);
 	printf("The product was updated succesfully\n");
 }
 
