@@ -12,19 +12,20 @@ Matrix::Matrix(int nrLines, int nrCols) {
 	head = NULL;
 }
 
-
+// theta(1)
 int Matrix::nrLines() const {
 	//TODO - Implementation
 	return lines;
 }
 
 
+// theta(1)
 int Matrix::nrColumns() const {
 	//TODO - Implementation
 	return columns;
 }
 
-
+//O(n)
 TElem Matrix::element(int i, int j) const {
 	//TODO - Implementation
 	if (i < 0 || j < 0 || i >= lines || j >= columns)
@@ -41,6 +42,8 @@ TElem Matrix::element(int i, int j) const {
 	return NULL_TELEM;
 }
 
+
+//O(n)
 TElem Matrix::modify(int i, int j, TElem e) {
 	//TODO - Implementation
 	if (i < 0 || j < 0 || i >= lines || j >= columns)
@@ -76,30 +79,19 @@ TElem Matrix::modify(int i, int j, TElem e) {
 		p = p->next;
 
 
-    	
-	
-	/*
-	while (p->next!=NULL && (p->next->line < i || p->next->column < j))
-	{
-		if (p->line == i && p->column == j)
-		{
-			TElem aux = p->value;
-			p->value = e;
-			return aux;
-		}
-	}
-
-	if (p->next->line == i && p->next->column == j)
-	{
-		TElem aux = p->next->value;
-		p->next->value = e;
-		return aux;
-	}
-	*/
 	Node* aux = p->next;
 	p->next = new_node;
 	new_node->next = aux;
 	return NULL_TELEM;
 }
 
-
+Matrix::~Matrix()
+{
+	Node* p = head;
+	while (p != NULL)
+	{
+		Node* aux = p->next;
+		delete p;
+		p = aux;
+	}
+}

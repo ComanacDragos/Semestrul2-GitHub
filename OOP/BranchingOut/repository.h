@@ -7,12 +7,12 @@
 
 typedef struct
 {
-	Product products[RepositoryCapacity];
+	Product* products;
 	int length, capacity;
 
 }ProductRepository;
 
-ProductRepository createProductRepository();
+ProductRepository* createProductRepository();
 
 /*
 Adds a product in the repository
@@ -47,3 +47,9 @@ void updateProduct(ProductRepository* productRepository,int catalogueNumber, cha
 Returns the length of the repository(number of products)
 */
 int repositoryLength(ProductRepository* productRepository);
+
+void increaseRepositorySize(ProductRepository* productRepository);
+
+void shrinkRepositorySize(ProductRepository* productRepository);
+
+void destroyRepository(ProductRepository* productRepository);

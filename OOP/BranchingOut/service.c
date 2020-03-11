@@ -28,9 +28,14 @@ Product getProductFromRepository(ProductService* productService, int index)
 void updateProductService(ProductService* productService, char catalogueNumber[], char state[], char type[], char value[])
 {
 	updateProduct(productService->productRepository, atoi(catalogueNumber), state, type, atoi(value));
-};
+}
 
 int repositoryLengthService(ProductService* productService)
 {
 	return repositoryLength(productService->productRepository);
+}
+
+void destroyService(ProductService* productService)
+{
+	destroyRepository(productService->productRepository);
 }

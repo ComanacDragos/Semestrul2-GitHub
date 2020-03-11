@@ -18,3 +18,5 @@ void removeProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfP
 void listProductsUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);
 
 void updateProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);
+
+destroyUserInterface(CommandBasedUI* commandUI);

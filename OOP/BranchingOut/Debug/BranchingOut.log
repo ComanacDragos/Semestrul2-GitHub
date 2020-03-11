@@ -1,11 +1,2 @@
-﻿  domain.c
-E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\domain.c(11,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
-E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\domain.c(12,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
-E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\domain.c(39,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
-E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\domain.c(44,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
-E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\domain.c(54,8): warning C4013: 'printf' undefined; assuming extern returning int
+﻿  main.c
   BranchingOut.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\Debug\BranchingOut.exe

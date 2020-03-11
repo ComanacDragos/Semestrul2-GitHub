@@ -10,9 +10,8 @@ int main()
 {
 	testAll();
 	testAllExtended();
-//	cout << "Test End" << endl;
-	//system("pause");
+	cout << "Test End" << endl;
+	system("pause");
 
-	//Matrix m(4,4);
-
+	
 }

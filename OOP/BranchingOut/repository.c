@@ -1,10 +1,17 @@
 #include "repository.h"
 
-ProductRepository createProductRepository()
+ProductRepository* createProductRepository()
 {
-	ProductRepository productRepository;
-	productRepository.capacity = RepositoryCapacity;
-	productRepository.length = 0;
+	ProductRepository* productRepository = (ProductRepository*)malloc(sizeof(ProductRepository));
+
+	if (productRepository == NULL)
+		return NULL;
+
+	productRepository->capacity = RepositoryCapacity;
+	productRepository->length = 0;
+
+	productRepository->products = (Product*)malloc(RepositoryCapacity * sizeof(Product));
+	
 	return productRepository;
 }
 
@@ -63,5 +70,20 @@ void updateProduct(ProductRepository* productRepository, int catalogueNumber, ch
 int repositoryLength(ProductRepository* productRepository)
 {
 	return productRepository->length;
+}
+
+void increaseRepositorySize(ProductRepository* productRepository)
+{
+
+}
+
+void shrinkRepositorySize(ProductRepository* productRepository)
+{
+}
+
+void destroyRepository(ProductRepository* productRepository)
+{
+	free(productRepository->products);
+	free(productRepository);
 }
 

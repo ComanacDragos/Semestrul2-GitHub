@@ -81,7 +81,13 @@ void storeProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfPa
 		return;
 	}
 
-	int succes = storeProductService(commandUI->productService, parameters[1], parameters[2], parameters[3], parameters[4]);
+	char catalogueNumber[WordInCommandLenght], state[WordInCommandLenght], type[WordInCommandLenght], value[WordInCommandLenght];
+	strcpy(catalogueNumber, parameters[1]);
+	strcpy(state, parameters[2]);
+	strcpy(type, parameters[3]);
+	strcpy(value, parameters[4]);
+
+	int succes = storeProductService(commandUI->productService, catalogueNumber, state, type, value);
 	if (succes == 0)
 		printf("The product was succesfully stored\n");
 	else
@@ -96,7 +102,10 @@ void removeProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfP
 		return;
 	}
 
-	int succes = removeProductService(commandUI->productService, parameters[1]);
+	char catalogueNumber[WordInCommandLenght];
+	strcpy(catalogueNumber, parameters[1]);
+
+	int succes = removeProductService(commandUI->productService, catalogueNumber);
 	if (succes == 0)
 		printf("The product was succesfully removed\n");
 	else
@@ -135,12 +144,17 @@ void updateProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfP
 		printf("Bad command\n");
 		return;
 	}
-	char* ID, state, type, value;
-	strcpy(ID, parameters[1]);
+	char catalogueNumber[WordInCommandLenght], state[WordInCommandLenght], type[WordInCommandLenght], value[WordInCommandLenght];
+	strcpy(catalogueNumber, parameters[1]);
 	strcpy(state, parameters[2]);
 	strcpy(type, parameters[3]);
 	strcpy(value, parameters[4]);
-	updateProductService(commandUI->productService, ID, state, type, value);
+	updateProductService(commandUI->productService, catalogueNumber, state, type, value);
 	printf("The product was updated succesfully\n");
+}
+
+destroyUserInterface(CommandBasedUI* commandUI)
+{
+	destroyService(commandUI->productService);
 }
 

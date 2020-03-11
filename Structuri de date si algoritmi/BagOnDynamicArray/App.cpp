@@ -15,5 +15,6 @@ int main() {
 	cout << "Short tests over" << endl;
 	testAllExtended();
 	
+
 	return 0;
 }

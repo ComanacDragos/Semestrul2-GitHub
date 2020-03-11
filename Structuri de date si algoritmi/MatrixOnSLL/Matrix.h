@@ -37,4 +37,5 @@ public:
 	//throws exception if (i,j) is not a valid position in the Matrix
 	TElem modify(int i, int j, TElem e);
 
+	~Matrix();
 };

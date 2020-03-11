@@ -25,7 +25,7 @@ void testProduct()
 
 void testRepository()
 {
-	ProductRepository productRepo = createProductRepository();
+	ProductRepository productRepo = *createProductRepository();
 	Product product = createProduct(123, "abc", "def", 456);
 	
 	assert(storeProduct(&productRepo, product) == 0);
@@ -69,11 +69,12 @@ void testRepository()
 
 	assert(removeProduct(&productRepo, 123) == 1);
 
+	destroyRepository(&productRepo);
 }
 
 void testService()
 {
-	ProductRepository repo = createProductRepository();
+	ProductRepository repo = *createProductRepository();
 	ProductService service = createService(&repo);
 	assert(storeProductService(&service, "123", "state", "type", "1") == 0);
 

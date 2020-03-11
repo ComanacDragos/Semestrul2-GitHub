@@ -34,3 +34,5 @@ void updateProductService(ProductService* productService, char catalogueNumber[]
 Returns the number of products in repository
 */
 int repositoryLengthService(ProductService* productService);
+
+void destroyService(ProductService* productService);
