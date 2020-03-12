@@ -2,7 +2,7 @@
 #include "domain.h"
 #include <stdlib.h>
 
-#define RepositoryCapacity 50
+#define RepositoryCapacity 2
 //the number of elements the repository can hold
 
 typedef struct

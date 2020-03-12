@@ -6,7 +6,7 @@ typedef struct
 	ProductService* productService;
 }CommandBasedUI;
 
-CommandBasedUI createUI(ProductService* productService);
+CommandBasedUI* createUI(ProductService* productService);
 
 
 void startProgram(CommandBasedUI* commandUI);
@@ -18,5 +18,7 @@ void removeProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfP
 void listProductsUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);
 
 void updateProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);
+
+void listMaximumPotencyValueUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);
 
 destroyUserInterface(CommandBasedUI* commandUI);

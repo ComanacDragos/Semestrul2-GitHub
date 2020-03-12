@@ -2,10 +2,14 @@
 #include <string.h>
 #include <stdio.h>
 
-CommandBasedUI createUI(ProductService* productService)
+CommandBasedUI* createUI(ProductService* productService)
 {
-	CommandBasedUI commandBasedUI;
-	commandBasedUI.productService = productService;
+	CommandBasedUI* commandBasedUI = (CommandBasedUI*)malloc(sizeof(commandBasedUI));
+
+	if (commandBasedUI == NULL)
+		return NULL;
+
+	commandBasedUI->productService = productService;
 	return commandBasedUI;
 }
 
@@ -127,6 +131,12 @@ void listProductsUI(CommandBasedUI* commandUI, char** parameters,int numberOfPar
 	else
 		if (numberOfParameters == 2)
 		{
+			if (atoi(parameters[1]) != 0)
+			{
+				listMaximumPotencyValueUI(commandUI, parameters, numberOfParameters);
+				return;
+			}
+
 			int i, numberOfProducts = repositoryLengthService(commandUI->productService);
 			for (i = 0; i < numberOfProducts; i++)
 			{
@@ -153,8 +163,23 @@ void updateProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfP
 	printf("The product was updated succesfully\n");
 }
 
+void listMaximumPotencyValueUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters)
+{
+
+	char maximumPotencyValue[WordInCommandLenght];
+	strcpy(maximumPotencyValue, parameters[1]);
+
+	ProductRepository* filteredProducts = listMaximumPotencyValueService(commandUI->productService, maximumPotencyValue);
+	
+	for (int i = 0; i < filteredProducts->length; i++)
+		printProduct(getProduct(filteredProducts, i));
+	
+	destroyRepository(filteredProducts);
+}
+
 destroyUserInterface(CommandBasedUI* commandUI)
 {
 	destroyService(commandUI->productService);
+	free(commandUI);
 }
 

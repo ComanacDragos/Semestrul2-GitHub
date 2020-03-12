@@ -1,10 +1,14 @@
 #include "service.h"
 
 
-ProductService createService(ProductRepository* productRepository)
+ProductService* createService(ProductRepository* productRepository)
 {
-	ProductService productService;
-	productService.productRepository = productRepository;
+	ProductService* productService = (ProductService*)malloc(sizeof(ProductService));
+
+	if (productService == NULL)
+		return NULL;
+
+	productService->productRepository = productRepository;
 	return productService;
 }
 
@@ -35,7 +39,26 @@ int repositoryLengthService(ProductService* productService)
 	return repositoryLength(productService->productRepository);
 }
 
+Product* listMaximumPotencyValueService(ProductService* productService, char maximumPotencyValue[])
+{
+	int maximumPotencyVal = atoi(maximumPotencyValue);
+
+	ProductRepository* filteredProducts = createProductRepository();
+
+	if (filteredProducts == NULL)
+		return NULL;
+
+	for (int i = 0; i < repositoryLength(productService->productRepository); i++)
+	{
+		Product currentProduct = getProductFromRepository(productService, i);
+		if (getValue(&currentProduct) <= maximumPotencyVal)
+			storeProduct(filteredProducts, currentProduct);
+	}
+	return filteredProducts;
+}
+
 void destroyService(ProductService* productService)
 {
 	destroyRepository(productService->productRepository);
+	free(productService);
 }

@@ -20,6 +20,9 @@ int storeProduct(ProductRepository* productRepository, Product product)
 	int productIndex = findProduct(productRepository, getCatalogueNumber(&product));
 	if (productIndex == -1)
 	{
+		if (productRepository->length == productRepository->capacity)
+			increaseRepositorySize(productRepository);
+
 		productRepository->products[productRepository->length] = product;
 		productRepository->length += 1;
 		return 0;
@@ -36,6 +39,10 @@ int removeProduct(ProductRepository* productRepository, int catalogueNumber)
 		for (i = productIndex; i < productRepository->length; i++)
 			productRepository->products[i] = productRepository->products[i + 1];
 			productRepository->length -= 1;
+			
+			if (productRepository->length == productRepository->capacity / 2)
+				shrinkRepositorySize(productRepository);
+			
 			return 0;
 	}
 	return 1;
@@ -74,11 +81,31 @@ int repositoryLength(ProductRepository* productRepository)
 
 void increaseRepositorySize(ProductRepository* productRepository)
 {
+	productRepository->capacity *= 2;
+	Product* largerProductRepository = (Product*)malloc(sizeof(Product) * productRepository->capacity);
 
+	if (largerProductRepository == NULL)
+		return;
+
+	for (int i = 0; i < productRepository->length; i++)
+		largerProductRepository[i] = productRepository->products[i];
+
+	free(productRepository->products);
+	productRepository->products = largerProductRepository;
 }
 
 void shrinkRepositorySize(ProductRepository* productRepository)
 {
+	productRepository->capacity /= 2;
+	Product* largerProductRepository = (Product*)malloc(sizeof(Product) * productRepository->capacity);
+
+	if (largerProductRepository == NULL)
+		return;
+
+	for (int i = 0; i < productRepository->length; i++)
+		largerProductRepository[i] = productRepository->products[i];
+	free(productRepository->products);
+	productRepository->products = largerProductRepository;
 }
 
 void destroyRepository(ProductRepository* productRepository)

@@ -6,7 +6,7 @@ typedef struct
 	ProductRepository* productRepository;
 }ProductService;
 
-ProductService createService(ProductRepository* productRepository);
+ProductService* createService(ProductRepository* productRepository);
 
 /*
 Creates a product and adds it to the repository
@@ -34,5 +34,8 @@ void updateProductService(ProductService* productService, char catalogueNumber[]
 Returns the number of products in repository
 */
 int repositoryLengthService(ProductService* productService);
+
+
+Product* listMaximumPotencyValueService(ProductService* productService, char maximumPotencyValue[]);
 
 void destroyService(ProductService* productService);
