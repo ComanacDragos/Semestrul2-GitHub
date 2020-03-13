@@ -58,18 +58,26 @@ void startProgram(CommandBasedUI* commandUI)
 			i++;
 		}
 		numberOfParameters = i;
-		
-		if (strcmp(commandParameters[0], "add") == 0)
+		char command[WordInCommandLenght];
+		strcpy(command, commandParameters[0]);
+
+		if (strcmp(command, "add") == 0)
 			storeProductUI(commandUI, commandParameters, numberOfParameters);
 		
-		if (strcmp(commandParameters[0], "list") == 0)
+		if (strcmp(command, "list") == 0)
 			listProductsUI(commandUI, commandParameters, numberOfParameters);
 
-		if (strcmp(commandParameters[0], "delete") == 0)
+		if (strcmp(command, "delete") == 0)
 			removeProductUI(commandUI, commandParameters, numberOfParameters);
 
-		if (strcmp(commandParameters[0], "update") == 0)
+		if (strcmp(command, "update") == 0)
 			updateProductUI(commandUI, commandParameters, numberOfParameters);
+
+		if (strcmp(command, "undo") == 0)
+			undoUI(commandUI, commandParameters, numberOfParameters);
+
+		if (strcmp(command, "redo") == 0)
+			redoUI(commandUI, commandParameters, numberOfParameters);
 
 		for (i = 0; i < numberOfParameters; i++)
 			free(commandParameters[i]);
@@ -175,6 +183,29 @@ void listMaximumPotencyValueUI(CommandBasedUI* commandUI, char** parameters, int
 		printProduct(getProduct(filteredProducts, i));
 	
 	destroyRepository(filteredProducts);
+}
+
+void undoUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters)
+{
+	if (numberOfParameters != 1)
+		return;
+	int succes = undoService(commandUI->productService);
+	if (succes == 0)
+		printf("The undo was succesful\n");
+	else
+		printf("The undo was unsuccesful\n");
+
+}
+
+void redoUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters)
+{
+	if (numberOfParameters != 1)
+		return;
+	int succes = redoService(commandUI->productService);
+	if (succes == 0)
+		printf("The redo was succesful\n");
+	else
+		printf("The redo was unsuccesful\n");
 }
 
 destroyUserInterface(CommandBasedUI* commandUI)

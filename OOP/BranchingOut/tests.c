@@ -114,22 +114,43 @@ void testService()
 	
 	assert(findProduct(service->productRepository, 123) == -1);
 
-	assert(storeProductService(service, "123", "state", "b", "1") == 0);
-	assert(storeProductService(service, "124", "state", "a", "1") == 0);
+	assert(storeProductService(service, "123", "b", "ab", "1") == 0);
+	assert(storeProductService(service, "124", "a", "ba", "1") == 0);
 
 	ProductRepository* filteredProducts = listMaximumPotencyValueService(service, "3");
 
 	assert(getCatalogueNumber(getProduct(filteredProducts, 0)) == 124);
 	assert(getValue(getProduct(filteredProducts, 0)) == 1);
-	assert(strcmp(getState(getProduct(filteredProducts, 0)), "state") == 0);
-	assert(strcmp(getType(getProduct(filteredProducts, 0)), "a") == 0);
+	assert(strcmp(getState(getProduct(filteredProducts, 0)), "a") == 0);
+	assert(strcmp(getType(getProduct(filteredProducts, 0)), "ba") == 0);
 
 	assert(getCatalogueNumber(getProduct(filteredProducts, 1)) == 123);
 	assert(getValue(getProduct(filteredProducts, 1)) == 1);
-	assert(strcmp(getState(getProduct(filteredProducts, 1)), "state") == 0);
-	assert(strcmp(getType(getProduct(filteredProducts, 1)), "b") == 0);
+	assert(strcmp(getState(getProduct(filteredProducts, 1)), "b") == 0);
+	assert(strcmp(getType(getProduct(filteredProducts, 1)), "ab") == 0);
 
 	destroyRepository(filteredProducts);
+
+
+	destroyService(service);
+}
+
+void testUndoRedo()
+{
+	ProductRepository* repo = createProductRepository();
+	ProductService* service = createService(repo);
+
+	storeProductService(service, "1", "state", "type", "1");
+
+	assert(undoService(service) == 0);
+	assert(undoService(service) == 1);
+
+	assert(repositoryLength(service->productRepository) == 0);
+
+	assert(redoService(service) == 0);
+	assert(redoService(service) == 1);
+
+	assert(repositoryLength(service->productRepository) == 1);
 
 	destroyService(service);
 }
@@ -139,5 +160,6 @@ void testAll()
 	testProduct();
 	testRepository();
 	testService();
+	testUndoRedo();
 	printf("\nThe tests were succesfull!\n");
 }

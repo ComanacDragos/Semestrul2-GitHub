@@ -14,7 +14,7 @@ typedef struct
 
 typedef struct
 {
-	ProductRepository* repositories;
+	ProductRepository** repositories;
 	int lenght, capacity, currentRepositoryIndex;
 }UndoRedoListOfLists;
 
@@ -73,4 +73,7 @@ void increaseUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
 
 void shrinkUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
 
+ProductRepository* getCurrentProductRepositoryFromListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
+
 void destroyUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
+

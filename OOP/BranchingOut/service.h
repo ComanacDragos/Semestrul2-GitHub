@@ -4,6 +4,7 @@
 typedef struct
 {
 	ProductRepository* productRepository;
+	ProductRepository* originalProductRepository;
 	UndoRedoListOfLists* undoRedoListOfLists;
 }ProductService;
 
@@ -37,10 +38,10 @@ Returns the number of products in repository
 int repositoryLengthService(ProductService* productService);
 
 
-Product* listMaximumPotencyValueService(ProductService* productService, char maximumPotencyValue[]);
+ProductRepository* listMaximumPotencyValueService(ProductService* productService, char maximumPotencyValue[]);
 
 void destroyService(ProductService* productService);
 
-void undoService(ProductService* productService);
+int undoService(ProductService* productService);
 
-void redoService(ProductService* productService);
+int redoService(ProductService* productService);

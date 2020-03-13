@@ -21,4 +21,8 @@ void updateProductUI(CommandBasedUI* commandUI, char** parameters, int numberOfP
 
 void listMaximumPotencyValueUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);
 
+void undoUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);
+
+void redoUI(CommandBasedUI* commandUI, char** parameters, int numberOfParameters);
+
 destroyUserInterface(CommandBasedUI* commandUI);
