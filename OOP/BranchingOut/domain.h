@@ -26,3 +26,4 @@ void updateType(Product* product, char newType[]);
 void updateValue(Product* product, int newValue);
 
 void printProduct(Product* product);
+

@@ -1,6 +1,6 @@
 #include "domain.h"
 #include <string.h>
-
+#include <stdlib.h>
 
 Product createProduct(int catalogueNumber, char state[], char type[], int value)
 {

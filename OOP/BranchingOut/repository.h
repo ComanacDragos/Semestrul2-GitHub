@@ -12,6 +12,12 @@ typedef struct
 
 }ProductRepository;
 
+typedef struct
+{
+	ProductRepository* repositories;
+	int lenght, capacity, currentRepositoryIndex;
+}UndoRedoListOfLists;
+
 ProductRepository* createProductRepository();
 
 /*
@@ -53,3 +59,18 @@ void increaseRepositorySize(ProductRepository* productRepository);
 void shrinkRepositorySize(ProductRepository* productRepository);
 
 void destroyRepository(ProductRepository* productRepository);
+
+ProductRepository* createUndoRedoListOfLists();
+
+void storeInUndoRedoListOfListsRepository(UndoRedoListOfLists* undoRedoListOfLists, ProductRepository* productRepository);
+
+/*
+Deletes all repositories between a certain index and the end
+*/
+void deleteFromUndoRedoListOfListsRepositories(UndoRedoListOfLists* undoRedoListOfLists, int startIndex);
+
+void increaseUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
+
+void shrinkUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
+
+void destroyUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists);

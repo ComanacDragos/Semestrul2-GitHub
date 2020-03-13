@@ -7,8 +7,10 @@
 #include "UserInterface.h"
 
 
+
 int main()
 {
+	
 	testAll();
 	
 	ProductRepository* productRepository = createProductRepository();
@@ -18,7 +20,6 @@ int main()
 	startProgram(commandBasedUI);
 
 	destroyUserInterface(commandBasedUI);
-	
 	
 	_CrtDumpMemoryLeaks();
 	return 0;

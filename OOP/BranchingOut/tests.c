@@ -26,7 +26,6 @@ void testProduct()
 void testRepository()
 {
 	ProductRepository* productRepo = createProductRepository();
-	//ProductRepository productRepo = *productRepoPointer;
 	Product product = createProduct(123, "abc", "def", 456);
 	
 	assert(storeProduct(productRepo, product) == 0);
@@ -114,6 +113,23 @@ void testService()
 	assert(removeProductService(service, "123") == 1);
 	
 	assert(findProduct(service->productRepository, 123) == -1);
+
+	assert(storeProductService(service, "123", "state", "b", "1") == 0);
+	assert(storeProductService(service, "124", "state", "a", "1") == 0);
+
+	ProductRepository* filteredProducts = listMaximumPotencyValueService(service, "3");
+
+	assert(getCatalogueNumber(getProduct(filteredProducts, 0)) == 124);
+	assert(getValue(getProduct(filteredProducts, 0)) == 1);
+	assert(strcmp(getState(getProduct(filteredProducts, 0)), "state") == 0);
+	assert(strcmp(getType(getProduct(filteredProducts, 0)), "a") == 0);
+
+	assert(getCatalogueNumber(getProduct(filteredProducts, 1)) == 123);
+	assert(getValue(getProduct(filteredProducts, 1)) == 1);
+	assert(strcmp(getState(getProduct(filteredProducts, 1)), "state") == 0);
+	assert(strcmp(getType(getProduct(filteredProducts, 1)), "b") == 0);
+
+	destroyRepository(filteredProducts);
 
 	destroyService(service);
 }

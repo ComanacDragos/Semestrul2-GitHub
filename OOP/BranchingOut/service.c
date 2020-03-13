@@ -9,6 +9,7 @@ ProductService* createService(ProductRepository* productRepository)
 		return NULL;
 
 	productService->productRepository = productRepository;
+
 	return productService;
 }
 
@@ -54,6 +55,17 @@ Product* listMaximumPotencyValueService(ProductService* productService, char max
 		if (getValue(&currentProduct) <= maximumPotencyVal)
 			storeProduct(filteredProducts, currentProduct);
 	}
+
+	for(int i=0;i<repositoryLength(productService->productRepository)-1;i++)
+		for(int j=i+1;j<repositoryLength(productService->productRepository);j++)
+			if (strcmp(getType(getProduct(filteredProducts, i)), getType(getProduct(filteredProducts, j))) > 0)
+			{
+				Product auxiliaryInterchange = *getProduct(filteredProducts,i);
+				*getProduct(filteredProducts, i) = *getProduct(filteredProducts, j);
+				*getProduct(filteredProducts, j) = auxiliaryInterchange;
+			}
+
+
 	return filteredProducts;
 }
 
@@ -61,4 +73,12 @@ void destroyService(ProductService* productService)
 {
 	destroyRepository(productService->productRepository);
 	free(productService);
+}
+
+void undoService(ProductService* productService)
+{
+}
+
+void redoService(ProductService* productService)
+{
 }
