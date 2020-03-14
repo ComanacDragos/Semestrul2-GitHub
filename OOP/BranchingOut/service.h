@@ -4,7 +4,6 @@
 typedef struct
 {
 	ProductRepository* productRepository;
-	ProductRepository* originalProductRepository;
 	UndoRedoListOfLists* undoRedoListOfLists;
 }ProductService;
 
@@ -45,3 +44,5 @@ void destroyService(ProductService* productService);
 int undoService(ProductService* productService);
 
 int redoService(ProductService* productService);
+
+void copyRepository(ProductRepository* destinationRepository, ProductRepository* sourceRepository);

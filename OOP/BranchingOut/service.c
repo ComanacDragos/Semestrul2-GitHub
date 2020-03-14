@@ -9,8 +9,7 @@ ProductService* createService(ProductRepository* productRepository)
 		return NULL;
 
 	productService->productRepository = productRepository;
-	productService->originalProductRepository = productRepository;
-
+	
 	productService->undoRedoListOfLists = createUndoRedoListOfLists();
 	storeInUndoRedoListOfListsRepository(productService->undoRedoListOfLists, productRepository);
 
@@ -86,7 +85,7 @@ ProductRepository* listMaximumPotencyValueService(ProductService* productService
 
 void destroyService(ProductService* productService)
 {
-	destroyRepository(productService->originalProductRepository);
+	destroyRepository(productService->productRepository);
 	destroyUndoRedoListOfLists(productService->undoRedoListOfLists);
 	free(productService);
 }
@@ -97,7 +96,9 @@ int undoService(ProductService* productService)
 		return 1;
 
 	productService->undoRedoListOfLists->currentRepositoryIndex -= 1;
-	productService->productRepository = getCurrentProductRepositoryFromListOfLists(productService->undoRedoListOfLists);
+
+	copyRepository(productService->productRepository, getCurrentProductRepositoryFromListOfLists(productService->undoRedoListOfLists));
+
 	return 0;
 }
 
@@ -106,6 +107,22 @@ int redoService(ProductService* productService)
 	if (productService->undoRedoListOfLists->currentRepositoryIndex == productService->undoRedoListOfLists->lenght - 1)
 		return 1;
 	productService->undoRedoListOfLists->currentRepositoryIndex += 1;
-	productService->productRepository = getCurrentProductRepositoryFromListOfLists(productService->undoRedoListOfLists);
+	
+	copyRepository(productService->productRepository, getCurrentProductRepositoryFromListOfLists(productService->undoRedoListOfLists));
+
 	return 0;
+}
+
+void copyRepository(ProductRepository* destinationRepository, ProductRepository* sourceRepository)
+{
+	Product* copyOfProducts = (Product*)malloc(sizeof(Product) * sourceRepository->capacity);
+
+	for (int i = 0; i < sourceRepository->length; i++)
+		copyOfProducts[i] = sourceRepository->products[i];
+
+	free(destinationRepository->products);
+
+	destinationRepository->products = copyOfProducts;
+	destinationRepository->length = sourceRepository->length;
+	destinationRepository->capacity = sourceRepository->capacity;
 }

@@ -1,4 +1,5 @@
 #include "repository.h"
+#include <stdio.h>
 
 ProductRepository* createProductRepository()
 {
@@ -144,10 +145,9 @@ void storeInUndoRedoListOfListsRepository(UndoRedoListOfLists* undoRedoListOfLis
 	for (int i = 0; i < productRepository->length; i++)
 		storeProduct(copyRepository, *getProduct(productRepository, i));
 
-
 	undoRedoListOfLists->repositories[undoRedoListOfLists->lenght] = copyRepository;
 	undoRedoListOfLists->lenght += 1;
-	undoRedoListOfLists->currentRepositoryIndex += 1;	
+	undoRedoListOfLists->currentRepositoryIndex += 1;
 }
 
 void deleteFromUndoRedoListOfListsRepositories(UndoRedoListOfLists* undoRedoListOfLists, int startIndex)
@@ -158,6 +158,7 @@ void deleteFromUndoRedoListOfListsRepositories(UndoRedoListOfLists* undoRedoList
 		undoRedoListOfLists->repositories[i] = NULL;
 	}
 		undoRedoListOfLists->lenght = startIndex;
+		undoRedoListOfLists->currentRepositoryIndex = startIndex - 1;
 
 	if (undoRedoListOfLists->lenght == undoRedoListOfLists->capacity / 2)
 		shrinkUndoRedoListOfLists(undoRedoListOfLists);

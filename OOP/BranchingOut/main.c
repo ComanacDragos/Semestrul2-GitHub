@@ -6,12 +6,12 @@
 #include "tests.h"
 #include "UserInterface.h"
 
-
+#define _CRTDBG_MAP_ALLOC
 
 int main()
 {
 	
-	//testAll();
+	testAll();
 	
 	ProductRepository* productRepository = createProductRepository();
 	ProductService* productService = createService(productRepository);
@@ -20,7 +20,6 @@ int main()
 	startProgram(commandBasedUI);
 
 	destroyUserInterface(commandBasedUI);
-	
 	
 	_CrtDumpMemoryLeaks();
 	return 0;
