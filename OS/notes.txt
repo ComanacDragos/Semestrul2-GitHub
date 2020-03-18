@@ -1,0 +1,33 @@
+Seminar 2
+
+grep -v "^[ \t{}]*$\| ^[ \t]*//" a.c
+
+-v all lines that do not match
+
+\t - tab
+wc -l (word count)
+
+S = `expr 3 + 2`
+
+N = $(expr 3 + 2)
+
+bc - calculator (quit to exit)
+
+
+strace
+
+md5 sha1 sha256 sh512 
+-gives an unique number
+echo abc | md5sum
+
+find gives everything in the directory recursively
+
+ls -d doesn t show the children
+
+
+no space after =
+
+. & at the end to still run in the same console
+
+ps
+wait <number>

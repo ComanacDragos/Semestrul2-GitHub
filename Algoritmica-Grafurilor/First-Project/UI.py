@@ -71,8 +71,9 @@ x. Exit """
         left = int(input("Give left end-point: "))
         right = int(input("Give right end-point: "))
         try:
+            cost = self._controller.get_cost(left, right)
             print("The cost of %d->%d is:" % (left, right), end=" ")
-            print(self._controller.get_cost(left, right))
+            print(cost)
         except EdgeException as err:
             print(err)
 

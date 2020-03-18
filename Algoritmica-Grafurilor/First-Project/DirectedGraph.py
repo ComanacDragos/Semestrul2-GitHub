@@ -1,41 +1,26 @@
 class DoubleDictGraph:
-    def __init__(self, filename):
+    def __init__(self):
         self._dictIn = {}
         self._dictOut = {}
         self._dictCosts = {}
-        self._loadGraph(filename)
+        self._vertices = 0
+        self._edges = 0
 
-    def _loadGraph(self, filename):
-        f = open(filename, "r")
-        lines = f.readlines()
-        first = lines[0]
-        first = first.strip().split()
-        self._vertices = int(first[0])
-        self._edges = int(first[1])
-        lines.pop(0)
+    @property
+    def vertices(self):
+        return self._vertices
 
-        for i in range(self._vertices):
-            self._dictIn[i] = []
-            self._dictOut[i] = []
+    @vertices.setter
+    def vertices(self, value):
+        self._vertices = value
 
-        for line in lines:
-            line = line.strip().split()
-            left = int(line[0])
-            right = int(line[1])
-            cost = int(line[2])
+    @property
+    def edges(self):
+        return self._edges
 
-            self._dictOut[left].append(right)
-            self._dictIn[right].append(left)
-            self._dictCosts[(left,right)] = cost
-
-        print(self._dictCosts)
-        print()
-        print(self._dictIn)
-        print()
-        print(self._dictOut)
-
-    def _storeGraph(self, filename):
-        pass
+    @edges.setter
+    def edges(self,value):
+        self._edges = value
 
     def is_edge(self, x, y):
         '''
@@ -55,6 +40,33 @@ class DoubleDictGraph:
         """
         return n in self._dictIn
 
+    def add_vertex(self, n):
+        '''
+        Adds the vertex n if it does not exists
+        :param n: integer number
+        :return:
+        :exception: if the vertice already exists
+        '''
+        if self.is_vertice(n) == True:
+            raise VertexException("Vertex already in graph")
+        self._dictIn[n] = {}
+        self._dictOut[n] = {}
+        self._vertices += 1
+
+    def remove_vertex(self, vertex):
+        '''
+        Removes a given vertex from the graph
+        :param vertex:
+        :return:
+        :exception: if the vertex does not exist raises an exception
+        '''
+        if vertex not in self._dictIn:
+            raise VertexException("Vertex not in graph")
+
+        for edges in self._dictCosts.keys():
+            if vertex in edges:
+                pass
+
     def add_edge(self, x, y, cost):
         '''
         Adds the edge x -> y with a cost
@@ -66,15 +78,13 @@ class DoubleDictGraph:
         '''
         if self.is_edge(x, y) == True:
             raise AlreadyExists("There already exists such an edge")
-        self._dictIn[y].append(x)
-        self._dictOut[x].append(y)
-        self._dictCosts[(x,y)].append(cost)
+        if self.is_vertice(x) == False or self.is_vertice(y) == False:
+            raise VertexException("Vertex doesn't exist")
 
-    def get_nr_vertices(self):
-        '''
-        :return: number of vertices
-        '''
-        return self._vertices
+        self._dictIn[y][len(self._dictIn[y])] = x
+        self._dictOut[x][len(self._dictOut[x])] = y
+        self._dictCosts[(x,y)] = cost
+
 
     def get_vertices(self):
         """
@@ -108,25 +118,27 @@ class DoubleDictGraph:
     def parse_outbound(self, vertex):
         """
         :param vertex: a vertex of the graph
-        :return: the list of target vertices
-        :exception: the vertex doesn't exist
-        """
-        if self.is_vertice(vertex) == False:
-            raise VertexException("Vertex doesn't exist")
-        return self._dictOut[vertex][:]
-
-    def parse_inbound(self, vertex):
-        """
-        :param vertex: a vertex of the graph
-        :return: the list of target vertices
+        :return: the list of outbound vertices
         :exception: the vertex doesn't exist
         """
         if self.is_vertice(vertex) == False:
             raise VertexException("Vertex doesn't exist")
         vertices = []
-        for v in self._dictOut.keys():
-            if vertex in self._dictOut[v]:
-                vertices.append(v)
+        for v in self._dictOut[vertex]:
+            vertices.append(self._dictOut[vertex][v])
+        return vertices
+
+    def parse_inbound(self, vertex):
+        """
+        :param vertex: a vertex of the graph
+        :return: the list of inbound vertices
+        :exception: the vertex doesn't exist
+        """
+        if self.is_vertice(vertex) == False:
+            raise VertexException("Vertex doesn't exist")
+        vertices = []
+        for v in self._dictIn[vertex]:
+            vertices.append(self._dictIn[vertex][v])
         return vertices
 
     def get_cost(self, x, y):
@@ -151,6 +163,8 @@ class DoubleDictGraph:
         if (x,y) not in self._dictCosts.keys():
             raise EdgeException("Edge doesn't exist")
         self._dictCosts[(x,y)] = newValue
+
+
 
 class AlreadyExists (Exception):
     pass

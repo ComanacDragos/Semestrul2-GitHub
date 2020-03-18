@@ -8,7 +8,7 @@ class Controller:
         '''
         :return: number of vertices in graph
         '''
-        return self._graph.get_nr_vertices()
+        return self._graph.vertices
 
     def get_vertices(self):
         """

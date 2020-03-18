@@ -1,2 +1,7 @@
-﻿  tests.c
+﻿  service.c
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\service.c(13,67): warning C4133: '=': incompatible types - from 'ProductRepository *' to 'UndoRedoListOfLists *'
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\service.c(75,14): warning C4013: 'strcmp' undefined; assuming extern returning int
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\service.c(149,28): warning C4133: 'return': incompatible types - from 'UndoRedoListOfLists *' to 'ProductRepository *'
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\service.c(199,14): warning C4098: 'increaseUndoRedoListOfLists': 'void' function returning a value
+E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\service.c(224,14): warning C4098: 'shrinkUndoRedoListOfLists': 'void' function returning a value
   BranchingOut.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\BranchingOut\Debug\BranchingOut.exe

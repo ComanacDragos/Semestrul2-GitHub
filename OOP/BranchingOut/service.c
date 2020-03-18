@@ -97,7 +97,8 @@ int undoService(ProductService* productService)
 
 	productService->undoRedoListOfLists->currentRepositoryIndex -= 1;
 
-	copyRepository(productService->productRepository, getCurrentProductRepositoryFromListOfLists(productService->undoRedoListOfLists));
+	//copyRepository(productService->productRepository, getCurrentProductRepositoryFromListOfLists(productService->undoRedoListOfLists));
+	copyRepository(productService->productRepository, productService->undoRedoListOfLists);
 
 	return 0;
 }
@@ -108,21 +109,156 @@ int redoService(ProductService* productService)
 		return 1;
 	productService->undoRedoListOfLists->currentRepositoryIndex += 1;
 	
-	copyRepository(productService->productRepository, getCurrentProductRepositoryFromListOfLists(productService->undoRedoListOfLists));
+	//copyRepository(productService->productRepository, getCurrentProductRepositoryFromListOfLists(productService->undoRedoListOfLists));
+	copyRepository(productService->productRepository, productService->undoRedoListOfLists);
 
 	return 0;
 }
 
-void copyRepository(ProductRepository* destinationRepository, ProductRepository* sourceRepository)
+void copyRepository(ProductRepository* destinationRepository, UndoRedoListOfLists* undoRedoListOfLists)
 {
-	Product* copyOfProducts = (Product*)malloc(sizeof(Product) * sourceRepository->capacity);
+	Product* copyOfProducts = (Product*)malloc(sizeof(Product) * getCurrentProductRepositoryCapacityFromListOfLists(undoRedoListOfLists));
+	Product* sourceProducts = getCurrentProductRepositoryFromListOfLists(undoRedoListOfLists);
 
-	for (int i = 0; i < sourceRepository->length; i++)
-		copyOfProducts[i] = sourceRepository->products[i];
+	for (int i = 0; i < getCurrentProductRepositoryLenghtFromListOfLists(undoRedoListOfLists); i++)
+		copyOfProducts[i] = sourceProducts[i];
 
 	free(destinationRepository->products);
 
 	destinationRepository->products = copyOfProducts;
-	destinationRepository->length = sourceRepository->length;
-	destinationRepository->capacity = sourceRepository->capacity;
+	destinationRepository->length = getCurrentProductRepositoryLenghtFromListOfLists(undoRedoListOfLists);
+	destinationRepository->capacity = getCurrentProductRepositoryCapacityFromListOfLists(undoRedoListOfLists);
 }
+
+
+ProductRepository* createUndoRedoListOfLists()
+{
+	UndoRedoListOfLists* undoRedoListOfLists = (UndoRedoListOfLists*)malloc(sizeof(UndoRedoListOfLists));
+
+	if (undoRedoListOfLists == NULL)
+		return NULL;
+
+	undoRedoListOfLists->capacity = 2;
+	undoRedoListOfLists->lenght = 0;
+	undoRedoListOfLists->currentRepositoryIndex = -1;
+	undoRedoListOfLists->productLists = (Product**)malloc(undoRedoListOfLists->capacity * sizeof(Product*));
+
+	undoRedoListOfLists->capacities = (int*)malloc(undoRedoListOfLists->capacity * sizeof(int));
+	undoRedoListOfLists->lenghts = (int*)malloc(undoRedoListOfLists->capacity * sizeof(int));
+
+	return undoRedoListOfLists;
+}
+
+
+void storeInUndoRedoListOfListsRepository(UndoRedoListOfLists* undoRedoListOfLists, ProductRepository* productRepository)
+{
+
+	if (undoRedoListOfLists->currentRepositoryIndex != undoRedoListOfLists->lenght - 1)
+		deleteFromUndoRedoListOfListsRepositories(undoRedoListOfLists, undoRedoListOfLists->currentRepositoryIndex + 1);
+
+	if (undoRedoListOfLists->lenght == undoRedoListOfLists->capacity)
+		increaseUndoRedoListOfLists(undoRedoListOfLists);
+
+	Product* copyProductList = (Product*)malloc(sizeof(Product) * productRepository->length);
+
+		for (int i = 0; i < productRepository->length; i++)
+			copyProductList[i] = *getProduct(productRepository, i);
+
+	undoRedoListOfLists->productLists[undoRedoListOfLists->lenght] = copyProductList;
+	undoRedoListOfLists->lenghts[undoRedoListOfLists->lenght] = productRepository->length;
+	undoRedoListOfLists->capacities[undoRedoListOfLists->lenght] = productRepository->capacity;
+
+	undoRedoListOfLists->lenght += 1;
+	undoRedoListOfLists->currentRepositoryIndex += 1;
+
+}
+
+void deleteFromUndoRedoListOfListsRepositories(UndoRedoListOfLists* undoRedoListOfLists, int startIndex)
+{
+	for (int i = startIndex; i < undoRedoListOfLists->lenght; i++)
+	{
+		free(undoRedoListOfLists->productLists[i]);
+		undoRedoListOfLists->productLists[i] = NULL;
+	}
+	undoRedoListOfLists->lenght = startIndex;
+	undoRedoListOfLists->currentRepositoryIndex = startIndex - 1;
+	if (undoRedoListOfLists->lenght == undoRedoListOfLists->capacity / 2)
+		shrinkUndoRedoListOfLists(undoRedoListOfLists);
+}
+
+
+void increaseUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists)
+{
+	undoRedoListOfLists->capacity *= 2;
+
+	Product** largerProductLists = (Product**)malloc(undoRedoListOfLists->capacity * sizeof(Product*));
+	int* largerLenghts = (int*)malloc(undoRedoListOfLists->capacity * sizeof(int));
+	int* largerCapacities = (int*)malloc(undoRedoListOfLists->capacity * sizeof(int));
+
+	if (largerProductLists == NULL)
+		return NULL;
+
+	for (int i = 0; i < undoRedoListOfLists->lenght; i++) {
+		largerProductLists[i] = undoRedoListOfLists->productLists[i];
+		largerLenghts[i] = undoRedoListOfLists->lenghts[i];
+		largerCapacities[i] = undoRedoListOfLists->capacities[i];
+	}
+	free(undoRedoListOfLists->capacities);
+	free(undoRedoListOfLists->lenghts);
+	free(undoRedoListOfLists->productLists);
+	undoRedoListOfLists->productLists = largerProductLists;
+	undoRedoListOfLists->lenghts = largerLenghts;
+	undoRedoListOfLists->capacities = largerCapacities;
+}
+
+void shrinkUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists)
+{
+
+	undoRedoListOfLists->capacity /= 2;
+
+	Product** smallerRepositories = (Product**)malloc(undoRedoListOfLists->capacity * sizeof(Product*));
+	int* smallerLenghts = (int*)malloc(undoRedoListOfLists->capacity * sizeof(int));
+	int* smallerCapacities = (int*)malloc(undoRedoListOfLists->capacity * sizeof(int));
+
+	if (smallerRepositories == NULL)
+		return NULL;
+
+	for (int i = 0; i < undoRedoListOfLists->lenght; i++){
+		smallerRepositories[i] = undoRedoListOfLists->productLists[i];
+		smallerLenghts[i] = undoRedoListOfLists->lenghts[i];
+		smallerCapacities[i] = undoRedoListOfLists->capacities[i];
+	}
+	free(undoRedoListOfLists->capacities);
+	free(undoRedoListOfLists->lenghts);
+	free(undoRedoListOfLists->productLists);
+
+	undoRedoListOfLists->productLists = smallerRepositories;
+	undoRedoListOfLists->lenghts = smallerLenghts;
+	undoRedoListOfLists->capacities = smallerCapacities;
+	
+}
+
+Product* getCurrentProductRepositoryFromListOfLists(UndoRedoListOfLists* undoRedoListOfLists)
+{
+	return undoRedoListOfLists->productLists[undoRedoListOfLists->currentRepositoryIndex];
+}
+int getCurrentProductRepositoryLenghtFromListOfLists(UndoRedoListOfLists* undoRedoListOfLists)
+{
+	return undoRedoListOfLists->lenghts[undoRedoListOfLists->currentRepositoryIndex];
+
+}int getCurrentProductRepositoryCapacityFromListOfLists(UndoRedoListOfLists* undoRedoListOfLists)
+{
+	return undoRedoListOfLists->capacities[undoRedoListOfLists->currentRepositoryIndex];
+}
+
+void destroyUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists)
+{
+	for (int i = 0; i < undoRedoListOfLists->lenght; i++)
+		free(undoRedoListOfLists->productLists[i]);
+	
+	free(undoRedoListOfLists->capacities);
+	free(undoRedoListOfLists->lenghts);
+	free(undoRedoListOfLists->productLists);
+	free(undoRedoListOfLists);
+}
+

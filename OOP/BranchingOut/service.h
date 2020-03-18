@@ -3,6 +3,14 @@
 
 typedef struct
 {
+	Product** productLists;
+	int* lenghts;
+	int* capacities;
+	int lenght, capacity, currentRepositoryIndex;
+}UndoRedoListOfLists;
+
+typedef struct
+{
 	ProductRepository* productRepository;
 	UndoRedoListOfLists* undoRedoListOfLists;
 }ProductService;
@@ -45,4 +53,31 @@ int undoService(ProductService* productService);
 
 int redoService(ProductService* productService);
 
-void copyRepository(ProductRepository* destinationRepository, ProductRepository* sourceRepository);
+
+void copyRepository(ProductRepository* destinationRepository, UndoRedoListOfLists* undoRedoListOfLists);
+
+ProductRepository* createUndoRedoListOfLists();
+
+
+
+void storeInUndoRedoListOfListsRepository(UndoRedoListOfLists* undoRedoListOfLists, ProductRepository* productRepository);
+
+/*
+Deletes all repositories between a certain index and the end
+*/
+void deleteFromUndoRedoListOfListsRepositories(UndoRedoListOfLists* undoRedoListOfLists, int startIndex);
+
+void increaseUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
+
+void shrinkUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
+
+Product* getCurrentProductRepositoryFromListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
+
+int getCurrentProductRepositoryLenghtFromListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
+
+int getCurrentProductRepositoryCapacityFromListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
+
+
+void destroyUndoRedoListOfLists(UndoRedoListOfLists* undoRedoListOfLists);
+
+
