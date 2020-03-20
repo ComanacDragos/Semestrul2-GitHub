@@ -62,3 +62,34 @@ class Controller:
         :return: None
         """
         self._graph.modify_cost(x, y, newValue)
+
+    def add_vertex(self, n):
+        '''
+        :param n: vertex to be added
+        :return:
+        '''
+        self._graph.add_vertex(n)
+
+    def remove_vertex(self,n):
+        '''
+        :param n: vertex to be removed
+        :return:
+        '''
+        self._graph.remove_vertex(n)
+
+    def add_edge(self,x , y, cost):
+        '''
+        :param x: left end-point of the edge
+        :param y: right end-point of the edge
+        :param cost: the cost of the edge
+        :return:
+        '''
+        self._graph.add_edge(x, y, cost)
+
+    def remove_edge(self, x, y):
+        '''
+        :param x: left end-point of the edge
+        :param y: right end-point of the edge
+        :return:
+        '''
+        self._graph.remove_edge(x, y)

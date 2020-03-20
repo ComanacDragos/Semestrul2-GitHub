@@ -1,3 +1,6 @@
+from copy import deepcopy
+import random
+
 class DoubleDictGraph:
     def __init__(self):
         self._dictIn = {}
@@ -63,9 +66,36 @@ class DoubleDictGraph:
         if vertex not in self._dictIn:
             raise VertexException("Vertex not in graph")
 
-        for edges in self._dictCosts.keys():
-            if vertex in edges:
-                pass
+        toBeRemoved = []
+        for edge in self._dictCosts.keys():
+            if vertex in edge:
+                toBeRemoved.append(edge)
+                self.edges -= 1
+        for edge in toBeRemoved:
+            self._dictCosts.pop(edge)
+
+
+        for i in self._dictOut[vertex].values():
+            toBeRemoved = []
+            for j in self._dictIn[i]:
+                if self._dictIn[i][j] == vertex:
+                    toBeRemoved.append(j)
+
+            for j in toBeRemoved:
+                self._dictIn[i].pop(j)
+
+        for i in self._dictIn[vertex].values():
+            toBeRemoved = []
+            for j in self._dictOut[i]:
+                if self._dictOut[i][j] == vertex:
+                    toBeRemoved.append(j)
+
+            for j in toBeRemoved:
+                self._dictOut[i].pop(j)
+
+        self._dictIn.pop(vertex)
+        self._dictOut.pop(vertex)
+        self.vertices -= 1
 
     def add_edge(self, x, y, cost):
         '''
@@ -85,6 +115,31 @@ class DoubleDictGraph:
         self._dictOut[x][len(self._dictOut[x])] = y
         self._dictCosts[(x,y)] = cost
 
+        self.edges += 1
+
+    def remove_edge(self, x, y):
+        '''
+        Removes the edge from x to y
+        :param x: left endpoint
+        :param y: right endpoint
+        :return:
+        :exception: if the edge doesn't exist
+        '''
+        if (x,y) not in self._dictCosts:
+            raise EdgeException("Edge does not exist")
+
+        self._dictCosts.pop((x,y))
+        for i in self._dictOut[x]:
+            if self._dictOut[x][i] == y:
+                self._dictOut[x].pop(i)
+                break
+
+        for i in self._dictIn[y]:
+            if self._dictIn[y][i] == x:
+                self._dictIn[y].pop(i)
+                break
+
+        self.edges -= 1
 
     def get_vertices(self):
         """
@@ -164,7 +219,80 @@ class DoubleDictGraph:
             raise EdgeException("Edge doesn't exist")
         self._dictCosts[(x,y)] = newValue
 
+    def copy(self):
+        return deepcopy(self)
 
+    def get_costs(self):
+        return self._dictCosts
+
+def loadGraph(graph, filename):
+    '''
+    Loads a graph from a text file in the memory
+    :param graph: a graph
+    :param filename: the filename
+    :return:
+    '''
+    f = open(filename, "r")
+    lines = f.readlines()
+    graph.__init__()
+    firstLine = lines[0].strip().split()
+    vertices = int(firstLine[0])
+
+    lines.pop(0)
+    for i in range(vertices):
+        graph.add_vertex(i)
+
+    for line in lines:
+        line = line.strip().split()
+        graph.add_edge(int(line[0]), int(line[1]), int(line[2]))
+
+def storeGraph(graph, filename):
+    '''
+    Stores a graph from memory to a text file
+    :param graph: a graph
+    :param filename: the filename
+    :return:
+    '''
+    f = open(filename, "w")
+    s = ""
+    s += str(graph.vertices) + " " + str(graph.edges) + "\n"
+    for i in graph.get_vertices():
+        for j in graph.parse_outbound(i):
+            cost = graph.get_cost(i,j)
+            s += str(i) + " " + str(j) + " " + str(cost) + "\n"
+    f.write(s)
+
+def generateRandomGraph(vertices, edges):
+    randomGraph = DoubleDictGraph()
+    for i in range(vertices):
+        randomGraph.add_vertex(i)
+    while edges != 0:
+        left = random.choice(range(vertices))
+        right = random.choice(range(vertices))
+        if randomGraph.is_edge(left,right) == False:
+            cost = random.choice(range(100))
+            randomGraph.add_edge(left,right,cost)
+            edges -= 1
+    return randomGraph
+'''
+g = generateRandomGraph(3,4)
+
+
+#g = DoubleDictGraph()
+#loadGraph(g, "small_graph.txt")
+print(g.vertices)
+for i in range(g.vertices):
+    print()
+    print(g.parse_inbound(i))
+    print(g.parse_outbound(i))
+    print()
+
+print(g.get_vertices())
+print(g.get_costs())
+
+storeGraph(g, "second_small_graph.txt")
+
+'''
 
 class AlreadyExists (Exception):
     pass
@@ -174,4 +302,3 @@ class VertexException(Exception):
 
 class EdgeException(Exception):
     pass
-

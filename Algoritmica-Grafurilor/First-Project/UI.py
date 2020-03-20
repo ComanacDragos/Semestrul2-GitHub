@@ -15,6 +15,10 @@ class UI:
 6.Outbound vertices
 7.Get cost of an edge
 8.Update cost of an edge
+9.Add vertex
+10.Remove vertex
+11.Add edge
+12.Remove edge
 x. Exit """
         print(menu)
 

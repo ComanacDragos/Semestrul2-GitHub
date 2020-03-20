@@ -5,7 +5,7 @@ class TestGraph(unittest.TestCase):
     def test_addVertex(self):
         g = DoubleDictGraph()
         g.add_vertex(0)
-
+        assert g.vertices == 1
         self.assertEqual(g.is_vertice(0), True);
         self.assertEqual(g.is_vertice(1), False);
         with self.assertRaises(VertexException):
@@ -18,6 +18,13 @@ class TestGraph(unittest.TestCase):
         g.add_edge(0,1,5)
 
         assert g.is_edge(0,1) == True
+        assert g.edges == 1
+
+        assert g.parse_inbound(0) == []
+        assert g.parse_outbound(0) == [1]
+
+        assert g.parse_inbound(1) == [0]
+        assert g.parse_outbound(1) == []
 
         with self.assertRaises(AlreadyExists):
             g.add_edge(0,1,5)
@@ -130,6 +137,89 @@ class TestGraph(unittest.TestCase):
         assert g.get_cost(0,1) == 5
         assert g.get_cost(0, 2) == 1
         assert g.get_cost(2, 1) == 0
+
+    def test_remove_vertex(self):
+        g = DoubleDictGraph()
+        g.add_vertex(0)
+        g.add_vertex(1)
+        g.add_vertex(2)
+        g.add_edge(0, 1, 1)
+        g.add_edge(0, 2, 1)
+        g.add_edge(2, 1, 0)
+        g.add_edge(1,0,3)
+
+        g.remove_vertex(0)
+        assert g.vertices == 2
+
+        assert g.is_edge(0,1) == False
+        assert g.is_edge(0,2) == False
+        assert g.is_edge(1,0) == False
+        assert g.is_edge(2,1) == True
+
+        assert g.get_vertices() == [1,2]
+
+        assert g.parse_outbound(1) == []
+        assert g.parse_outbound(2) == [1]
+        assert g.parse_inbound(1) == [2]
+        assert g.parse_inbound(2) == []
+
+        with self.assertRaises(VertexException):
+            g.remove_vertex(0)
+
+    def test_remove_edge(self):
+        g = DoubleDictGraph()
+        g.add_vertex(0)
+        g.add_vertex(1)
+        g.add_vertex(2)
+        g.add_edge(0, 1, 1)
+        g.add_edge(0, 2, 1)
+        g.add_edge(2, 1, 0)
+        g.add_edge(1, 0, 3)
+
+        g.remove_edge(0,2)
+
+        assert g.is_edge(0,2) == False
+        assert g.edges == 3
+
+        assert g.parse_outbound(0) == [1]
+        assert g.parse_outbound(1) == [0]
+        assert g.parse_outbound(2) == [1]
+
+        assert g.parse_inbound(0) == [1]
+        assert g.parse_inbound(1) == [0,2]
+        assert g.parse_inbound(2) == []
+
+        with self.assertRaises(EdgeException):
+            g.remove_edge(0,2)
+
+    def test_copy(self):
+        g = DoubleDictGraph()
+        g.add_vertex(0)
+        g.add_vertex(1)
+        g.add_vertex(2)
+        g.add_edge(0, 1, 1)
+        g.add_edge(0, 2, 1)
+        g.add_edge(2, 1, 0)
+        g.add_edge(1, 0, 3)
+
+        g2 = g.copy()
+        g2.remove_vertex(0)
+
+        assert g.vertices == 3
+        assert g.edges == 4
+        assert g.parse_outbound(0) == [1,2]
+        assert g.parse_outbound(1) == [0]
+        assert g.parse_outbound(2) == [1]
+
+        assert g.parse_inbound(0) == [1]
+        assert g.parse_inbound(1) == [0,2]
+        assert g.parse_inbound(2) == [0]
+
+        assert g.is_edge(0,1) == True
+        assert g.is_edge(0,2) == True
+        assert g.is_edge(2,1) == True
+        assert g.is_edge(1,0) == True
+
 
 
 if __name__ == '__main__':
