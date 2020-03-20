@@ -19,6 +19,10 @@ class UI:
 10.Remove vertex
 11.Add edge
 12.Remove edge
+13.Load graph
+14.Store graph
+15.Replace current graph with a random one
+16.List all edges
 x. Exit """
         print(menu)
 
@@ -91,6 +95,64 @@ x. Exit """
         except EdgeException as err:
             print(err)
 
+    def UI_add_vertex(self):
+        vertex = int(input("Give vertex to be added: "))
+        try:
+            self._controller.add_vertex(vertex)
+            print("The vertex was added successfuly")
+        except VertexException as err:
+            print(err)
+
+    def UI_remove_vertex(self):
+        vertex = int(input("Give vertex to be removed: "))
+        try:
+            self._controller.remove_vertex(vertex)
+            print("The vertex was removed successfuly")
+        except VertexException as err:
+            print(err)
+
+    def UI_add_edge(self):
+        left = int(input("Give left end-point: "))
+        right = int(input("Give right end-point: "))
+        cost = int(input("Give cost: "))
+        try:
+            self._controller.add_edge(left, right, cost)
+            print("The edge was added successfuly")
+        except EdgeException as err:
+            print(err)
+
+    def UI_remove_edge(self):
+        left = int(input("Give left end-point: "))
+        right = int(input("Give right end-point: "))
+        try:
+            self._controller.remove_edge(left, right)
+            print("The edge was removed successfuly")
+        except EdgeException as err:
+            print(err)
+
+    def UI_load_graph(self):
+        filename = input("Give filename: ")
+        try:
+            self._controller.load_graph(filename)
+            print("The graph was loaded successfuly")
+        except Exception:
+            print("The requested graph does not exist")
+
+    def UI_store_graph(self):
+        filename = input("Give filename: ")
+        self._controller.store_graph(filename)
+        print("The graph was stored successfuly")
+
+    def UI_random_graph(self):
+        vertices = int(input("Give number of vertices: "))
+        edges = int(input("Give number of edges: "))
+        self._controller.random_graph(vertices, edges)
+        print("The graph was successfuly replaced with a random one")
+
+    def UI_print_edges(self):
+        print("The edges are: \n")
+        print(self._controller.print_edges())
+
     def start(self):
         commands ={
             "1" : self.UI_get_nr_vertices,
@@ -101,6 +163,14 @@ x. Exit """
             "6" : self.UI_out_bound_parse,
             "7" : self.UI_get_cost,
             "8" : self.UI_modify_cost,
+            "9" : self.UI_add_vertex,
+            "10": self.UI_remove_vertex,
+            "11": self.UI_add_edge,
+            "12": self.UI_remove_edge,
+            "13": self.UI_load_graph,
+            "14": self.UI_store_graph,
+            "15": self.UI_random_graph,
+            "16": self.UI_print_edges,
         }
         while True:
             self.menu()

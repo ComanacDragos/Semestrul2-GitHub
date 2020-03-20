@@ -93,3 +93,18 @@ class Controller:
         :return:
         '''
         self._graph.remove_edge(x, y)
+
+    def load_graph(self, filename):
+        loadGraph(self._graph, filename)
+
+    def store_graph(self, filename):
+        storeGraph(self._graph, filename)
+
+    def random_graph(self, vertices, edges):
+        self._graph = generateRandomGraph(vertices, edges)
+
+    def print_edges(self):
+        edges = ""
+        for edge in self._graph.get_costs():
+            edges += str(edge) + "\n"
+        return edges
