@@ -1,5 +1,5 @@
 from controller import *
-
+from datetime import datetime
 class UI:
     def __init__(self, controller):
         self._controller = controller
@@ -133,8 +133,11 @@ x. Exit """
     def UI_load_graph(self):
         filename = input("Give filename: ")
         try:
+            t1 = datetime.now()
             self._controller.load_graph(filename)
-            print("The graph was loaded successfuly")
+            t2 = datetime.now()
+            t = t2-t1
+            print("The graph was loaded successfuly in: " + str(t))
         except Exception:
             print("The requested graph does not exist")
 

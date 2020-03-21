@@ -27,7 +27,7 @@ class DoubleDictGraph:
 
     def is_edge(self, x, y):
         '''
-        Checks wheter or not there is an endge between x and y
+        Checks whether or not there is an endge between x and y
         :param x: left end-point
         :param y: right end-point
         :return: true if such an edge exists, false otherwise
@@ -274,25 +274,6 @@ def generateRandomGraph(vertices, edges):
             randomGraph.add_edge(left,right,cost)
             edges -= 1
     return randomGraph
-'''
-g = generateRandomGraph(3,4)
-
-
-#g = DoubleDictGraph()
-#loadGraph(g, "small_graph.txt")
-print(g.vertices)
-for i in range(g.vertices):
-    print()
-    print(g.parse_inbound(i))
-    print(g.parse_outbound(i))
-    print()
-
-print(g.get_vertices())
-print(g.get_costs())
-
-storeGraph(g, "second_small_graph.txt")
-
-'''
 
 class AlreadyExists (Exception):
     pass
