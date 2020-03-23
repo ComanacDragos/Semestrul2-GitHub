@@ -85,6 +85,7 @@ TElem Matrix::modify(int i, int j, TElem e) {
 	return NULL_TELEM;
 }
 
+//theta(n)
 Matrix::~Matrix()
 {
 	Node* p = head;
