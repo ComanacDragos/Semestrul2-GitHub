@@ -32,7 +32,8 @@ CommandUserInterface& CommandUserInterface::operator=(const CommandUserInterface
 
 void CommandUserInterface::startProgram()
 {
-	while (1)
+	int isRunning = 1;
+	while (isRunning)
 	{
 		char userInput[CommandLenght];
 		std::cout << "> ";
@@ -61,31 +62,24 @@ void CommandUserInterface::startProgram()
 		char command[WordInCommandLenght];
 		strcpy(command, commandParameters[0]);
 
-		if (numberOfParameters != 2)
-			continue;
-
-		if(strcmp(command, "mode") == 0)
+		if (numberOfParameters == 2)
 		{
-			if (strcmp(commandParameters[1], "A") == 0)
+			if(strcmp(command, "mode") == 0 && strcmp(commandParameters[1], "A") == 0)
 			{
 				this->administratorUserInterface.startAdministratorMode();
-
-
-				for (i = 0; i < numberOfParameters; i++)
-					delete[] commandParameters[i];
-				delete[] commandParameters;
-
-				return;
+				isRunning = 0;
 			}
-			if (strcmp(commandParameters[1], "B") == 0)
-			{
-				for (i = 0; i < numberOfParameters; i++)
-					delete[] commandParameters[i];
-				delete[] commandParameters;
 
-				return;
+			if (strcmp(command, "mode") == 0 && strcmp(commandParameters[1], "B") == 0)
+			{
+				this->clientUserInterface.startClientUserInterface();
+				isRunning = 0;
 			}
 		}
+
+		for (i = 0; i < numberOfParameters; i++)
+			delete[] commandParameters[i];
+		delete[] commandParameters;
 	}
 }
 

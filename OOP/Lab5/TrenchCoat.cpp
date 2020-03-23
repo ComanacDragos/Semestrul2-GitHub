@@ -70,5 +70,5 @@ std::string TrenchCoat::to_string()
 
 void TrenchCoat::openInBrowser()
 {
-	ShellExecuteA(NULL, NULL, "chrome.exe", this->getPhotographSource().c_str(), NULL, SW_SHOWMAXIMIZED);
+	//ShellExecuteA(NULL, NULL, "chrome.exe", this->getPhotographSource().c_str(), NULL, SW_SHOWMAXIMIZED);
 }
