@@ -224,24 +224,3 @@ class TestGraph(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-'''
-class TestMenu:
-    def __init__(self):
-        self._test = TestGraph()
-
-    def print_menu(self):
-    
-    def start(self):
-        commands = {
-            "1" : self._test.test_addVertex
-        }
-        while True:
-            self.print_menu()
-            choice = input(">")
-            if choice in commands:
-                commands[choice]()
-            elif choice == "x":
-                return
-            else:
-                print("Invalid command")'''

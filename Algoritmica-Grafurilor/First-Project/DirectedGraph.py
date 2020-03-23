@@ -97,6 +97,14 @@ class DoubleDictGraph:
         self._dictOut.pop(vertex)
         self.vertices -= 1
 
+        for i in range(vertex+1, self._vertices):
+            self._dictIn[i-1] = self._dictIn[i]
+            self._dictIn.pop[i]
+            self._dictOut[i-1] = self._dictOut[i]
+            self._dictOut.pop(i)
+            #
+
+
     def add_edge(self, x, y, cost):
         '''
         Adds the edge x -> y with a cost
@@ -283,3 +291,17 @@ class VertexException(Exception):
 
 class EdgeException(Exception):
     pass
+
+'''
+d = {1:{0:1,1:2,2:3},
+     2:{0:0,1:5,2:6}
+     }
+vertex=1
+d.pop(vertex)
+d[vertex] = d[vertex+1]
+d.pop(vertex+1)
+for i in d[vertex]:
+    if(d[vertex][i] > vertex):
+        d[vertex][i] -= 1
+print(d)
+'''
