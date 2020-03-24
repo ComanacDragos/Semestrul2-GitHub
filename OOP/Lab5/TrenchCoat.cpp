@@ -28,6 +28,7 @@ TrenchCoat& TrenchCoat::operator=(const TrenchCoat& trenchCoat)
 {
 	if (this == &trenchCoat)
 		return *this;
+
 	this->name = trenchCoat.name;
 	this->photographSource = trenchCoat.photographSource;
 	this->price = trenchCoat.price;

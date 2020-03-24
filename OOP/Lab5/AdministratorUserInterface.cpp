@@ -97,6 +97,7 @@ void AdministratorUserInterface::deleteCoat(char** parameters, int numberOfParam
 	if (numberOfParameters != 2)
 	{
 		std::cout << "bad command\n";
+		return;
 	}
 	std::string name = parameters[1];
 	

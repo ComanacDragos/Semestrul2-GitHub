@@ -1,11 +1,10 @@
 #include <crtdbg.h>
-#include "tests.h"
 
+#include "tests.h"
 #include "CommandUserInterface.h"
 
 int main()
 {
-
 	{
 		testAll();
 		CoatRepository coatRepository;

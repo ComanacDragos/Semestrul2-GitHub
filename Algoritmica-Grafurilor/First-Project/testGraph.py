@@ -4,17 +4,16 @@ from DirectedGraph import *
 class TestGraph(unittest.TestCase):
     def test_addVertex(self):
         g = DoubleDictGraph()
-        g.add_vertex(0)
+        g.add_vertex()
         assert g.vertices == 1
         self.assertEqual(g.is_vertice(0), True);
         self.assertEqual(g.is_vertice(1), False);
-        with self.assertRaises(VertexException):
-            g.add_vertex(0)
+
 
     def test_add_edge(self):
         g = DoubleDictGraph()
-        g.add_vertex(0)
-        g.add_vertex(1)
+        g.add_vertex()
+        g.add_vertex()
         g.add_edge(0,1,5)
 
         assert g.is_edge(0,1) == True
@@ -35,9 +34,9 @@ class TestGraph(unittest.TestCase):
 
     def test_get_vertices(self):
         g = DoubleDictGraph()
-        g.add_vertex(0)
-        g.add_vertex(1)
-        g.add_vertex(2)
+        g.add_vertex()
+        g.add_vertex()
+        g.add_vertex()
         cont = 0
         for i in g.get_vertices():
             assert  i == cont
@@ -45,8 +44,8 @@ class TestGraph(unittest.TestCase):
 
     def test_get_in_out_degree(self):
         g = DoubleDictGraph()
-        g.add_vertex(0)
-        g.add_vertex(1)
+        g.add_vertex()
+        g.add_vertex()
         g.add_edge(0,1,4)
 
         assert g.get_in_degree(0) == 0
@@ -62,9 +61,9 @@ class TestGraph(unittest.TestCase):
 
     def test_parse_outbound(self):
         g = DoubleDictGraph()
-        g.add_vertex(0)
-        g.add_vertex(1)
-        g.add_vertex(2)
+        g.add_vertex()
+        g.add_vertex()
+        g.add_vertex()
         g.add_edge(0,1,1)
         g.add_edge(0,2,1)
         g.add_edge(2,1,0)
@@ -86,9 +85,9 @@ class TestGraph(unittest.TestCase):
 
     def test_parse_inbound(self):
         g = DoubleDictGraph()
-        g.add_vertex(0)
-        g.add_vertex(1)
-        g.add_vertex(2)
+        g.add_vertex()
+        g.add_vertex()
+        g.add_vertex()
         g.add_edge(0, 1, 1)
         g.add_edge(0, 2, 1)
         g.add_edge(2, 1, 0)
@@ -110,9 +109,9 @@ class TestGraph(unittest.TestCase):
 
     def test_get_cost(self):
         g = DoubleDictGraph()
-        g.add_vertex(0)
-        g.add_vertex(1)
-        g.add_vertex(2)
+        g.add_vertex()
+        g.add_vertex()
+        g.add_vertex()
         g.add_edge(0, 1, 1)
         g.add_edge(0, 2, 1)
         g.add_edge(2, 1, 0)
@@ -126,9 +125,9 @@ class TestGraph(unittest.TestCase):
 
     def test_modify_cost(self):
         g = DoubleDictGraph()
-        g.add_vertex(0)
-        g.add_vertex(1)
-        g.add_vertex(2)
+        g.add_vertex()
+        g.add_vertex()
+        g.add_vertex()
         g.add_edge(0, 1, 1)
         g.add_edge(0, 2, 1)
         g.add_edge(2, 1, 0)
@@ -140,9 +139,9 @@ class TestGraph(unittest.TestCase):
 
     def test_remove_vertex(self):
         g = DoubleDictGraph()
-        g.add_vertex(0)
-        g.add_vertex(1)
-        g.add_vertex(2)
+        g.add_vertex()
+        g.add_vertex()
+        g.add_vertex()
         g.add_edge(0, 1, 1)
         g.add_edge(0, 2, 1)
         g.add_edge(2, 1, 0)
@@ -151,26 +150,22 @@ class TestGraph(unittest.TestCase):
         g.remove_vertex(0)
         assert g.vertices == 2
 
-        assert g.is_edge(0,1) == False
-        assert g.is_edge(0,2) == False
-        assert g.is_edge(1,0) == False
-        assert g.is_edge(2,1) == True
+        assert g.is_edge(1,0) == True
 
-        assert g.get_vertices() == [1,2]
+        assert g.get_vertices() == [0,1]
 
-        assert g.parse_outbound(1) == []
-        assert g.parse_outbound(2) == [1]
-        assert g.parse_inbound(1) == [2]
-        assert g.parse_inbound(2) == []
+        assert g.parse_outbound(0) == []
+        assert g.parse_outbound(1) == [0]
+        assert g.parse_inbound(0) == [1]
+        assert g.parse_inbound(1) == []
 
-        with self.assertRaises(VertexException):
-            g.remove_vertex(0)
+
 
     def test_remove_edge(self):
         g = DoubleDictGraph()
-        g.add_vertex(0)
-        g.add_vertex(1)
-        g.add_vertex(2)
+        g.add_vertex()
+        g.add_vertex()
+        g.add_vertex()
         g.add_edge(0, 1, 1)
         g.add_edge(0, 2, 1)
         g.add_edge(2, 1, 0)
@@ -179,6 +174,10 @@ class TestGraph(unittest.TestCase):
         g.remove_edge(0,2)
 
         assert g.is_edge(0,2) == False
+        assert g.is_edge(0, 1) == True
+        assert g.is_edge(2, 1) == True
+        assert g.is_edge(1, 0) == True
+
         assert g.edges == 3
 
         assert g.parse_outbound(0) == [1]
@@ -194,9 +193,9 @@ class TestGraph(unittest.TestCase):
 
     def test_copy(self):
         g = DoubleDictGraph()
-        g.add_vertex(0)
-        g.add_vertex(1)
-        g.add_vertex(2)
+        g.add_vertex()
+        g.add_vertex()
+        g.add_vertex()
         g.add_edge(0, 1, 1)
         g.add_edge(0, 2, 1)
         g.add_edge(2, 1, 0)

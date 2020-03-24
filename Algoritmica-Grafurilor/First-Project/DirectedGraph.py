@@ -43,22 +43,19 @@ class DoubleDictGraph:
         """
         return n in self._dictIn
 
-    def add_vertex(self, n):
+    def add_vertex(self):
         '''
-        Adds the vertex n if it does not exists
-        :param n: integer number
+        Adds a new vertex in the graph
         :return:
-        :exception: if the vertice already exists
         '''
-        if self.is_vertice(n) == True:
-            raise VertexException("Vertex already in graph")
+        n = self._vertices
         self._dictIn[n] = {}
         self._dictOut[n] = {}
         self._vertices += 1
 
     def remove_vertex(self, vertex):
         '''
-        Removes a given vertex from the graph
+        Removes a given vertex from the graph and renumbers the remaining ones
         :param vertex:
         :return:
         :exception: if the vertex does not exist raises an exception
@@ -97,13 +94,37 @@ class DoubleDictGraph:
         self._dictOut.pop(vertex)
         self.vertices -= 1
 
-        for i in range(vertex+1, self._vertices):
+        #Renumbering the remaining vertices
+
+        for i in range(vertex+1, self._vertices+1):
             self._dictIn[i-1] = self._dictIn[i]
-            self._dictIn.pop[i]
+            self._dictIn.pop(i)
             self._dictOut[i-1] = self._dictOut[i]
             self._dictOut.pop(i)
-            #
 
+            for j in self._dictIn[i-1]:
+                if self._dictIn[i-1][j] > vertex:
+                    self._dictIn[i-1][j] -= 1
+
+            for j in self._dictOut[i-1]:
+                if self._dictOut[i-1][j] > vertex:
+                    self._dictOut[i-1][j] -= 1
+
+        newDict = {}
+        for edge in self._dictCosts:
+            x = edge[0]
+            y = edge[1]
+            if x > vertex:
+                x -= 1
+            if y > vertex:
+                y -= 1
+            newEdge = (x,y)
+            if(edge != newEdge):
+                newDict[newEdge] = self._dictCosts[edge]
+            else:
+                newDict[edge] = self._dictCosts[edge]
+
+        self._dictCosts = newDict
 
     def add_edge(self, x, y, cost):
         '''
@@ -156,6 +177,8 @@ class DoubleDictGraph:
         vertices = []
         for i in self._dictIn:
             vertices.append(i)
+
+        vertices.sort()
         return vertices
 
     def get_in_degree(self, vertex):
@@ -189,6 +212,8 @@ class DoubleDictGraph:
         vertices = []
         for v in self._dictOut[vertex]:
             vertices.append(self._dictOut[vertex][v])
+
+        vertices.sort()
         return vertices
 
     def parse_inbound(self, vertex):
@@ -202,6 +227,8 @@ class DoubleDictGraph:
         vertices = []
         for v in self._dictIn[vertex]:
             vertices.append(self._dictIn[vertex][v])
+
+        vertices.sort()
         return vertices
 
     def get_cost(self, x, y):
@@ -248,7 +275,7 @@ def loadGraph(graph, filename):
 
     lines.pop(0)
     for i in range(vertices):
-        graph.add_vertex(i)
+        graph.add_vertex()
 
     for line in lines:
         line = line.strip().split()
@@ -273,7 +300,7 @@ def storeGraph(graph, filename):
 def generateRandomGraph(vertices, edges):
     randomGraph = DoubleDictGraph()
     for i in range(vertices):
-        randomGraph.add_vertex(i)
+        randomGraph.add_vertex()
     while edges != 0:
         left = random.choice(range(vertices))
         right = random.choice(range(vertices))
@@ -292,16 +319,3 @@ class VertexException(Exception):
 class EdgeException(Exception):
     pass
 
-'''
-d = {1:{0:1,1:2,2:3},
-     2:{0:0,1:5,2:6}
-     }
-vertex=1
-d.pop(vertex)
-d[vertex] = d[vertex+1]
-d.pop(vertex+1)
-for i in d[vertex]:
-    if(d[vertex][i] > vertex):
-        d[vertex][i] -= 1
-print(d)
-'''

@@ -3,18 +3,21 @@
 void TrenchCoatgetName_TrenchCoat_CorrectName()
 {
 	TrenchCoat coat = { "name", "size", "photographSource", 4 };
+
 	assert(coat.getName().compare("name") == 0);
 }
 
 void TrenchCoatgetSize_TrenchCoat_CorrectSize()
 {
 	TrenchCoat coat = { "name", "size", "photographSource", 4 };
+
 	assert(coat.getSize().compare("size") == 0);
 }
 
 void TrenchCoatgetPhotographSource_TrenchCoat_CorrectPhotographSource()
 {
 	TrenchCoat coat = { "name", "size", "photographSource", 4 };
+
 	assert(coat.getPhotographSource().compare("photographSource") == 0);
 }
 
@@ -30,9 +33,9 @@ void DynamicVectoraddElement_ValidElement_ElementAdded()
 	TrenchCoat coat = { "name", "size", "photographSource", 4 };
 	DynamicVector dynVector;
 	dynVector.addElement(coat);
+
 	assert(dynVector.getLength() == 1);
 }
-
 
 void DynamicVectorremoveElement_ValidPosition_ElementRemoved()
 {
@@ -40,6 +43,7 @@ void DynamicVectorremoveElement_ValidPosition_ElementRemoved()
 	DynamicVector dynVector;
 	dynVector.addElement(coat);
 	dynVector.removeFromPosition(0);
+
 	assert(dynVector.getLength() == 0);
 }
 
@@ -111,6 +115,7 @@ void CoatRepositoryDeleteCoat_InvalidPostion_ElementNotDeleted()
 
 	repo.storeCoat(coat);
 	repo.deleteCoat("name");
+
 	assert(repo.deleteCoat("name") == 1);
 }
 
@@ -123,7 +128,9 @@ void CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoat()
 	repo.updateCoat(newCoat);
 
 	//test if the coat was updated
+
 	TrenchCoat updatedCoat = repo.getCoatFromRepository(0);
+
 	assert(updatedCoat.getName().compare("name") == 0);
 	assert(updatedCoat.getSize().compare("size2") == 0);
 	assert(updatedCoat.getPhotographSource().compare("photographSource2") == 0);
@@ -162,6 +169,7 @@ void CoatServiceDeleteCoat_ValidCoat_CoatDeleted()
 	CoatService service{ repo };
 
 	service.storeCoatService("name", "size", "photoSource", "3");
+
 	assert(service.deleteCoatService("name") == 0);
 }
 
@@ -172,6 +180,7 @@ void CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted()
 
 	service.storeCoatService("name", "size", "photoSource", "3");
 	service.deleteCoatService("name");
+
 	assert(service.deleteCoatService("name") == 1);
 }
 
@@ -184,6 +193,7 @@ void CoatServiceListCoats_ValidCoat_ListOfCoatsAsString()
 	service.storeCoatService("name2", "size", "photoSource", "3");
 
 	std::string listOfCoats = service.listCoats();
+
 	assert(listOfCoats.compare("name size 3 photoSource\nname2 size 3 photoSource\n") == 0);
 }
 
@@ -194,6 +204,7 @@ void CoatServiceUpdateCoat_ValidCoat_UpdatedCoat()
 
 	service.storeCoatService("name", "size", "photoSource", "3");
 	service.updateCoatService("name", "newSize", "newPhotoSource", "5");
+
 	assert(service.listCoats().compare("name newSize 5 newPhotoSource\n") == 0);
 }
 

@@ -96,9 +96,8 @@ x. Exit """
             print(err)
 
     def UI_add_vertex(self):
-        vertex = int(input("Give vertex to be added: "))
         try:
-            self._controller.add_vertex(vertex)
+            self._controller.add_vertex()
             print("The vertex was added successfuly")
         except VertexException as err:
             print(err)
@@ -119,6 +118,8 @@ x. Exit """
             self._controller.add_edge(left, right, cost)
             print("The edge was added successfuly")
         except EdgeException as err:
+            print(err)
+        except VertexException as err:
             print(err)
 
     def UI_remove_edge(self):

@@ -58,6 +58,7 @@ void CommandUserInterface::startProgram()
 			splitPointer = strtok(NULL, " ,");
 			i++;
 		}
+
 		numberOfParameters = i;
 		char command[WordInCommandLenght];
 		strcpy(command, commandParameters[0]);

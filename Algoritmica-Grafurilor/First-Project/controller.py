@@ -63,12 +63,11 @@ class Controller:
         """
         self._graph.modify_cost(x, y, newValue)
 
-    def add_vertex(self, n):
+    def add_vertex(self):
         '''
-        :param n: vertex to be added
         :return:
         '''
-        self._graph.add_vertex(n)
+        self._graph.add_vertex()
 
     def remove_vertex(self,n):
         '''
