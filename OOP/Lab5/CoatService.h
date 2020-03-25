@@ -26,7 +26,7 @@ public:
 
 	void updateCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price);
 	
-	std::string listCoats();
+	DynamicVector listCoats();
 	
 	void openInBrowser(const std::string& name);
 };

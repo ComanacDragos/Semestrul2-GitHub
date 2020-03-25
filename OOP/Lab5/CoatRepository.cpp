@@ -58,3 +58,8 @@ int CoatRepository::getRepositoryLength()
 {
 	return this->coats.getLength();
 }
+
+DynamicVector CoatRepository::getAllCoats()
+{
+	return this->coats;
+}

@@ -30,5 +30,7 @@ public:
 	TrenchCoat findCoatFromRepository(const std::string& name);
 
 	int getRepositoryLength();
+
+	DynamicVector getAllCoats();
 };
 

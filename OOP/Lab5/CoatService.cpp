@@ -43,13 +43,9 @@ void CoatService::updateCoatService(const std::string& name, const std::string& 
 	this->coatRepository.updateCoat(updatedCoat);
 }
 
-std::string CoatService::listCoats()
+DynamicVector CoatService::listCoats()
 {
-	std::string listOfCoats = "";
-	for (int i = 0; i < this->coatRepository.getRepositoryLength(); i++)
-		listOfCoats += this->coatRepository.getCoatFromRepository(i).to_string() + "\n";
-	
-	return listOfCoats;
+	return this->coatRepository.getAllCoats();
 }
 
 void CoatService::openInBrowser(const std::string& name)

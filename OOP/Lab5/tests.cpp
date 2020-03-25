@@ -119,7 +119,7 @@ void CoatRepositoryDeleteCoat_InvalidPostion_ElementNotDeleted()
 	assert(repo.deleteCoat("name") == 1);
 }
 
-void CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoat()
+void CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoatName()
 {
 	TrenchCoat coat = { "name", "size", "photographSource", 4 };
 	TrenchCoat newCoat = { "name", "size2", "photographSource2", 5 };
@@ -127,13 +127,47 @@ void CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoat()
 	repo.storeCoat(coat);
 	repo.updateCoat(newCoat);
 
-	//test if the coat was updated
-
 	TrenchCoat updatedCoat = repo.getCoatFromRepository(0);
 
 	assert(updatedCoat.getName().compare("name") == 0);
+	}
+
+void CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoatSize()
+{
+	TrenchCoat coat = { "name", "size", "photographSource", 4 };
+	TrenchCoat newCoat = { "name", "size2", "photographSource2", 5 };
+	CoatRepository repo;
+	repo.storeCoat(coat);
+	repo.updateCoat(newCoat);
+
+	TrenchCoat updatedCoat = repo.getCoatFromRepository(0);
+
 	assert(updatedCoat.getSize().compare("size2") == 0);
+	}
+
+void CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoatPhotographSource()
+{
+	TrenchCoat coat = { "name", "size", "photographSource", 4 };
+	TrenchCoat newCoat = { "name", "size2", "photographSource2", 5 };
+	CoatRepository repo;
+	repo.storeCoat(coat);
+	repo.updateCoat(newCoat);
+
+	TrenchCoat updatedCoat = repo.getCoatFromRepository(0);
+
 	assert(updatedCoat.getPhotographSource().compare("photographSource2") == 0);
+}
+
+void CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoatPrice()
+{
+	TrenchCoat coat = { "name", "size", "photographSource", 4 };
+	TrenchCoat newCoat = { "name", "size2", "photographSource2", 5 };
+	CoatRepository repo;
+	repo.storeCoat(coat);
+	repo.updateCoat(newCoat);
+
+	TrenchCoat updatedCoat = repo.getCoatFromRepository(0);
+
 	assert(updatedCoat.getPrice() == 5);
 }
 
@@ -143,7 +177,11 @@ void test_CoatRepository()
 	CoatRepositoryStoreCoat_InValidCoat_ElementNotAdded();
 	CoatRepositoryDeleteCoat_ValidPosition_ElementDeleted();
 	CoatRepositoryDeleteCoat_InvalidPostion_ElementNotDeleted();
-	CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoat();
+	CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoatName();
+	CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoatPhotographSource();
+	CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoatSize();
+	CoatRepositoryUpdateCoat_ExistentCoat_UpdatedCoatPrice();
+
 }
 
 void CoatServiceStoreCoat_ValidCoat_CoatAdded()
@@ -160,6 +198,7 @@ void CoatServiceStoreCoat_InvalidCoat_CoatNotAdded()
 	CoatService service{ repo };
 
 	service.storeCoatService("name", "size", "photoSource", "3");
+
 	assert(service.storeCoatService("name", "size", "photoSource", "3") == 1);
 }
 
@@ -184,19 +223,6 @@ void CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted()
 	assert(service.deleteCoatService("name") == 1);
 }
 
-void CoatServiceListCoats_ValidCoat_ListOfCoatsAsString()
-{
-	CoatRepository repo;
-	CoatService service{ repo };
-
-	service.storeCoatService("name", "size", "photoSource", "3");
-	service.storeCoatService("name2", "size", "photoSource", "3");
-
-	std::string listOfCoats = service.listCoats();
-
-	assert(listOfCoats.compare("name size 3 photoSource\nname2 size 3 photoSource\n") == 0);
-}
-
 void CoatServiceUpdateCoat_ValidCoat_UpdatedCoat()
 {
 	CoatRepository repo;
@@ -205,7 +231,11 @@ void CoatServiceUpdateCoat_ValidCoat_UpdatedCoat()
 	service.storeCoatService("name", "size", "photoSource", "3");
 	service.updateCoatService("name", "newSize", "newPhotoSource", "5");
 
-	assert(service.listCoats().compare("name newSize 5 newPhotoSource\n") == 0);
+	DynamicVector listOfCoats = service.listCoats();
+
+	TrenchCoat coat = listOfCoats.getElement(0);
+
+	assert(coat.to_string().compare("name newSize 5 newPhotoSource") == 0);
 }
 
 void test_CoatService()
@@ -214,7 +244,6 @@ void test_CoatService()
 	CoatServiceStoreCoat_InvalidCoat_CoatNotAdded();
 	CoatServiceDeleteCoat_ValidCoat_CoatDeleted();
 	CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted();
-	CoatServiceListCoats_ValidCoat_ListOfCoatsAsString();
 	CoatServiceUpdateCoat_ValidCoat_UpdatedCoat();
 }
 

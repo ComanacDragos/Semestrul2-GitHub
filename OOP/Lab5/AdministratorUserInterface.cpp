@@ -127,6 +127,10 @@ void AdministratorUserInterface::listCoats(char** parameters, int numberOfParame
 {
 	if (numberOfParameters != 1)
 		std::cout << "Bad command\n";
-	std::cout << this->coatService.listCoats();
+	
+	DynamicVector coatList = this->coatService.listCoats();
+
+	for (int i = 0; i < coatList.getLength(); i++)
+		std::cout << coatList.getElement(i).to_string() << '\n';
 }	
 

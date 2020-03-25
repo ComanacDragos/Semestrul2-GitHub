@@ -28,8 +28,11 @@ public:
 	void startAdministratorMode();
 
 	void storeCoat(char** parameters, int numberOfParameters);
+
 	void deleteCoat(char** parameters, int numberOfParameters);
+	
 	void updateCoat(char** parameters, int numberOfParameters);
+	
 	void listCoats(char** parameters, int numberOfParameters);
 };
 

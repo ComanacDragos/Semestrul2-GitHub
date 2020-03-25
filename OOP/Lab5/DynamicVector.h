@@ -2,6 +2,7 @@
 #include "TrenchCoat.h"
 #include <iostream>
 
+// type of the elements stored
 typedef TrenchCoat TElem;
 
 class DynamicVector
