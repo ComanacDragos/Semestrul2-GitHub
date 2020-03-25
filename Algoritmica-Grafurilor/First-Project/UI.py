@@ -23,6 +23,7 @@ class UI:
 14.Store graph
 15.Replace current graph with a random one
 16.List all edges
+17. Print the state of the graph
 x. Exit """
         print(menu)
 
@@ -157,6 +158,10 @@ x. Exit """
         print("The edges are: \n")
         print(self._controller.print_edges())
 
+    def UI_print_state(self):
+        print("The state is: \n")
+        print(self._controller.get_state())
+
     def start(self):
         commands ={
             "1" : self.UI_get_nr_vertices,
@@ -175,6 +180,7 @@ x. Exit """
             "14": self.UI_store_graph,
             "15": self.UI_random_graph,
             "16": self.UI_print_edges,
+            "17": self.UI_print_state,
         }
         while True:
             self.menu()

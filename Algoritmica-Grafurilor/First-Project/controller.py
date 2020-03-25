@@ -107,3 +107,6 @@ class Controller:
         for edge in self._graph.get_costs():
             edges += str(edge) + "\n"
         return edges
+
+    def get_state(self):
+        return self._graph.get_state()

@@ -260,6 +260,15 @@ class DoubleDictGraph:
     def get_costs(self):
         return self._dictCosts
 
+    def get_state(self):
+        state = ""
+        state += str(self._vertices) + " " + str(self._edges) + "\n"
+        state += "The edges are: " + str(self._dictCosts) + "\n"
+        state += "The outbound neighbours are: " + str(self._dictOut) + "\n"
+        state += "The inbound neighbours are: " + str(self._dictIn) + "\n"
+
+        return state
+
 def loadGraph(graph, filename):
     '''
     Loads a graph from a text file in the memory

@@ -160,7 +160,6 @@ class TestGraph(unittest.TestCase):
         assert g.parse_inbound(1) == []
 
 
-
     def test_remove_edge(self):
         g = DoubleDictGraph()
         g.add_vertex()
@@ -218,6 +217,7 @@ class TestGraph(unittest.TestCase):
         assert g.is_edge(0,2) == True
         assert g.is_edge(2,1) == True
         assert g.is_edge(1,0) == True
+
 
 
 
