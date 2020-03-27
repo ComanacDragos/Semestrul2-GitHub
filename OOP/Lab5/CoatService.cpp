@@ -43,7 +43,7 @@ void CoatService::updateCoatService(const std::string& name, const std::string& 
 	this->coatRepository.updateCoat(updatedCoat);
 }
 
-DynamicVector CoatService::listCoats()
+DynamicVector<TrenchCoat> CoatService::listCoats()
 {
 	return this->coatRepository.getAllCoats();
 }

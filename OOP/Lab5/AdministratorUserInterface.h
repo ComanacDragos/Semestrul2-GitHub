@@ -25,7 +25,8 @@ public:
 
 	~AdministratorUserInterface(){}
 
-	void startAdministratorMode();
+	//returns 0 if t
+	int startAdministratorMode();
 
 	void storeCoat(char** parameters, int numberOfParameters);
 

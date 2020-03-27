@@ -3,7 +3,7 @@
 class CoatRepository
 {
 private:
-	DynamicVector coats;
+	DynamicVector<TrenchCoat> coats;
 
 public:
 	//default constructor
@@ -31,6 +31,6 @@ public:
 
 	int getRepositoryLength();
 
-	DynamicVector getAllCoats();
+	DynamicVector<TrenchCoat> getAllCoats();
 };
 

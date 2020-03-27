@@ -1,13 +1,17 @@
+/*
+
 #include "DynamicVector.h"
 
-DynamicVector::DynamicVector()
+template <typename TElem>
+DynamicVector<TElem>::DynamicVector()
 {
 	this->capacity = 2;
 	this->length = 0;
 	this->elements = new TElem[this->capacity];
 }
 
-DynamicVector::DynamicVector(const DynamicVector& dynamicVector)
+template <typename TElem>
+DynamicVector<TElem>::DynamicVector(const DynamicVector<TElem>& dynamicVector)
 {
 	this->capacity = dynamicVector.capacity;
 	this->length = dynamicVector.length;
@@ -17,12 +21,14 @@ DynamicVector::DynamicVector(const DynamicVector& dynamicVector)
 		this->elements[i] = dynamicVector.elements[i];
 }
 
-DynamicVector::~DynamicVector()
+template <typename TElem>
+DynamicVector<TElem>::~DynamicVector()
 {
 	delete[] this->elements;
 }
 
-DynamicVector& DynamicVector::operator=(const DynamicVector& dynamicVector)
+template <typename TElem>
+DynamicVector<TElem>& DynamicVector<TElem>::operator=(const DynamicVector<TElem>& dynamicVector)
 {
 	if (this == &dynamicVector)
 		return *this;
@@ -39,7 +45,8 @@ DynamicVector& DynamicVector::operator=(const DynamicVector& dynamicVector)
 	return *this;
 }
 
-void DynamicVector::addElement(const TElem& element)
+template <typename TElem>
+void DynamicVector<TElem>::addElement(const TElem& element)
 {	
 	if (this->capacity == this->length)
 		this->increaseSize();
@@ -48,7 +55,8 @@ void DynamicVector::addElement(const TElem& element)
 	this->length += 1;
 }
 
-void DynamicVector::removeFromPosition(int position)
+template <typename TElem>
+void DynamicVector<TElem>::removeFromPosition(int position)
 {
 	
 	for (int i = position; i < this->length; i++)
@@ -60,17 +68,20 @@ void DynamicVector::removeFromPosition(int position)
 		this->shrinkSize();
 }
 
-int DynamicVector::getLength()
+template <typename TElem>
+int DynamicVector<TElem>::getLength()
 {
 	return this->length;
 }
 
-TElem& DynamicVector::getElement(int position)
+template <typename TElem>
+TElem& DynamicVector<TElem>::getElement(int position)
 {
 	return this->elements[position];
 }
 
-int DynamicVector::findElement(TElem element)
+template <typename TElem>
+int DynamicVector<TElem>::findElement(TElem element)
 {
 	for (int i = 0; i < this->length; i++)
 		if (this->elements[i] == element)
@@ -78,7 +89,8 @@ int DynamicVector::findElement(TElem element)
 	return -1;
 }
 
-void DynamicVector::increaseSize()
+template <typename TElem>
+void DynamicVector<TElem>::increaseSize()
 {
 	this->capacity *= 2;
 	TElem* largerElements = new TElem[this->capacity];
@@ -91,7 +103,8 @@ void DynamicVector::increaseSize()
 
 }
 
-void DynamicVector::shrinkSize()
+template <typename TElem>
+void DynamicVector<TElem>::shrinkSize()
 {
 	this->capacity /= 2;
 	TElem* smallerElements = new TElem[this->capacity];
@@ -102,3 +115,4 @@ void DynamicVector::shrinkSize()
 	delete[] this->elements;
 	this->elements = smallerElements;
 }
+*/

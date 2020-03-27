@@ -31,7 +31,7 @@ void test_TrenchCoat()
 void DynamicVectoraddElement_ValidElement_ElementAdded()
 {
 	TrenchCoat coat = { "name", "size", "photographSource", 4 };
-	DynamicVector dynVector;
+	DynamicVector<TrenchCoat> dynVector;
 	dynVector.addElement(coat);
 
 	assert(dynVector.getLength() == 1);
@@ -40,7 +40,7 @@ void DynamicVectoraddElement_ValidElement_ElementAdded()
 void DynamicVectorremoveElement_ValidPosition_ElementRemoved()
 {
 	TrenchCoat coat = { "name", "size", "photographSource", 4 };
-	DynamicVector dynVector;
+	DynamicVector<TrenchCoat> dynVector;
 	dynVector.addElement(coat);
 	dynVector.removeFromPosition(0);
 
@@ -49,7 +49,7 @@ void DynamicVectorremoveElement_ValidPosition_ElementRemoved()
 
 void DynamicVectorIncreaseSize_DynamicVector_LargerDynamicVector()
 {
-	DynamicVector dynVector;
+	DynamicVector<TrenchCoat> dynVector;
 	TrenchCoat coat1{ "n1", "s", "s", 4 };
 	TrenchCoat coat2{ "n2", "s", "s", 4 };
 	TrenchCoat coat3{ "n3", "s", "s", 4 };
@@ -62,7 +62,7 @@ void DynamicVectorIncreaseSize_DynamicVector_LargerDynamicVector()
 
 void DynamicVectorIncreaseSize_DynamicVector_SmallerDynamicVector()
 {
-	DynamicVector dynVector;
+	DynamicVector<TrenchCoat> dynVector;
 	TrenchCoat coat1{ "n1", "s", "s", 4 };
 	TrenchCoat coat2{ "n2", "s", "s", 4 };
 	TrenchCoat coat3{ "n3", "s", "s", 4 };
@@ -231,7 +231,7 @@ void CoatServiceUpdateCoat_ValidCoat_UpdatedCoat()
 	service.storeCoatService("name", "size", "photoSource", "3");
 	service.updateCoatService("name", "newSize", "newPhotoSource", "5");
 
-	DynamicVector listOfCoats = service.listCoats();
+	DynamicVector<TrenchCoat> listOfCoats = service.listCoats();
 
 	TrenchCoat coat = listOfCoats.getElement(0);
 

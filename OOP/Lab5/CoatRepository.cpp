@@ -59,7 +59,7 @@ int CoatRepository::getRepositoryLength()
 	return this->coats.getLength();
 }
 
-DynamicVector CoatRepository::getAllCoats()
+DynamicVector<TrenchCoat> CoatRepository::getAllCoats()
 {
 	return this->coats;
 }
