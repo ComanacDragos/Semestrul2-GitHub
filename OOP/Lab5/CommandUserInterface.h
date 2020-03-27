@@ -3,6 +3,8 @@
 #include "AdministratorUserInterface.h"
 #include "ClientUserInterface.h"
 
+#define AdministratorMode 2
+#define ClientMode 1
 
 class CommandUserInterface
 {

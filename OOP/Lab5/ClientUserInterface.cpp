@@ -8,6 +8,7 @@ ClientUserInterface::ClientUserInterface(const CoatService& coatService)
 ClientUserInterface::ClientUserInterface(const ClientUserInterface& clientUserInterface)
 {
 	this->coatService = clientUserInterface.coatService;
+	this->coatsIterator = clientUserInterface.coatsIterator;
 }
 
 ClientUserInterface& ClientUserInterface::operator=(const ClientUserInterface& clientUserInterface)
@@ -15,10 +16,13 @@ ClientUserInterface& ClientUserInterface::operator=(const ClientUserInterface& c
 	if (this == &clientUserInterface)
 		return *this;
 	this->coatService = clientUserInterface.coatService;
+	this->coatsIterator = clientUserInterface.coatsIterator;
+	return *this;
 }
 
-void ClientUserInterface::startClientUserInterface()
+int ClientUserInterface::startClientUserInterface()
 {
+	this->setIterator();
 	while (1)
 	{
 		char userInput[CommandLenght];
@@ -28,7 +32,7 @@ void ClientUserInterface::startClientUserInterface()
 		std::cin.get();
 
 		if (strcmp(userInput, "exit") == 0)
-			break;
+			return 0;
 
 		char* splitPointer = strtok(userInput, " ,");
 
@@ -48,13 +52,48 @@ void ClientUserInterface::startClientUserInterface()
 		char command[WordInCommandLenght];
 		strcpy(command, commandParameters[0]);
 
-		if (strcmp(command, "exit") == 0)
-			return;
+		if (numberOfParameters == 2)
+		{
+			char mode[WordInCommandLenght];
+			strcpy(mode, commandParameters[1]);
+			if (strcmp(command, "mode") == 0 && strcmp(mode, "A") == 0)
 
+				for (i = 0; i < numberOfParameters; i++)
+					delete[] commandParameters[i];
+				delete[] commandParameters;
+				
+				return 2;
+		}
+
+		if (strcmp(command, "next") == 0)
+			this->nextCoat(commandParameters, numberOfParameters);
 
 		for (i = 0; i < numberOfParameters; i++)
 			delete[] commandParameters[i];
 		delete[] commandParameters;
 	}
 }
+
+void ClientUserInterface::setIterator()
+{
+	this->coatsIterator = this->coatService.coatsIterator();
+}
+
+void ClientUserInterface::nextCoat(char** parameters, int numberOfParameters)
+{
+	if (numberOfParameters != 1)
+	{
+		std::cout << "Bad command\n";
+		return;
+	}
+
+	DynamicVector<TrenchCoat> coatList = this->coatService.listCoats();
+
+	for (int i = 0; i < coatList.getLength(); i++)
+		std::cout << coatList.getElement(i).to_string() << '\n';
+	//std::cout << this->coatsIterator.getCurrent().to_string()<<'\n';
+	//this->coatsIterator.next();
+}
+
+
 

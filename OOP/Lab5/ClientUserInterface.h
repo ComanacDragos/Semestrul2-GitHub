@@ -12,6 +12,7 @@ class ClientUserInterface
 {
 private:
 	CoatService coatService;
+	CoatsIterator coatsIterator;
 
 public:
 	ClientUserInterface(){}
@@ -24,6 +25,12 @@ public:
 
 	~ClientUserInterface(){}
 
-	void startClientUserInterface();
+
+	//returns 0 if the user exits the program and 2 if the user changes the mode
+	int startClientUserInterface();
+
+	void setIterator();
+
+	void nextCoat(char** parameters, int numberOfParameters);
 };
 

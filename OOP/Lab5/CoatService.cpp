@@ -53,3 +53,19 @@ void CoatService::openInBrowser(const std::string& name)
 	TrenchCoat coat = this->coatRepository.findCoatFromRepository(name);
 	coat.openInBrowser();
 }
+
+TrenchCoat CoatService::getCoatFromRepository(int position)
+{
+	return this->coatRepository.getCoatFromRepository(position);
+}
+
+int CoatService::getRepositoryLenght()
+{
+	return this->coatRepository.getRepositoryLength();
+}
+
+
+CoatsIterator CoatService::coatsIterator()
+{
+	return CoatsIterator(this->listCoats());
+}

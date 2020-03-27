@@ -25,7 +25,7 @@ public:
 
 	~AdministratorUserInterface(){}
 
-	//returns 0 if t
+	//returns 0 if the user exits the program and 1 if the user changes the mode
 	int startAdministratorMode();
 
 	void storeCoat(char** parameters, int numberOfParameters);

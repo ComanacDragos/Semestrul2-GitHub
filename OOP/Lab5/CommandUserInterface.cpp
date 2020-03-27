@@ -4,13 +4,11 @@ CommandUserInterface::CommandUserInterface(const CoatService& coatService)
 {
 	this->coatService = coatService;
 
-	//this->initializeRepository();
 
-	AdministratorUserInterface administratorUserInterface{ this->coatService };
-	ClientUserInterface clientUserInterface{ this->coatService };
+	this->administratorUserInterface = AdministratorUserInterface(this->coatService);
+	this->clientUserInterface = ClientUserInterface(this->coatService);
 
-	this->administratorUserInterface = administratorUserInterface;
-	this->clientUserInterface = clientUserInterface;
+	this->initializeRepository();
 }
 
 CommandUserInterface::CommandUserInterface(const CommandUserInterface& commandUserInterface)
@@ -32,8 +30,8 @@ CommandUserInterface& CommandUserInterface::operator=(const CommandUserInterface
 
 void CommandUserInterface::startProgram()
 {
-	int isRunning = 1;
-	while (isRunning)
+	int isRunning = -1;
+	while (isRunning == -1)
 	{
 		char userInput[CommandLenght];
 		std::cout << "> ";
@@ -65,16 +63,28 @@ void CommandUserInterface::startProgram()
 
 		if (numberOfParameters == 2)
 		{
+			
 			if(strcmp(command, "mode") == 0 && strcmp(commandParameters[1], "A") == 0)
 			{
-				this->administratorUserInterface.startAdministratorMode();
-				isRunning = 0;
+				isRunning = AdministratorMode;
 			}
 
 			if (strcmp(command, "mode") == 0 && strcmp(commandParameters[1], "B") == 0)
 			{
-				this->clientUserInterface.startClientUserInterface();
-				isRunning = 0;
+				isRunning = ClientMode;
+			}
+		}
+
+		while(isRunning == AdministratorMode || isRunning == ClientMode)
+		{
+			if(isRunning == AdministratorMode)
+			{
+				isRunning = this->administratorUserInterface.startAdministratorMode();
+			}
+
+			if(isRunning == ClientMode)
+			{
+				isRunning = this->clientUserInterface.startClientUserInterface();
 			}
 		}
 
@@ -97,3 +107,5 @@ void CommandUserInterface::initializeRepository()
 	this->coatService.storeCoatService("coat9", "XL", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "100");
 	this->coatService.storeCoatService("coat10", "XXL", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "100");
 }
+
+

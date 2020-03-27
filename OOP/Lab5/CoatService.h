@@ -1,10 +1,12 @@
 #pragma once
 #include "CoatRepository.h"
+#include "CoatsIterator.h"
 
 class CoatService
 {
 private:
 	CoatRepository coatRepository;
+	DynamicVector <TrenchCoat> userCoats;
 
 public:
 	CoatService(){}
@@ -29,5 +31,12 @@ public:
 	DynamicVector<TrenchCoat> listCoats();
 	
 	void openInBrowser(const std::string& name);
+
+	TrenchCoat getCoatFromRepository(int position);
+
+	int getRepositoryLenght();
+
+	//returns an interator over the list of coats
+	CoatsIterator coatsIterator();
 };
 

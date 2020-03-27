@@ -1,2 +1,24 @@
-﻿  main.cpp
+﻿  AdministratorUserInterface.cpp
+E:\Universitate\Semestrul2-GitHub\OOP\Lab5\AdministratorUserInterface.cpp(37,1): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(440): message : see declaration of 'strtok'
+E:\Universitate\Semestrul2-GitHub\OOP\Lab5\AdministratorUserInterface.cpp(47,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+E:\Universitate\Semestrul2-GitHub\OOP\Lab5\AdministratorUserInterface.cpp(48,1): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(440): message : see declaration of 'strtok'
+E:\Universitate\Semestrul2-GitHub\OOP\Lab5\AdministratorUserInterface.cpp(53,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+E:\Universitate\Semestrul2-GitHub\OOP\Lab5\AdministratorUserInterface.cpp(71,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+  CommandUserInterface.cpp
+E:\Universitate\Semestrul2-GitHub\OOP\Lab5\CommandUserInterface.cpp(45,1): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(440): message : see declaration of 'strtok'
+E:\Universitate\Semestrul2-GitHub\OOP\Lab5\CommandUserInterface.cpp(55,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+E:\Universitate\Semestrul2-GitHub\OOP\Lab5\CommandUserInterface.cpp(56,1): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(440): message : see declaration of 'strtok'
+E:\Universitate\Semestrul2-GitHub\OOP\Lab5\CommandUserInterface.cpp(62,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+  main.cpp
+  Generating Code...
+E:\Universitate\Semestrul2-GitHub\OOP\Lab5\AdministratorUserInterface.cpp(21): warning C4715: 'AdministratorUserInterface::operator=': not all control paths return a value
   Lab5.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\Lab5\Debug\Lab5.exe

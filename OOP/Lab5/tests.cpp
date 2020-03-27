@@ -247,11 +247,59 @@ void test_CoatService()
 	CoatServiceUpdateCoat_ValidCoat_UpdatedCoat();
 }
 
+void CoatsIteratorGetCurrent_DynamicVectorWithOneElement_CorrectElement()
+{
+	TrenchCoat coat{ "a","a","a",1 };
+	DynamicVector<TrenchCoat> dynVector;
+	dynVector.addElement(coat);
+
+	CoatsIterator iterator{ dynVector };
+
+	assert(iterator.getCurrent() == coat);
+}
+
+void CoatsIteratorNext_DynamicVectorWithTwoElements_CorrectSecondElement()
+{
+	TrenchCoat coat1{ "a","a","a",1 };
+	TrenchCoat coat2{ "b","a","a",1 };
+	DynamicVector<TrenchCoat> dynVector;
+	dynVector.addElement(coat1);
+	dynVector.addElement(coat2);
+
+	CoatsIterator iterator{ dynVector };
+	iterator.next();
+
+	assert(iterator.getCurrent() == coat2);
+}
+
+void CoatsIteratorNext_DynamicVectorWithTwoElements_LoopsBack()
+{
+	TrenchCoat coat1{ "a","a","a",1 };
+	TrenchCoat coat2{ "b","a","a",1 };
+	DynamicVector<TrenchCoat> dynVector;
+	dynVector.addElement(coat1);
+	dynVector.addElement(coat2);
+
+	CoatsIterator iterator{ dynVector };
+	iterator.next();
+	iterator.next();
+
+	assert(iterator.getCurrent() == coat1);
+}
+
+void test_CoatsIterator()
+{
+	CoatsIteratorGetCurrent_DynamicVectorWithOneElement_CorrectElement();
+	CoatsIteratorNext_DynamicVectorWithTwoElements_CorrectSecondElement();
+	CoatsIteratorNext_DynamicVectorWithTwoElements_LoopsBack();
+}
+
 void testAll()
 {
 	test_TrenchCoat();
 	test_DynamicVector();
 	test_CoatRepository();
 	test_CoatService();
+	test_CoatsIterator();
 	std::cout << "The tests were successful\n";
 }

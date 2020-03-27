@@ -7,5 +7,7 @@
 #include "DynamicVector.h"
 #include "CoatRepository.h"
 #include "CoatService.h"
+#include "CoatsIterator.h"
+
 
 void testAll();

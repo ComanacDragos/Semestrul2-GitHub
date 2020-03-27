@@ -20,7 +20,7 @@ AdministratorUserInterface& AdministratorUserInterface::operator=(const Administ
 	this->coatService = admnistratorUserInterface.coatService;
 }
 
-void AdministratorUserInterface::startAdministratorMode()
+int AdministratorUserInterface::startAdministratorMode()
 {
 
 	while (1)
@@ -32,7 +32,7 @@ void AdministratorUserInterface::startAdministratorMode()
 		std::cin.get();
 
 		if (strcmp(userInput, "exit") == 0)
-			break;
+			return 0;
 
 		char* splitPointer = strtok(userInput, " ,");
 
@@ -64,9 +64,19 @@ void AdministratorUserInterface::startAdministratorMode()
 		if (strcmp(command, "update") == 0)
 			this->updateCoat(commandParameters, numberOfParameters);
 
-		if (strcmp(command, "exit") == 0)
-			return;
 
+		if (numberOfParameters == 2)
+		{	
+			char mode[WordInCommandLenght];
+			strcpy(mode, commandParameters[1]);
+			if (strcmp(command, "mode") == 0 && strcmp(mode, "B") == 0)
+				for (i = 0; i < numberOfParameters; i++)
+					delete[] commandParameters[i];
+				delete[] commandParameters;
+
+				return 1;
+	
+		}
 
 		for (i = 0; i < numberOfParameters; i++)
 			delete[] commandParameters[i];

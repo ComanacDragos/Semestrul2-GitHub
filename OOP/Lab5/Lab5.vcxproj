@@ -142,6 +142,7 @@
     <ClCompile Include="ClientUserInterface.cpp" />
     <ClCompile Include="CoatRepository.cpp" />
     <ClCompile Include="CoatService.cpp" />
+    <ClCompile Include="CoatsIterator.cpp" />
     <ClCompile Include="CommandUserInterface.cpp" />
     <ClCompile Include="DynamicVector.cpp" />
     <ClCompile Include="main.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="ClientUserInterface.h" />
     <ClInclude Include="CoatRepository.h" />
     <ClInclude Include="CoatService.h" />
+    <ClInclude Include="CoatsIterator.h" />
     <ClInclude Include="CommandUserInterface.h" />
     <ClInclude Include="DynamicVector.h" />
     <ClInclude Include="tests.h" />
