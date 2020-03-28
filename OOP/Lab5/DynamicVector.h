@@ -1,9 +1,7 @@
 #pragma once
 #include "TrenchCoat.h"
-#include <iostream>
 
-// type of the elements stored
-//typedef TrenchCoat TElem;
+//TElem - type of the elements stored
 
 template <typename TElem>
 class DynamicVector
@@ -39,7 +37,6 @@ private:
 	void increaseSize();
 
 	void shrinkSize();
-
 };
 
 template <typename TElem>
@@ -88,7 +85,7 @@ DynamicVector<TElem>& DynamicVector<TElem>::operator=(const DynamicVector<TElem>
 template <typename TElem>
 void DynamicVector<TElem>::addElement(const TElem& element)
 {
-	if (this->capacity == this->length)
+	if (this->capacity-1 == this->length)
 		this->increaseSize();
 
 	this->elements[this->length] = element;

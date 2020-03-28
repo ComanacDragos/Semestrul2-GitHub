@@ -138,8 +138,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AdministratorUserInterface.cpp" />
-    <ClCompile Include="ClientUserInterface.cpp" />
     <ClCompile Include="CoatRepository.cpp" />
     <ClCompile Include="CoatService.cpp" />
     <ClCompile Include="CoatsIterator.cpp" />
@@ -150,8 +148,6 @@
     <ClCompile Include="TrenchCoat.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AdministratorUserInterface.h" />
-    <ClInclude Include="ClientUserInterface.h" />
     <ClInclude Include="CoatRepository.h" />
     <ClInclude Include="CoatService.h" />
     <ClInclude Include="CoatsIterator.h" />

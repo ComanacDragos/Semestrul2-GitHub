@@ -38,5 +38,13 @@ public:
 
 	//returns an interator over the list of coats
 	CoatsIterator coatsIterator();
+
+	void saveTrenchCoatToUserList(const std::string& name);
+
+	DynamicVector<TrenchCoat> listFilteredCoats(const std::string& size, const std::string& price);
+
+	DynamicVector<TrenchCoat> getUserCoats();
+
+	void emptyUserCoats();
 };
 

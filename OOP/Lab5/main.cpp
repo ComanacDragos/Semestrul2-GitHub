@@ -12,8 +12,8 @@ int main()
 		CommandUserInterface commandUserInterface{ coatService };
 		commandUserInterface.startProgram();
 	}
-
 	_CrtDumpMemoryLeaks();
 	
+
 	return 0;
 }

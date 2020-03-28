@@ -69,3 +69,34 @@ CoatsIterator CoatService::coatsIterator()
 {
 	return CoatsIterator(this->listCoats());
 }
+
+void CoatService::saveTrenchCoatToUserList(const std::string& name)
+{
+	TrenchCoat newUserCoat = this->coatRepository.findCoatFromRepository(name);
+	this->userCoats.addElement(newUserCoat);
+}
+
+DynamicVector<TrenchCoat> CoatService::listFilteredCoats(const std::string& size, const std::string& price)
+{
+	DynamicVector<TrenchCoat> filteredCoats;
+	
+	for (int i = 0; i < this->getRepositoryLenght(); i++)
+	{
+		TrenchCoat currentCoat = this->getCoatFromRepository(i);
+
+		if (currentCoat.getSize().compare(size) == 0 && currentCoat.getPrice() <= atoi(price.c_str()))
+			filteredCoats.addElement(currentCoat);
+	}
+	return filteredCoats;
+}
+
+DynamicVector<TrenchCoat> CoatService::getUserCoats()
+{
+	return this->userCoats;
+}
+
+void CoatService::emptyUserCoats()
+{
+	DynamicVector<TrenchCoat> emptyList;
+	this->userCoats = emptyList;
+}

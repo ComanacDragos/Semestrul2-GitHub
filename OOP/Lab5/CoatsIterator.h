@@ -7,7 +7,7 @@ class CoatsIterator
 private:
 	DynamicVector<TrenchCoat> coats;
 	int currentPosition;
-	
+
 public:
 	CoatsIterator();
 
@@ -26,8 +26,5 @@ public:
 	void next();
 
 	TrenchCoat getCurrent();
-
-
-
 };
 

@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AdministratorUserInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ClientUserInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CoatRepository.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -47,19 +41,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AdministratorUserInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ClientUserInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CoatRepository.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CoatService.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandUserInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DynamicVector.h">
@@ -72,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CoatsIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandUserInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

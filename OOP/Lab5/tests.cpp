@@ -42,9 +42,10 @@ void DynamicVectorremoveElement_ValidPosition_ElementRemoved()
 	TrenchCoat coat = { "name", "size", "photographSource", 4 };
 	DynamicVector<TrenchCoat> dynVector;
 	dynVector.addElement(coat);
+	dynVector.addElement(TrenchCoat("name1", "size", "source", 3));
 	dynVector.removeFromPosition(0);
 
-	assert(dynVector.getLength() == 0);
+	assert(dynVector.getLength() == 1);
 }
 
 void DynamicVectorIncreaseSize_DynamicVector_LargerDynamicVector()
@@ -209,7 +210,9 @@ void CoatServiceDeleteCoat_ValidCoat_CoatDeleted()
 
 	service.storeCoatService("name", "size", "photoSource", "3");
 
-	assert(service.deleteCoatService("name") == 0);
+	service.storeCoatService("name1", "size", "photoSource", "3");
+
+	assert(service.deleteCoatService("name") == 0 && service.getCoatFromRepository(0) == TrenchCoat("name1", "size", "photoSource", 3));
 }
 
 void CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted()
@@ -218,6 +221,7 @@ void CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted()
 	CoatService service{ repo };
 
 	service.storeCoatService("name", "size", "photoSource", "3");
+
 	service.deleteCoatService("name");
 
 	assert(service.deleteCoatService("name") == 1);
@@ -238,6 +242,29 @@ void CoatServiceUpdateCoat_ValidCoat_UpdatedCoat()
 	assert(coat.to_string().compare("name newSize 5 newPhotoSource") == 0);
 }
 
+void CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded()
+{
+	CoatRepository repo;
+	CoatService service{ repo };
+	service.storeCoatService("name", "size", "source", "3");
+
+	service.saveTrenchCoatToUserList("name");
+	assert(service.getUserCoats().getElement(0) == TrenchCoat("name", "size", "source", 3));
+}
+
+void CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter()
+{
+	CoatRepository repo;
+	CoatService service{ repo };
+	service.storeCoatService("name", "size", "source", "3");
+	service.storeCoatService("name1", "size", "source", "5");
+	service.storeCoatService("name2", "size2", "source", "3");
+
+	DynamicVector<TrenchCoat> filtered = service.listFilteredCoats("size", "3");
+
+	assert(filtered.getElement(0) == TrenchCoat("name", "size", "source", 3) && filtered.getLength() == 1);
+}
+
 void test_CoatService()
 {
 	CoatServiceStoreCoat_ValidCoat_CoatAdded();
@@ -245,6 +272,8 @@ void test_CoatService()
 	CoatServiceDeleteCoat_ValidCoat_CoatDeleted();
 	CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted();
 	CoatServiceUpdateCoat_ValidCoat_UpdatedCoat();
+	CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded();
+	CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter();
 }
 
 void CoatsIteratorGetCurrent_DynamicVectorWithOneElement_CorrectElement()
