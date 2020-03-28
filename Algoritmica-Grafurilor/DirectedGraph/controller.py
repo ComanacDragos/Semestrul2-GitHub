@@ -1,4 +1,5 @@
 from DirectedGraph import *
+from Traversals import *
 
 class Controller:
     def __init__(self, graph):
@@ -110,3 +111,9 @@ class Controller:
 
     def get_state(self):
         return self._graph.get_state()
+
+    def breadth_first(self, vertex):
+        return BF(vertex, self._graph)
+
+    def connected_components(self):
+        return connected_components(self._graph)

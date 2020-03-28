@@ -263,9 +263,21 @@ class DoubleDictGraph:
     def get_state(self):
         state = ""
         state += str(self._vertices) + " " + str(self._edges) + "\n"
-        state += "The edges are: " + str(self._dictCosts) + "\n"
-        state += "The outbound neighbours are: " + str(self._dictOut) + "\n"
-        state += "The inbound neighbours are: " + str(self._dictIn) + "\n"
+        #state += "The edges are: " + str(self._dictCosts) + "\n"
+        #state += "The outbound neighbours are: " + str(self._dictOut) + "\n"
+        #state += "The inbound neighbours are: " + str(self._dictIn) + "\n"
+
+        state += "The edges are: \n"
+        for i in self._dictCosts:
+            state += str(i) + " : " + str(self._dictCosts[i]) + "\n"
+
+        state += "The outbound dictionary: \n"
+        for i in self._dictOut:
+            state += str(i) + " : " + str(list(self._dictOut[i].values())) + "\n"
+
+        state += "The inbound dictionary: \n"
+        for i in self._dictIn:
+            state += str(i) + " : " + str(list(self._dictIn[i].values())) + "\n"
 
         return state
 
@@ -318,6 +330,8 @@ def generateRandomGraph(vertices, edges):
             randomGraph.add_edge(left,right,cost)
             edges -= 1
     return randomGraph
+
+
 
 class AlreadyExists (Exception):
     pass

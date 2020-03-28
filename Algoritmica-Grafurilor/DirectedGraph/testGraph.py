@@ -218,8 +218,5 @@ class TestGraph(unittest.TestCase):
         assert g.is_edge(2,1) == True
         assert g.is_edge(1,0) == True
 
-
-
-
 if __name__ == '__main__':
     unittest.main()

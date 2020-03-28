@@ -7,6 +7,16 @@ class UI:
     @staticmethod
     def menu():
         menu = """
+1. Information about the graph
+2. Change the graph
+3. Traversals
+ x. Exit
+ """
+        print(menu)
+
+    @staticmethod
+    def information_menu():
+        menu = """
 1.Number of vertices
 2.Iterate the set of vertices
 3.Check existence of an edge
@@ -14,17 +24,36 @@ class UI:
 5.Inbound vertices
 6.Outbound vertices
 7.Get cost of an edge
-8.Update cost of an edge
-9.Add vertex
-10.Remove vertex
-11.Add edge
-12.Remove edge
-13.Load graph
-14.Store graph
-15.Replace current graph with a random one
-16.List all edges
-17. Print the state of the graph
-x. Exit """
+8. List all edges
+9. State of the graph
+x. Exit information menu
+        """
+        print(menu)
+
+    @staticmethod
+    def modify_menu():
+        menu = """
+1.Update cost of an edge
+2.Add vertex
+3.Remove vertex
+4.Add edge
+5.Remove edge
+6.Load graph
+7.Store graph
+8.Replace current graph with a random one
+9. State of the graph
+x. Exit modify menu
+        """
+        print(menu)
+
+    @staticmethod
+    def traversal_menu():
+        menu ="""
+1. State of the graph
+2. BreadthFirst Traversal
+3. Connected components
+x. Exit traversal menu
+        """
         print(menu)
 
     def UI_get_nr_vertices(self):
@@ -162,25 +191,82 @@ x. Exit """
         print("The state is: \n")
         print(self._controller.get_state())
 
+    def UI_BreadthFirstTraversal(self):
+        vertex = input("Give vertex: ")
+        try:
+            traversal = self._controller.breadth_first(vertex)
+            print("The traversal is:", end=' ')
+            for i in traversal:
+                print(str(i), end=' ')
+        except VertexException as err:
+            print(err)
+
+    def start_information_menu(self):
+        commands = {
+            "1": self.UI_get_nr_vertices,
+            "2": self.UI_iterate_vertices,
+            "3": self.UI_is_edge,
+            "4": self.UI_in_out_degree,
+            "5": self.UI_in_bound_parse,
+            "6": self.UI_out_bound_parse,
+            "7": self.UI_get_cost,
+            "8": self.UI_print_edges,
+            "9": self.UI_print_state
+        }
+        while(True):
+            self.information_menu()
+            choice = input("> ")
+            if choice in commands:
+                commands[choice]()
+            elif choice == "x":
+                return
+            else:
+                print("Invalid command\n")
+
+    def start_modify_menu(self):
+        commands = {
+            "1": self.UI_modify_cost,
+            "2": self.UI_add_vertex,
+            "3": self.UI_remove_vertex,
+            "4": self.UI_add_edge,
+            "5": self.UI_remove_edge,
+            "6": self.UI_load_graph,
+            "7": self.UI_store_graph,
+            "8": self.UI_random_graph,
+            "9": self.UI_print_state,
+        }
+
+        while (True):
+            self.modify_menu()
+            choice = input("> ")
+            if choice in commands:
+                commands[choice]()
+            elif choice == "x":
+                return
+            else:
+                print("Invalid command\n")
+
+    def start_traversal_menu(self):
+        commands = {
+            "1": self.UI_print_state,
+            "2": self.UI_BreadthFirstTraversal
+        }
+
+        while (True):
+            self.traversal_menu()
+            choice = input("> ")
+            if choice in commands:
+                commands[choice]()
+            elif choice == "x":
+                return
+            else:
+                print("Invalid command\n")
+
     def start(self):
         commands ={
-            "1" : self.UI_get_nr_vertices,
-            "2" : self.UI_iterate_vertices,
-            "3" : self.UI_is_edge,
-            "4" : self.UI_in_out_degree,
-            "5" : self.UI_in_bound_parse,
-            "6" : self.UI_out_bound_parse,
-            "7" : self.UI_get_cost,
-            "8" : self.UI_modify_cost,
-            "9" : self.UI_add_vertex,
-            "10": self.UI_remove_vertex,
-            "11": self.UI_add_edge,
-            "12": self.UI_remove_edge,
-            "13": self.UI_load_graph,
-            "14": self.UI_store_graph,
-            "15": self.UI_random_graph,
-            "16": self.UI_print_edges,
-            "17": self.UI_print_state,
+            "1": self.start_information_menu,
+            "2": self.start_modify_menu,
+            "3": self.start_traversal_menu
         }
         while True:
             self.menu()
