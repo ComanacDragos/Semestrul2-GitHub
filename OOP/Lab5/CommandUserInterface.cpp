@@ -67,22 +67,22 @@ void CommandUserInterface::startProgram()
 			}
 		}
 
-		while(isRunning == AdministratorMode || isRunning == ClientMode)
-		{
-			if(isRunning == AdministratorMode)
-			{
-				isRunning = this->startAdministratorMode();
-			}
-
-			if(isRunning == ClientMode)
-			{
-				isRunning = this->startClientUserInterface();
-			}
-		}
-
 		for (i = 0; i < numberOfParameters; i++)
 			delete[] commandParameters[i];
 		delete[] commandParameters;
+	}
+
+	while (isRunning == AdministratorMode || isRunning == ClientMode)
+	{
+		if (isRunning == AdministratorMode)
+		{
+			isRunning = this->startAdministratorMode();
+		}
+
+		if (isRunning == ClientMode)
+		{
+			isRunning = this->startClientUserInterface();
+		}
 	}
 }
 
@@ -152,11 +152,11 @@ int CommandUserInterface::startAdministratorMode()
 			strcpy(mode, commandParameters[1]);
 			if (strcmp(command, "mode") == 0 && strcmp(mode, "B") == 0)
 			{
-						for (i = 0; i < numberOfParameters; i++)
-						delete[] commandParameters[i];
+				for (i = 0; i < numberOfParameters; i++)
+					delete[] commandParameters[i];
 				delete[] commandParameters;
 
-				return 1;
+				return ClientMode;
 			}
 		}
 
@@ -231,7 +231,7 @@ void CommandUserInterface::listCoats(char** parameters, int numberOfParameters)
 int CommandUserInterface::startClientUserInterface()
 {
 	this->setIterator();
-	this->coatService.emptyUserCoats();
+	//this->coatService.emptyUserCoats();
 	while (1)
 	{
 		char userInput[CommandLenght];
@@ -280,11 +280,11 @@ int CommandUserInterface::startClientUserInterface()
 			strcpy(mode, commandParameters[1]);
 			if (strcmp(command, "mode") == 0 && strcmp(mode, "A") == 0)
 			{
-					for (i = 0; i < numberOfParameters; i++)
-						delete[] commandParameters[i];
+				for (i = 0; i < numberOfParameters; i++)
+					delete[] commandParameters[i];
 				delete[] commandParameters;
 
-				return 2;
+				return AdministratorMode;
 			}
 		}
 
@@ -296,7 +296,7 @@ int CommandUserInterface::startClientUserInterface()
 
 void CommandUserInterface::setIterator()
 {
-	this->coatsIterator = this->coatService.coatsIterator();
+	this->coatService.setCoatIteratorToFirst();
 }
 
 void CommandUserInterface::nextCoat(char** parameters, int numberOfParameters)
@@ -307,10 +307,11 @@ void CommandUserInterface::nextCoat(char** parameters, int numberOfParameters)
 		return;
 	}
 
-	DynamicVector<TrenchCoat> coatList = this->coatService.listCoats();
+	//DynamicVector<TrenchCoat> coatList = this->coatService.listCoats();
 
-	std::cout << this->coatsIterator.getCurrent().to_string()<<'\n';
-	this->coatsIterator.next();
+	//std::cout << this->coatsIterator.getCurrent().to_string()<<'\n';
+	//this->coatsIterator.next();
+	std::cout << this->coatService.getNextCoatFromIterator().to_string() << '\n';
 }
 
 void CommandUserInterface::saveTrenchCoatToUserList(char** parameters, int numberOfParameters)

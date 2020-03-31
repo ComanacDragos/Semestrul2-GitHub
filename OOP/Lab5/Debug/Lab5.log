@@ -1,2 +1,1 @@
-﻿  tests.cpp
-  Lab5.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\Lab5\Debug\Lab5.exe
+﻿LINK : fatal error LNK1168: cannot open E:\Universitate\Semestrul2-GitHub\OOP\Lab5\Debug\Lab5.exe for writing

@@ -9,6 +9,8 @@ CoatService::CoatService(CoatRepository& coatRepository)
 CoatService::CoatService(const CoatService& coatService)
 {
 	this->coatRepository = coatService.coatRepository;
+	this->userCoats = coatService.userCoats;
+	this->coatsIterator = coatService.coatsIterator;
 }
 
 CoatService& CoatService::operator=(const CoatService& coatService)
@@ -16,6 +18,8 @@ CoatService& CoatService::operator=(const CoatService& coatService)
 	if (this == &coatService)
 		return *this;
 	this->coatRepository = coatService.coatRepository;
+	this->userCoats = coatService.userCoats;
+	this->coatsIterator = coatService.coatsIterator;
 	return *this;
 }
 
@@ -34,6 +38,15 @@ int CoatService::storeCoatService(const std::string& name, const std::string& si
 int CoatService::deleteCoatService(const std::string name)
 {
 	int succes = this->coatRepository.deleteCoat(name);
+
+	if (succes == 0)
+		for (int i = 0; i < this->userCoats.getLength(); i++)
+			if (strcmp(this->userCoats.getElement(i).getName().c_str(), name.c_str()) == 0)
+			{
+				this->userCoats.removeFromPosition(i);
+				break;
+			}
+
 	return succes;
 }
 
@@ -41,6 +54,11 @@ void CoatService::updateCoatService(const std::string& name, const std::string& 
 {
 	TrenchCoat updatedCoat{ name, size, photographSource, atoi(price.c_str()) };
 	this->coatRepository.updateCoat(updatedCoat);
+
+	for (int i = 0; i < this->userCoats.getLength(); i++)
+		if (this->userCoats.getElement(i).getName().compare(name.c_str()) == 0)
+			this->userCoats.getElement(i) = updatedCoat;
+
 }
 
 DynamicVector<TrenchCoat> CoatService::listCoats()
@@ -65,7 +83,7 @@ int CoatService::getRepositoryLenght()
 }
 
 
-CoatsIterator CoatService::coatsIterator()
+CoatsIterator CoatService::getCoatsIterator()
 {
 	return CoatsIterator(this->listCoats());
 }
@@ -99,4 +117,16 @@ void CoatService::emptyUserCoats()
 {
 	DynamicVector<TrenchCoat> emptyList;
 	this->userCoats = emptyList;
+}
+
+void CoatService::setCoatIteratorToFirst()
+{
+	this->coatsIterator = this->getCoatsIterator();
+}
+
+TrenchCoat CoatService::getNextCoatFromIterator()
+{
+	TrenchCoat nextCoat = this->coatsIterator.getCurrent();
+	this->coatsIterator.next();
+	return nextCoat;
 }
