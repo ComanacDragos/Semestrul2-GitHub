@@ -51,7 +51,8 @@ x. Exit modify menu
         menu ="""
 1. State of the graph
 2. BreadthFirst Traversal
-3. Connected components
+3. DepthFirst Traversal
+4. Connected components
 x. Exit traversal menu
         """
         print(menu)
@@ -198,8 +199,30 @@ x. Exit traversal menu
             print("The traversal is:", end=' ')
             for i in traversal:
                 print(str(i), end=' ')
+            print("\n")
         except VertexException as err:
             print(err)
+
+    def UI_DepthFirstTraversal(self):
+        vertex = input("Give vertex: ")
+        try:
+            traversal = self._controller.depth_first(vertex)
+            print("The traversal is:", end=' ')
+            for i in traversal:
+                print(str(i), end=' ')
+            print("\n")
+        except VertexException as err:
+            print(err)
+
+    def UI_ConnectedComponents(self):
+        components = self._controller.connected_components()
+        cont = 0
+        for i in components:
+            print(str(cont) + ". ", end=' ')
+            for j in i:
+                print(str(j) + " ", end=' ')
+            print("\n")
+            cont += 1
 
     def start_information_menu(self):
         commands = {
@@ -249,7 +272,10 @@ x. Exit traversal menu
     def start_traversal_menu(self):
         commands = {
             "1": self.UI_print_state,
-            "2": self.UI_BreadthFirstTraversal
+            "2": self.UI_BreadthFirstTraversal,
+            "3": self.UI_DepthFirstTraversal,
+            "4": self.UI_ConnectedComponents,
+
         }
 
         while (True):

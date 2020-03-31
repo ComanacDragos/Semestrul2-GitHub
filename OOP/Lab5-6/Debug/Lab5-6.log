@@ -1,7 +1,5 @@
-﻿  CoatRepository.cpp
-  CoatService.cpp
-E:\Universitate\Semestrul2-GitHub\OOP\Lab5-6\CoatService.cpp(30,20): warning C4018: '<': signed/unsigned mismatch
-  CoatsIterator.cpp
+﻿  CoatService.cpp
+E:\Universitate\Semestrul2-GitHub\OOP\Lab5-6\CoatService.cpp(31,20): warning C4018: '<': signed/unsigned mismatch
   CommandUserInterface.cpp
 E:\Universitate\Semestrul2-GitHub\OOP\Lab5-6\CommandUserInterface.cpp(37,1): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(440): message : see declaration of 'strtok'
@@ -31,10 +29,5 @@ E:\Universitate\Semestrul2-GitHub\OOP\Lab5-6\CommandUserInterface.cpp(262,1): wa
 E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
 E:\Universitate\Semestrul2-GitHub\OOP\Lab5-6\CommandUserInterface.cpp(280,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 E:\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
-  DynamicVector.cpp
-  main.cpp
-  tests.cpp
-  TrenchCoat.cpp
   Generating Code...
-E:\Universitate\Semestrul2-GitHub\OOP\Lab5-6\CoatRepository.cpp(55): warning C4715: 'CoatRepository::findCoatFromRepository': not all control paths return a value
   Lab5-6.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\Lab5-6\Debug\Lab5-6.exe

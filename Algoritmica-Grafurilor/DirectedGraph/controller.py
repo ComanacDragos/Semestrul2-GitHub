@@ -113,7 +113,10 @@ class Controller:
         return self._graph.get_state()
 
     def breadth_first(self, vertex):
-        return BF(vertex, self._graph)
+        return BFS(int(vertex), self._graph)
+
+    def depth_first(self, vertex):
+        return DFS(int(vertex), self._graph, [])
 
     def connected_components(self):
         return connected_components(self._graph)

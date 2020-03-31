@@ -1,6 +1,6 @@
 from DirectedGraph import *
 
-def BF(vertex, graph):
+def BFS(vertex, graph):
     '''
     Breadth-first traversal
     :param vertex:
@@ -8,7 +8,6 @@ def BF(vertex, graph):
     :return: the path
     :exception: vertex not valid
     '''
-    #graph = DoubleDictGraph()
     if not vertex < graph.vertices:
         raise VertexException("Vertex doesn't exist")
 
@@ -25,6 +24,28 @@ def BF(vertex, graph):
 
     return visited
 
+
+def DFS(vertex, graph, visited):
+    '''
+    Depth first traversal
+    :param vertex:
+    :param graph:
+    :param visited:
+    :return:
+    :exception: invalid vertex
+    '''
+    if not vertex < graph.vertices:
+        raise VertexException("Vertex doesn't exist")
+
+    visited.append(vertex)
+
+    for i in graph.parse_outbound(vertex):
+        if i not in visited:
+            DFS(i, graph, visited)
+
+
+    return visited
+
 def connected_components(graph):
     '''
     :param graph: undirected graph
@@ -38,6 +59,6 @@ def connected_components(graph):
                 visited = 1
                 break
         if visited == 0:
-            connectedComponents.append(BF(i, graph))
+            connectedComponents.append(BFS(i, graph))
     return connectedComponents
 
