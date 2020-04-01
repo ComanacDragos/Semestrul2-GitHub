@@ -10,20 +10,20 @@ class UI:
 1. Information about the graph
 2. Change the graph
 3. Traversals
- x. Exit
+x. Exit
  """
         print(menu)
 
     @staticmethod
     def information_menu():
         menu = """
-1.Number of vertices
-2.Iterate the set of vertices
-3.Check existence of an edge
-4.In degree and out degree of a vertex
-5.Inbound vertices
-6.Outbound vertices
-7.Get cost of an edge
+1. Number of vertices
+2. Iterate the set of vertices
+3. Check existence of an edge
+4. In degree and out degree of a vertex
+5. Inbound vertices
+6. Outbound vertices
+7. Get cost of an edge
 8. List all edges
 9. State of the graph
 x. Exit information menu
@@ -33,15 +33,17 @@ x. Exit information menu
     @staticmethod
     def modify_menu():
         menu = """
-1.Update cost of an edge
-2.Add vertex
-3.Remove vertex
-4.Add edge
-5.Remove edge
-6.Load graph
-7.Store graph
-8.Replace current graph with a random one
-9. State of the graph
+1. Update cost of an edge
+2. Add vertex
+3. Remove vertex
+4. Add edge
+5. Remove edge
+6. Load directed graph
+7. Load undirected graph
+8. Store graph
+9. Replace current graph with a random one
+10. Replace current graph with a random undirected one
+11. State of the graph
 x. Exit modify menu
         """
         print(menu)
@@ -173,6 +175,17 @@ x. Exit traversal menu
         except Exception:
             print("The requested graph does not exist")
 
+    def UI_load_undirected_graph(self):
+        filename = input("Give filename: ")
+        try:
+            t1 = datetime.now()
+            self._controller.load_undirected_graph(filename)
+            t2 = datetime.now()
+            t = t2-t1
+            print("The graph was loaded successfuly in: " + str(t))
+        except ValueError:
+            print("The requested graph does not exist")
+
     def UI_store_graph(self):
         filename = input("Give filename: ")
         self._controller.store_graph(filename)
@@ -182,6 +195,12 @@ x. Exit traversal menu
         vertices = int(input("Give number of vertices: "))
         edges = int(input("Give number of edges: "))
         self._controller.random_graph(vertices, edges)
+        print("The graph was successfuly replaced with a random one")
+
+    def UI_random_undirected_graph(self):
+        vertices = int(input("Give number of vertices: "))
+        edges = int(input("Give number of edges: "))
+        self._controller.random_undirected_graph(vertices, edges)
         print("The graph was successfuly replaced with a random one")
 
     def UI_print_edges(self):
@@ -216,7 +235,7 @@ x. Exit traversal menu
 
     def UI_ConnectedComponents(self):
         components = self._controller.connected_components()
-        cont = 0
+        cont = 1
         for i in components:
             print(str(cont) + ". ", end=' ')
             for j in i:
@@ -254,9 +273,11 @@ x. Exit traversal menu
             "4": self.UI_add_edge,
             "5": self.UI_remove_edge,
             "6": self.UI_load_graph,
-            "7": self.UI_store_graph,
-            "8": self.UI_random_graph,
-            "9": self.UI_print_state,
+            "7": self.UI_load_undirected_graph,
+            "8": self.UI_store_graph,
+            "9": self.UI_random_graph,
+            "10": self.UI_random_undirected_graph,
+            "11": self.UI_print_state,
         }
 
         while (True):

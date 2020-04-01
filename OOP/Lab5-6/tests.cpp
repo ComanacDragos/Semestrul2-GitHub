@@ -249,6 +249,7 @@ void CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded()
 	service.storeCoatService("name", "size", "source", "3");
 
 	service.saveTrenchCoatToUserList("name");
+
 	assert(service.getUserCoats().getElement(0) == TrenchCoat("name", "size", "source", 3));
 }
 

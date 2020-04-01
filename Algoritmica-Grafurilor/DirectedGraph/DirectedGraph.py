@@ -283,7 +283,7 @@ class DoubleDictGraph:
 
 def loadGraph(graph, filename):
     '''
-    Loads a graph from a text file in the memory
+    Loads a directed graph from a text file in the memory
     :param graph: a graph
     :param filename: the filename
     :return:
@@ -301,6 +301,28 @@ def loadGraph(graph, filename):
     for line in lines:
         line = line.strip().split()
         graph.add_edge(int(line[0]), int(line[1]), int(line[2]))
+
+def loadUndirectedGraph(graph, filename):
+    '''
+    Loads a undirected graph from a text file in the memory
+    :param graph: a graph
+    :param filename: the filename
+    :return:
+    '''
+    f = open(filename, "r")
+    lines = f.readlines()
+    graph.__init__()
+    firstLine = lines[0].strip().split()
+    vertices = int(firstLine[0])
+
+    lines.pop(0)
+    for i in range(vertices):
+        graph.add_vertex()
+
+    for line in lines:
+        line = line.strip().split()
+        graph.add_edge(int(line[0]), int(line[1]), int(line[2]))
+        graph.add_edge(int(line[1]), int(line[0]), int(line[2]))
 
 def storeGraph(graph, filename):
     '''
@@ -328,6 +350,20 @@ def generateRandomGraph(vertices, edges):
         if randomGraph.is_edge(left,right) == False:
             cost = random.choice(range(100))
             randomGraph.add_edge(left,right,cost)
+            edges -= 1
+    return randomGraph
+
+def generateRandomUndirectedGraph(vertices, edges):
+    randomGraph = DoubleDictGraph()
+    for i in range(vertices):
+        randomGraph.add_vertex()
+    while edges != 0:
+        left = random.choice(range(vertices))
+        right = random.choice(range(vertices))
+        if randomGraph.is_edge(left,right) == False and left != right:
+            cost = random.choice(range(100))
+            randomGraph.add_edge(left,right,cost)
+            randomGraph.add_edge(right, left, cost)
             edges -= 1
     return randomGraph
 
