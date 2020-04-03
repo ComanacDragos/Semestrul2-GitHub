@@ -55,6 +55,8 @@ x. Exit modify menu
 2. BreadthFirst Traversal
 3. DepthFirst Traversal
 4. Connected components
+5. Backwards DFS
+6. Strongly connected components
 x. Exit traversal menu
         """
         print(menu)
@@ -243,6 +245,27 @@ x. Exit traversal menu
             print("\n")
             cont += 1
 
+    def UI_Backwards_DFS(self):
+        vertex = input("Give vertex: ")
+        try:
+            traversal = self._controller.backwards_depth_first(vertex)
+            print("The traversal is:", end=' ')
+            for i in traversal:
+                print(str(i), end=' ')
+            print("\n")
+        except VertexException as err:
+            print(err)
+
+    def UI_strongly_connected_components(self):
+        components = self._controller.strongly_connected_components()
+        cont = 1
+        for i in components:
+            print(str(cont) + ". ", end=' ')
+            for j in i:
+                print(str(j) + " ", end=' ')
+            print("\n")
+            cont += 1
+
     def start_information_menu(self):
         commands = {
             "1": self.UI_get_nr_vertices,
@@ -296,7 +319,8 @@ x. Exit traversal menu
             "2": self.UI_BreadthFirstTraversal,
             "3": self.UI_DepthFirstTraversal,
             "4": self.UI_ConnectedComponents,
-
+            "5": self.UI_Backwards_DFS,
+            "6": self.UI_strongly_connected_components,
         }
 
         while (True):

@@ -24,8 +24,12 @@ def BFS(vertex, graph):
 
     return visited
 
+def DFS(vertex, graph):
+    visited = []
+    DFS_Utility(vertex, graph, visited)
+    return visited
 
-def DFS(vertex, graph, visited):
+def DFS_Utility(vertex, graph, visited):
     '''
     Depth first traversal
     :param vertex:
@@ -41,10 +45,7 @@ def DFS(vertex, graph, visited):
 
     for i in graph.parse_outbound(vertex):
         if i not in visited:
-            DFS(i, graph, visited)
-
-
-    return visited
+            DFS_Utility(i, graph, visited)
 
 def connected_components(graph):
     '''
@@ -61,4 +62,53 @@ def connected_components(graph):
         if visited == 0:
             connectedComponents.append(BFS(i, graph))
     return connectedComponents
+
+def Backwards_DFS(vertex, graph):
+    visited = []
+    Backwards_DFS_Utility(vertex, graph, visited)
+    return visited
+
+def Backwards_DFS_Utility(vertex, graph, visited):
+    '''
+    Depth first traversal
+    :param vertex:
+    :param graph:
+    :param visited:
+    :return:
+    :exception: invalid vertex
+    '''
+    if not vertex < graph.vertices:
+        raise VertexException("Vertex doesn't exist")
+
+    visited.append(vertex)
+
+    for i in graph.parse_inbound(vertex):
+        if i not in visited:
+            Backwards_DFS_Utility(i, graph, visited)
+
+
+def strongly_connected_components(graph):
+    '''
+    :param graph:
+    :return:strongly connected components of the graph
+    '''
+    stack = []
+    for i in range(graph.vertices):
+        if i not in stack:
+            DFS_Utility(i, graph, stack)
+
+    components = []
+
+    while len(stack) != 0:
+        vertex = stack.pop(0)
+
+        exists = 0
+        for component in components:
+            if vertex in component:
+                exists = 1
+
+        if exists == 0:
+            components.append(Backwards_DFS(vertex, graph))
+
+    return components
 

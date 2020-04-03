@@ -122,7 +122,13 @@ class Controller:
         return BFS(int(vertex), self._graph)
 
     def depth_first(self, vertex):
-        return DFS(int(vertex), self._graph, [])
+        return DFS(int(vertex), self._graph)
+
+    def backwards_depth_first(self, vertex):
+        return Backwards_DFS(int(vertex), self._graph)
 
     def connected_components(self):
         return connected_components(self._graph)
+
+    def strongly_connected_components(self):
+        return strongly_connected_components(self._graph)
