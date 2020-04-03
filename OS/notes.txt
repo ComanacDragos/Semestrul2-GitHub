@@ -35,6 +35,18 @@ wait <number>
 
 
 
+L6
+wait returneaza pid ul  copiului terminat
+
+perror
+
+citim din 0
+scriem in 1
+
+
+
+wait(status) status - cum s a terminat procesul fiu
+
 L4
 
 sed .. g global
