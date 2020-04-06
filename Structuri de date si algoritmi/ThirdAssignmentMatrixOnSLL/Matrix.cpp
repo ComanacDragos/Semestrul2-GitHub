@@ -27,7 +27,7 @@ int Matrix::nrColumns() const {
 }
 
 
-//O(n)
+//O(n) - where n is the number of non-null elements in the matrix
 TElem Matrix::element(int i, int j) const {
 	//TODO - Implementation
 	if (i < 0 || j < 0 || i >= this->lines || j >= this->columns)
@@ -46,7 +46,7 @@ TElem Matrix::element(int i, int j) const {
 	return NULL_TELEM;
 }
 
-//O(n)
+//O(n) - where n is the number of non-null elements in the matrix
 TElem Matrix::modify(int i, int j, TElem e) {
 	//TODO - Implementation
 	if (i < 0 || j < 0 || i >= lines || j >= columns)
@@ -148,10 +148,11 @@ TElem Matrix::modify(int i, int j, TElem e) {
 		//fourth case: update a null value with a non-null value
 		previous->next = new_node;
 		new_node->next = p;
+		return NULL_TELEM;
 	}
 }
 
-//theta(n)
+//theta(n) - where n is the number of non-null elements in the matrix
 Matrix::~Matrix()
 {
 	Node* p = this->head;

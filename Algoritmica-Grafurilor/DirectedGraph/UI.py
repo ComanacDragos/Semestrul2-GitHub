@@ -259,6 +259,7 @@ x. Exit traversal menu
     def UI_strongly_connected_components(self):
         components = self._controller.strongly_connected_components()
         cont = 1
+        print("The strongly connected components are: ")
         for i in components:
             print(str(cont) + ". ", end=' ')
             for j in i:

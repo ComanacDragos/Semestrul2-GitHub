@@ -86,29 +86,59 @@ def Backwards_DFS_Utility(vertex, graph, visited):
         if i not in visited:
             Backwards_DFS_Utility(i, graph, visited)
 
+def stackDFS(graph, vertex, visited, processed):
+
+    for i in graph.parse_outbound(vertex):
+        if i not in visited:
+            visited.append(i)
+            stackDFS(graph, i, visited, processed)
+
+    processed.append(vertex)
 
 def strongly_connected_components(graph):
     '''
     :param graph:
     :return:strongly connected components of the graph
     '''
-    stack = []
+    processed = []
+    visited = []
     for i in range(graph.vertices):
-        if i not in stack:
-            DFS_Utility(i, graph, stack)
+        if i not in visited:
+            visited.append(i)
+            stackDFS(graph, i, visited, processed)
 
-    components = []
+    components = {}
+    print(processed)
+    print(visited)
 
-    while len(stack) != 0:
-        vertex = stack.pop(0)
+    visited.clear()
+    q = []
+    c = -1
 
-        exists = 0
-        for component in components:
-            if vertex in component:
-                exists = 1
-
-        if exists == 0:
-            components.append(Backwards_DFS(vertex, graph))
+    while len(processed) != 0:
+        s = processed.pop()
+        if s not in visited:
+            c += 1
+            components[s] = c
+            q.insert(0, s)
+            visited.append(s)
+            # backwards BFS to find the elements from current component
+            while len(q) != 0:
+                x = q.pop()
+                for y in graph.parse_inbound(x):
+                    if y not in visited:
+                        visited.append(y)
+                        q.insert(0, y)
+                        components[y] = c
 
     return components
 
+
+g = DoubleDictGraph()
+loadGraph(g,"third_small_graph.txt")
+g.add_vertex()
+g.add_edge(4,5,3)
+
+comp = strongly_connected_components(g)
+for i in comp:
+    print(i, comp[i])

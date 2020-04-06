@@ -131,4 +131,13 @@ class Controller:
         return connected_components(self._graph)
 
     def strongly_connected_components(self):
-        return strongly_connected_components(self._graph)
+        map = strongly_connected_components(self._graph)
+        components = []
+
+        for i in range(max(map.values())+1):
+            components.append([])
+
+        for i in map:
+            components[map[i]].append(i)
+
+        return components
