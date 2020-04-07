@@ -1,0 +1,3 @@
+﻿  Set.cpp
+E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\Set.h(18): warning C4091: 'typedef ': ignored on left of 'Set::DLLANode' when no variable is declared
+  Lab3SetOnDLLA.vcxproj -> E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\Debug\Lab3SetOnDLLA.exe

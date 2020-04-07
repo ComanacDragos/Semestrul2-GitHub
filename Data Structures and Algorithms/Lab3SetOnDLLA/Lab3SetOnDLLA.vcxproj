@@ -138,6 +138,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="ExtendedTest.cpp" />
+    <ClCompile Include="Set.cpp" />
+    <ClCompile Include="SetIterator.cpp" />
+    <ClCompile Include="ShortTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ExtendedTest.h" />
+    <ClInclude Include="Set.h" />
+    <ClInclude Include="SetIterator.h" />
+    <ClInclude Include="ShortTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

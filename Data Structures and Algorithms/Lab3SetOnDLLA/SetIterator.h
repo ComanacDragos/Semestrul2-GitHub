@@ -1,5 +1,6 @@
 #pragma once
 #include "Set.h"
+#include <exception>
 
 class SetIterator
 {
@@ -11,6 +12,7 @@ private:
 	SetIterator(const Set& s);
 
 	//TODO - Representation
+	int current;
 
 public:
 	void first();

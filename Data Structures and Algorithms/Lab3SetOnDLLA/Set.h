@@ -12,6 +12,13 @@ class Set {
 
     private:
 		//TODO - Representation
+        typedef struct DLLANode {
+            TElem info;
+            int next, prev;
+        };
+
+        DLLANode* nodes;
+        int capacity, length, head, tail, firstEmpty;
 
     public:
         //implicit constructor
