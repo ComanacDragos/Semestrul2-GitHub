@@ -6,7 +6,6 @@ using namespace std;
 Matrix::Matrix(int nrLines, int nrCols) {
 	   
 	//TODO - Implementation
-	this->length = 0;
 	this->lines = nrLines;
 	this->columns = nrCols;
 	this->head = NULL;
@@ -150,6 +149,31 @@ TElem Matrix::modify(int i, int j, TElem e) {
 		new_node->next = p;
 		return NULL_TELEM;
 	}
+}
+
+
+// Best case Theta(1) : the list is empty
+// Worst case Theta(n): when we need to check for the last line (meaning that we need to parse all elements)
+// Overall: O(n)
+// where n is the number of non null elements in the matrix
+int Matrix::numberOfNonZeroElems(int line) const
+{
+	if (line < 0 || line >= this->lines)
+		throw exception("bad line");
+
+	int numberOfNonZeroElements = 0;
+	Node* p = this->head;
+
+
+	while (p!= NULL && p->line < line)
+		p = p->next;
+
+	while (p!=NULL && p->line == line)
+	{
+		p = p->next;
+		numberOfNonZeroElements += 1;
+	}
+	return numberOfNonZeroElements;
 }
 
 //theta(n) - where n is the number of non-null elements in the matrix

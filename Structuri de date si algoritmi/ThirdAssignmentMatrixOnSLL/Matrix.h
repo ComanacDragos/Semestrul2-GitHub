@@ -14,7 +14,7 @@ class Matrix {
 
 private:
 	//TODO - Representation
-	int length, lines, columns;
+	int lines, columns;
 	Node* head;
 public:
 	//constructor
@@ -34,6 +34,8 @@ public:
 	//returns the previous value from the position
 	//throws exception if (i,j) is not a valid position in the Matrix
 	TElem modify(int i, int j, TElem e);
+
+	int numberOfNonZeroElems(int line) const;
 
 	~Matrix();
 

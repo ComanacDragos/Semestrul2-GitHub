@@ -108,8 +108,6 @@ def strongly_connected_components(graph):
             stackDFS(graph, i, visited, processed)
 
     components = {}
-    print(processed)
-    print(visited)
 
     visited.clear()
     q = []
@@ -132,13 +130,3 @@ def strongly_connected_components(graph):
                         components[y] = c
 
     return components
-
-
-g = DoubleDictGraph()
-loadGraph(g,"third_small_graph.txt")
-g.add_vertex()
-g.add_edge(4,5,3)
-
-comp = strongly_connected_components(g)
-for i in comp:
-    print(i, comp[i])
