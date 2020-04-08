@@ -104,6 +104,7 @@ bool Set::add(TElem elem) {
 
 	std::cout << "\nFirst empty: " << this->firstEmpty << "\nHead: " << this->head << "\nTail: " << this->tail;
 	*/
+
 	return true;
 }
 
@@ -111,6 +112,47 @@ bool Set::add(TElem elem) {
 bool Set::remove(TElem elem) {
 	//TODO - Implementation
 	int current = this->head;
+
+	if (this->length == 1)
+	{
+		if (this->nodes[this->head].info != elem)
+			return false;
+
+		this->nodes[this->head].next = this->firstEmpty;
+		this->firstEmpty = this->head;
+
+		this->head = -1;
+		this->tail = -1;
+
+		this->length -= 1;
+
+
+		/*
+		std::cout << '\n';
+		std::cout << "\n\nelems: ";
+		for (int i = 0; i < this->capacity; i++)
+		{
+			std::cout << this->nodes[i].info << ' ';
+		}
+
+		std::cout << "\nnext: ";
+		for (int i = 0; i < this->capacity; i++)
+		{
+			std::cout << this->nodes[i].next << ' ';
+		}
+
+		std::cout << '\n';
+		std::cout << "prev: ";
+		for (int i = 0; i < this->capacity; i++)
+		{
+			std::cout << this->nodes[i].prev << ' ';
+		}
+
+		std::cout << "\nFirst empty: " << this->firstEmpty << "\nHead: " << this->head << "\nTail: " << this->tail;
+		*/
+
+		return true;
+	}
 
 	while (current != -1)
 	{
@@ -126,6 +168,32 @@ bool Set::remove(TElem elem) {
 				this->nodes[this->firstEmpty].prev = this->tail;
 
 				this->length -= 1;
+
+
+				/*
+				std::cout << '\n';
+				std::cout << "\n\nelems: ";
+				for (int i = 0; i < this->capacity; i++)
+				{
+					std::cout << this->nodes[i].info << ' ';
+				}
+
+				std::cout << "\nnext: ";
+				for (int i = 0; i < this->capacity; i++)
+				{
+					std::cout << this->nodes[i].next << ' ';
+				}
+
+				std::cout << '\n';
+				std::cout << "prev: ";
+				for (int i = 0; i < this->capacity; i++)
+				{
+					std::cout << this->nodes[i].prev << ' ';
+				}
+
+				std::cout << "\nFirst empty: " << this->firstEmpty << "\nHead: " << this->head << "\nTail: " << this->tail;
+				*/
+
 				return true;
 			}
 
@@ -139,6 +207,33 @@ bool Set::remove(TElem elem) {
 				this->nodes[this->firstEmpty].prev = this->tail;
 
 				this->length -= 1;
+
+
+				/*
+				std::cout << '\n';
+				std::cout << "\n\nelems: ";
+				for (int i = 0; i < this->capacity; i++)
+				{
+					std::cout << this->nodes[i].info << ' ';
+				}
+
+				std::cout << "\nnext: ";
+				for (int i = 0; i < this->capacity; i++)
+				{
+					std::cout << this->nodes[i].next << ' ';
+				}
+
+				std::cout << '\n';
+				std::cout << "prev: ";
+				for (int i = 0; i < this->capacity; i++)
+				{
+					std::cout << this->nodes[i].prev << ' ';
+				}
+
+				std::cout << "\nFirst empty: " << this->firstEmpty << "\nHead: " << this->head << "\nTail: " << this->tail;
+				*/
+
+
 				return true;
 			}
 
@@ -152,6 +247,32 @@ bool Set::remove(TElem elem) {
 			this->nodes[next].prev = previous;
 
 			this->length -= 1;
+
+
+			/*
+			std::cout << '\n';
+			std::cout << "\n\nelems: ";
+			for (int i = 0; i < this->capacity; i++)
+			{
+				std::cout << this->nodes[i].info << ' ';
+			}
+
+			std::cout << "\nnext: ";
+			for (int i = 0; i < this->capacity; i++)
+			{
+				std::cout << this->nodes[i].next << ' ';
+			}
+
+			std::cout << '\n';
+			std::cout << "prev: ";
+			for (int i = 0; i < this->capacity; i++)
+			{
+				std::cout << this->nodes[i].prev << ' ';
+			}
+
+			std::cout << "\nFirst empty: " << this->firstEmpty << "\nHead: " << this->head << "\nTail: " << this->tail;
+			*/
+
 			return true;
 		}
 		current = this->nodes[current].next;

@@ -26,6 +26,9 @@ void SetIterator::next() {
 TElem SetIterator::getCurrent()
 {
 	//TODO - Implementation
+	if (this->valid() == false)
+		throw std::exception("invalid iterator");
+
 	return set.nodes[this->current].info;
 }
 
