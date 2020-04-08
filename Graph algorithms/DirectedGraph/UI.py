@@ -185,7 +185,7 @@ x. Exit traversal menu
             t2 = datetime.now()
             t = t2-t1
             print("The graph was loaded successfuly in: " + str(t))
-        except ValueError:
+        except FileNotFoundError:
             print("The requested graph does not exist")
 
     def UI_store_graph(self):

@@ -14,13 +14,34 @@ def BFS(vertex, graph):
     queue = graph.parse_outbound(vertex)
     visited = [vertex]
 
+
+    #print("Visited at start: " + str(visited))
+    #print("Queue at start: " + str(queue))
+
     current = 0
+    #cont = 0
     while len(queue) > current:
+
         vertex = queue[current]
+
         if vertex not in visited:
+            '''
+            print("\nStep " + str(cont + 1) + ": ")
+            print("Vertex: " + str(vertex) + " and Current position in queue: " + str(current))
+            print("Visited before parsing outbound vertices: " + str(visited))
+            print("Queue before parsing outbound vertices: " + str(queue))
+
+            cont += 1
+            '''
             queue += graph.parse_outbound(vertex)
             visited.append(vertex)
+
+            '''
+            print("Visited after parsing outbound vertices: " + str(visited))
+            print("Queue after parsing outbound vertices: " + str(queue))
+            '''
         current += 1
+
 
     return visited
 
@@ -60,7 +81,9 @@ def connected_components(graph):
                 visited = 1
                 break
         if visited == 0:
+            #print("\nComponent " + str(len(connectedComponents) +1))
             connectedComponents.append(BFS(i, graph))
+            #print()
     return connectedComponents
 
 def Backwards_DFS(vertex, graph):
