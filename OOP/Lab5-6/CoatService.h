@@ -6,7 +6,7 @@ class CoatService
 {
 private:
 	CoatRepository coatRepository;
-	DynamicVector <TrenchCoat> userCoats;
+	std::vector <TrenchCoat> userCoats;
 	CoatsIterator coatsIterator;
 
 public:
@@ -29,9 +29,7 @@ public:
 
 	void updateCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price);
 	
-	DynamicVector<TrenchCoat> listCoats();
-	
-	void openInBrowser(const std::string& name);
+	std::vector<TrenchCoat> listCoats();
 
 	TrenchCoat getCoatFromRepository(int position);
 
@@ -42,9 +40,9 @@ public:
 
 	void saveTrenchCoatToUserList(const std::string& name);
 
-	DynamicVector<TrenchCoat> listFilteredCoats(const std::string& size, const std::string& price);
+	std::vector<TrenchCoat> listFilteredCoats(const std::string& size, const std::string& price);
 
-	DynamicVector<TrenchCoat> getUserCoats();
+	std::vector<TrenchCoat> getUserCoats();
 
 	void emptyUserCoats();
 

@@ -1,0 +1,504 @@
+#include "tests.h"
+
+void TrenchCoatgetName_TrenchCoat_CorrectName()
+{
+	TrenchCoat coat = { "name", "size", "photographSource", 4 };
+
+	assert(coat.getName().compare("name") == 0);
+}
+
+void TrenchCoatgetSize_TrenchCoat_CorrectSize()
+{
+	TrenchCoat coat = { "name", "size", "photographSource", 4 };
+
+	assert(coat.getSize().compare("size") == 0);
+}
+
+void TrenchCoatgetPhotographSource_TrenchCoat_CorrectPhotographSource()
+{
+	TrenchCoat coat = { "name", "size", "photographSource", 4 };
+
+	assert(coat.getPhotographSource().compare("photographSource") == 0);
+}
+
+void TrenchCoatInsertionExtractionOperator_Coat_CoatWrittenInFile()
+{
+	std::ofstream fout(TestFile);
+
+	TrenchCoat coat{ "name", "size", "source", 4 };
+
+	fout << coat;
+
+	fout.close();
+
+	std::ifstream fin(TestFile);
+
+	TrenchCoat coatFromFile;
+
+	fin >> coatFromFile;
+
+	assert(coatFromFile.to_string() == coat.to_string());
+	
+	fin.close();
+
+	std::ofstream clearFile(TestFile);
+	clearFile.close();
+}
+
+void TrenchCoatOperatorEqual_ValidCoat_SameCoat()
+{
+	TrenchCoat coat1{"name", "size", "source", 5}, coat2;
+	coat2 = coat1;
+	coat1 = coat1;
+	assert(coat1.to_string() == coat2.to_string());
+}
+
+void test_TrenchCoat()
+{
+	TrenchCoatgetName_TrenchCoat_CorrectName();
+	TrenchCoatgetSize_TrenchCoat_CorrectSize();
+	TrenchCoatgetPhotographSource_TrenchCoat_CorrectPhotographSource();
+	TrenchCoatInsertionExtractionOperator_Coat_CoatWrittenInFile();
+	TrenchCoatOperatorEqual_ValidCoat_SameCoat();
+}
+
+void FileRepositoryStoreCoat_ValidCoat_CoatStored()
+{
+	FileRepository repo{ TestFile };
+
+	TrenchCoat coat{ "name", "size","source", 5 };
+
+	repo.storeCoat(coat);
+
+	std::vector<TrenchCoat> coats = repo.getAllCoats();
+
+	assert(coats.size() == 1);
+
+	repo.clearFile();
+}
+
+void FileRepositoryStoreCoat_InvalidCoat_CoatNotStored()
+{
+	FileRepository repo{ TestFile };
+
+	TrenchCoat coat{ "name", "size","source", 5 };
+
+	repo.storeCoat(coat);
+	
+	try
+	{
+		repo.storeCoat(coat);
+		assert(false);
+	}
+	catch (ExistentTrenchCoat&)
+	{
+		assert(true);
+	}
+	repo.clearFile();
+}
+
+void FileRepositoryDeleteCoat_ValidCoat_CoatDeleted()
+{
+	FileRepository repo{ TestFile };
+
+	TrenchCoat coat{ "name", "size","source", 5 };
+
+	repo.storeCoat(coat);
+
+	repo.deleteCoat("name");
+
+	assert(repo.getAllCoats().size() == 0);
+
+	repo.clearFile();
+}
+
+void FileRepositoryDeleteCoat_InvalidCoat_CoatNotDeleted()
+{
+	FileRepository repo{ TestFile };
+
+	TrenchCoat coat{ "name", "size","source", 5 };
+
+	repo.storeCoat(coat);
+
+	try
+	{
+		repo.deleteCoat("Name1");
+		assert(false);
+	}
+	catch (InexistentTrenchCoat&)
+	{
+		assert(true);
+	}
+	repo.clearFile();
+}
+
+void FileRepositoryUpdateCoat_ValidCoat_CoatUpdated()
+{
+	FileRepository repo{ TestFile };
+
+	TrenchCoat coat{ "name", "size","source", 5 }, newCoat{ "name", "newSize", "newSource", 10 };
+
+	repo.storeCoat(coat);
+
+	repo.updateCoat(newCoat);
+
+	std::vector<TrenchCoat> coats = repo.getAllCoats();
+
+	assert(coats.size() == 1 
+		&& coats[0].to_string() == newCoat.to_string());
+
+	repo.clearFile();
+}
+
+void FileRepositoryUpdateCoat_InvalidCoat_ExceptionRaised()
+{
+	FileRepository repo{ TestFile };
+
+	TrenchCoat coat{ "name", "size","source", 5 }, newCoat{ "name", "newSize", "newSource", 10 };
+
+	repo.storeCoat(coat);
+
+	repo.updateCoat(newCoat);
+	
+	try
+	{
+		repo.updateCoat(TrenchCoat("InexistentName", "size", "source", 10));
+		assert(false);
+	}
+	catch (InexistentTrenchCoat&)
+	{
+		assert(true);
+	}
+	repo.clearFile();
+}
+
+void FileRepositoryGetCoatFromRepository_ValidIndex_CorrectCoat()
+{
+	FileRepository repo{ TestFile };
+
+	TrenchCoat coat{ "name", "size","source", 5 };
+
+	repo.storeCoat(coat);
+
+	assert(repo.getCoatFromRepository(0).to_string() == coat.to_string());
+
+	repo.clearFile();
+}
+
+void FileRepositoryGetCoatFromRepository_InvalidIndex_ExceptionThrown()
+{
+	FileRepository repo{ TestFile };
+
+	TrenchCoat coat{ "name", "size","source", 5 };
+
+	repo.storeCoat(coat);
+
+	try
+	{
+		TrenchCoat coat = repo.getCoatFromRepository(1);
+		assert(false);
+	}
+	catch(BadPosition&)
+	{
+		assert(true);
+	}
+
+	repo.clearFile();
+}
+
+void FileRepositoryFindCoatFromRepository_ValidName_CorrectCoat()
+{
+	FileRepository repo{ TestFile };
+
+	TrenchCoat coat{ "name", "size","source", 5 };
+
+	repo.storeCoat(coat);
+
+	TrenchCoat foundCoat = repo.findCoatFromRepository("name");
+
+	assert(coat.to_string() == foundCoat.to_string());
+	
+	repo.clearFile();
+}
+
+void FileRepositoryFindCoatFromRepository_InvalidName_Exception()
+{
+	FileRepository repo{ TestFile };
+
+	TrenchCoat coat{ "name", "size","source", 5 };
+
+	repo.storeCoat(coat);
+
+	try
+	{
+		TrenchCoat foundCoat = repo.findCoatFromRepository("name1");
+		assert(false);
+	}
+	catch(InexistentTrenchCoat&)
+	{
+		assert(true);
+	}
+	repo.clearFile();
+}
+
+void FileRepositoryGetRepositoryLength_RepositoryWithOneElement_One()
+{
+	FileRepository repo{};
+	repo.setPath(TestFile);
+
+	TrenchCoat coat{ "name", "size","source", 5 };
+
+	repo.storeCoat(coat);
+
+	assert(repo.getRepositoryLength() == 1);
+	repo.clearFile();
+}
+
+void test_FileRepository()
+{
+	FileRepositoryStoreCoat_ValidCoat_CoatStored();
+	FileRepositoryStoreCoat_InvalidCoat_CoatNotStored();
+	FileRepositoryDeleteCoat_ValidCoat_CoatDeleted();
+	FileRepositoryDeleteCoat_InvalidCoat_CoatNotDeleted();
+	FileRepositoryUpdateCoat_ValidCoat_CoatUpdated();
+	FileRepositoryUpdateCoat_InvalidCoat_ExceptionRaised();
+	FileRepositoryGetCoatFromRepository_ValidIndex_CorrectCoat();
+	FileRepositoryGetCoatFromRepository_InvalidIndex_ExceptionThrown();
+	FileRepositoryFindCoatFromRepository_ValidName_CorrectCoat();
+	FileRepositoryFindCoatFromRepository_InvalidName_Exception();
+	FileRepositoryGetRepositoryLength_RepositoryWithOneElement_One();
+}
+
+void CoatServiceStoreCoat_ValidCoat_CoatAdded()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+	
+	service.storeCoatService("name", "size", "photoSource", "3");
+	
+	assert(service.getCoatFromRepository(0).to_string() == TrenchCoat("name", "size", "photoSource", 3).to_string());
+
+	service.clearFile();
+}
+
+void CoatServiceStoreCoat_InvalidCoat_CoatNotAdded()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+
+	service.storeCoatService("name", "size", "photoSource", "3");
+
+	try
+	{
+		service.storeCoatService("name", "size", "photoSource", "3");
+		assert(false);
+	}
+	catch(ExistentTrenchCoat&)
+	{
+		assert(true);
+	}
+
+	service.clearFile();
+}
+
+void CoatServiceDeleteCoat_ValidCoat_CoatDeleted()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+
+	service.storeCoatService("name", "size", "photoSource", "3");
+
+	service.storeCoatService("name1", "size", "photoSource", "3");
+
+	//assert(service.deleteCoatService("name") == 0 && service.getCoatFromRepository(0) == TrenchCoat("name1", "size", "photoSource", 3));
+
+
+	service.clearFile();
+}
+
+void CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+
+	service.storeCoatService("name", "size", "photoSource", "3");
+
+	service.deleteCoatService("name");
+
+	//assert(service.deleteCoatService("name") == 1);
+
+	service.clearFile();
+}
+
+void CoatServiceUpdateCoat_ValidCoat_UpdatedCoat()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+
+	service.storeCoatService("name", "size", "photoSource", "3");
+	service.updateCoatService("name", "newSize", "newPhotoSource", "5");
+
+	std::vector<TrenchCoat> listOfCoats = service.listCoats();
+
+	TrenchCoat coat = listOfCoats[0];
+
+	assert(coat.to_string().compare("name newSize 5 newPhotoSource") == 0);
+
+	service.clearFile();
+}
+
+void CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+
+	service.storeCoatService("name", "size", "source", "3");
+
+	service.saveTrenchCoatToUserList("name");
+
+	assert(service.getUserCoats()[0] == TrenchCoat("name", "size", "source", 3));
+
+	service.clearFile();
+}
+
+void CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+
+	service.storeCoatService("name", "size", "source", "3");
+	service.storeCoatService("name1", "size", "source", "5");
+	service.storeCoatService("name2", "size2", "source", "3");
+
+	std::vector<TrenchCoat> filtered = service.listFilteredCoats("size", "3");
+
+	assert(filtered[0] == TrenchCoat("name", "size", "source", 3) && filtered.size() == 1);
+
+	service.clearFile();
+}
+
+void CoatServiceIsNumber_Number_True()
+{
+	CoatService srv;
+	std::string number = "234";
+	assert(srv.isNumber(number) == true);
+}
+
+void CoatServiceIsNumber_NotNumber_False()
+{
+	CoatService srv;
+	std::string number = "234a";
+	assert(srv.isNumber(number) == false);
+}
+void test_CoatService()
+{
+	CoatServiceStoreCoat_ValidCoat_CoatAdded();
+	//CoatServiceStoreCoat_InvalidCoat_CoatNotAdded();
+	//CoatServiceDeleteCoat_ValidCoat_CoatDeleted();
+	//CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted();
+	//CoatServiceUpdateCoat_ValidCoat_UpdatedCoat();
+	//CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded();
+	//CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter();
+	CoatServiceIsNumber_NotNumber_False();
+	CoatServiceIsNumber_Number_True();
+
+}
+
+
+void CoatsIteratorGetCurrent_DynamicVectorWithOneElement_CorrectElement()
+{
+	TrenchCoat coat{ "a","a","a",1 };
+	std::vector<TrenchCoat> dynVector;
+	dynVector.push_back(coat);
+
+	CoatsIterator iterator{ dynVector };
+
+	assert(iterator.getCurrent() == coat);
+}
+
+void CoatsIteratorNext_DynamicVectorWithTwoElements_CorrectSecondElement()
+{
+	TrenchCoat coat1{ "a","a","a",1 };
+	TrenchCoat coat2{ "b","a","a",1 };
+	std::vector<TrenchCoat> dynVector;
+	dynVector.push_back(coat1);
+	dynVector.push_back(coat2);
+
+	CoatsIterator iterator{ dynVector };
+	iterator.next();
+
+	assert(iterator.getCurrent() == coat2);
+}
+
+void CoatsIteratorNext_DynamicVectorWithTwoElements_LoopsBack()
+{
+	TrenchCoat coat1{ "a","a","a",1 };
+	TrenchCoat coat2{ "b","a","a",1 };
+	std:: vector<TrenchCoat> dynVector;
+	dynVector.push_back(coat1);
+	dynVector.push_back(coat2);
+
+	CoatsIterator iterator{ dynVector };
+	iterator.next();
+	iterator.next();
+
+	assert(iterator.getCurrent() == coat1);
+}
+
+void CoatsIteratorConstructor_SameConstructor_IteratorCopied()
+{
+	std::vector<TrenchCoat> coats;
+	CoatsIterator iterator{ coats }, iterator2{};
+	CoatsIterator iter = iterator;
+	iterator = iterator;
+	iterator = iterator2;
+	assert(iterator.valid() == false);
+}
+
+void test_CoatsIterator()
+{
+	CoatsIteratorGetCurrent_DynamicVectorWithOneElement_CorrectElement();
+	CoatsIteratorNext_DynamicVectorWithTwoElements_CorrectSecondElement();
+	CoatsIteratorNext_DynamicVectorWithTwoElements_LoopsBack();
+	CoatsIteratorConstructor_SameConstructor_IteratorCopied();
+}
+
+void tokenize_String_SplitString()
+{
+	std::string stringToBeSplit{"abc , , , 123"};
+	char delimiters[3]=", ";
+	std::vector<std::string> splitString{ tokenize(stringToBeSplit, delimiters) };
+	assert(splitString[0].compare("abc") == 0 
+		&& splitString[1].compare("123") == 0);
+}
+
+void Exceptions_Message_CorrectMessage()
+{
+	try
+	{
+		throw Exceptions("message");
+	}
+	catch (Exceptions & exception)
+	{
+		assert(strcmp(exception.what(), "message") == 0);
+	}
+}
+
+void testAll()
+{
+	test_TrenchCoat();
+	test_CoatService();
+	test_CoatsIterator();
+	test_FileRepository();  
+	tokenize_String_SplitString();
+	Exceptions_Message_CorrectMessage();
+	std::cout << "The tests were successful\n";
+}
+

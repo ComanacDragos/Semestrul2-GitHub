@@ -71,6 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -142,7 +143,6 @@
     <ClCompile Include="CoatService.cpp" />
     <ClCompile Include="CoatsIterator.cpp" />
     <ClCompile Include="CommandUserInterface.cpp" />
-    <ClCompile Include="DynamicVector.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="tests.cpp" />
     <ClCompile Include="TrenchCoat.cpp" />
@@ -152,7 +152,6 @@
     <ClInclude Include="CoatService.h" />
     <ClInclude Include="CoatsIterator.h" />
     <ClInclude Include="CommandUserInterface.h" />
-    <ClInclude Include="DynamicVector.h" />
     <ClInclude Include="tests.h" />
     <ClInclude Include="TrenchCoat.h" />
   </ItemGroup>

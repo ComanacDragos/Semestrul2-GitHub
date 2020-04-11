@@ -51,6 +51,8 @@ void CommandUserInterface::startProgram()
 
 		numberOfParameters = i;
 		char command[WordInCommandLenght];
+
+
 		strcpy(command, commandParameters[0]);
 
 		if (numberOfParameters == 2)
@@ -220,10 +222,10 @@ void CommandUserInterface::listCoats(char** parameters, int numberOfParameters)
 	if (numberOfParameters != 1)
 		std::cout << "Bad command\n";
 
-	DynamicVector<TrenchCoat> coatList = this->coatService.listCoats();
+	std::vector<TrenchCoat> coatList = this->coatService.listCoats();
 
-	for (int i = 0; i < coatList.getLength(); i++)
-		std::cout << coatList.getElement(i).to_string() << '\n';
+	for (int i = 0; i < coatList.size(); i++)
+		std::cout << coatList[i].to_string() << '\n';
 }
 
 
@@ -331,10 +333,10 @@ void CommandUserInterface::listFilteredCoats(char** parameters, int numberOfPara
 	}
 	std::string size = parameters[1];
 	std::string price = parameters[2];
-	DynamicVector<TrenchCoat> filteredCoats = this->coatService.listFilteredCoats(size, price);
+	std::vector<TrenchCoat> filteredCoats = this->coatService.listFilteredCoats(size, price);
 
-	for (int i = 0; i < filteredCoats.getLength(); i++)
-		std::cout << filteredCoats.getElement(i).to_string() << '\n';
+	for (int i = 0; i < filteredCoats.size(); i++)
+		std::cout << filteredCoats[i].to_string() << '\n';
 }
 
 void CommandUserInterface::listUsersCoats(char** parameters, int numberOfParameters)
@@ -343,8 +345,8 @@ void CommandUserInterface::listUsersCoats(char** parameters, int numberOfParamet
 	{
 		std::cout << "Bad command\n";
 	}
-	DynamicVector<TrenchCoat> userCoats = this->coatService.getUserCoats();
+	std:: vector<TrenchCoat> userCoats = this->coatService.getUserCoats();
 	
-	for (int i = 0; i < userCoats.getLength(); i++)
-		std::cout << userCoats.getElement(i).to_string() << '\n';
+	for (int i = 0; i < userCoats.size(); i++)
+		std::cout << userCoats[i].to_string() << '\n';
 }

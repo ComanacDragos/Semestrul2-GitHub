@@ -28,61 +28,6 @@ void test_TrenchCoat()
 	TrenchCoatgetPhotographSource_TrenchCoat_CorrectPhotographSource();
 }
 
-void DynamicVectoraddElement_ValidElement_ElementAdded()
-{
-	TrenchCoat coat = { "name", "size", "photographSource", 4 };
-	DynamicVector<TrenchCoat> dynVector;
-	dynVector.addElement(coat);
-
-	assert(dynVector.getLength() == 1);
-}
-
-void DynamicVectorremoveElement_ValidPosition_ElementRemoved()
-{
-	TrenchCoat coat = { "name", "size", "photographSource", 4 };
-	DynamicVector<TrenchCoat> dynVector;
-	dynVector.addElement(coat);
-	dynVector.addElement(TrenchCoat("name1", "size", "source", 3));
-	dynVector.removeFromPosition(0);
-
-	assert(dynVector.getLength() == 1);
-}
-
-void DynamicVectorIncreaseSize_DynamicVector_LargerDynamicVector()
-{
-	DynamicVector<TrenchCoat> dynVector;
-	TrenchCoat coat1{ "n1", "s", "s", 4 };
-	TrenchCoat coat2{ "n2", "s", "s", 4 };
-	TrenchCoat coat3{ "n3", "s", "s", 4 };
-	dynVector.addElement(coat1);
-	dynVector.addElement(coat2);
-	dynVector.addElement(coat3);
-
-	assert(dynVector.getLength() == 3);
-}
-
-void DynamicVectorIncreaseSize_DynamicVector_SmallerDynamicVector()
-{
-	DynamicVector<TrenchCoat> dynVector;
-	TrenchCoat coat1{ "n1", "s", "s", 4 };
-	TrenchCoat coat2{ "n2", "s", "s", 4 };
-	TrenchCoat coat3{ "n3", "s", "s", 4 };
-	dynVector.addElement(coat1);
-	dynVector.addElement(coat2);
-	dynVector.addElement(coat3);
-	dynVector.removeFromPosition(1);
-
-	assert(dynVector.getLength() == 2);
-}
-
-void test_DynamicVector()
-{
-	DynamicVectoraddElement_ValidElement_ElementAdded();
-	DynamicVectorremoveElement_ValidPosition_ElementRemoved();
-	DynamicVectorIncreaseSize_DynamicVector_LargerDynamicVector();
-	DynamicVectorIncreaseSize_DynamicVector_SmallerDynamicVector();
-}
-
 void CoatRepositoryStoreCoat_ValidCoat_ElementAdded()
 {
 	TrenchCoat coat = { "name", "size", "photographSource", 4 };
@@ -235,9 +180,9 @@ void CoatServiceUpdateCoat_ValidCoat_UpdatedCoat()
 	service.storeCoatService("name", "size", "photoSource", "3");
 	service.updateCoatService("name", "newSize", "newPhotoSource", "5");
 
-	DynamicVector<TrenchCoat> listOfCoats = service.listCoats();
+	std::vector<TrenchCoat> listOfCoats = service.listCoats();
 
-	TrenchCoat coat = listOfCoats.getElement(0);
+	TrenchCoat coat = listOfCoats[0];
 
 	assert(coat.to_string().compare("name newSize 5 newPhotoSource") == 0);
 }
@@ -250,7 +195,7 @@ void CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded()
 
 	service.saveTrenchCoatToUserList("name");
 
-	assert(service.getUserCoats().getElement(0) == TrenchCoat("name", "size", "source", 3));
+	assert(service.getUserCoats()[0] == TrenchCoat("name", "size", "source", 3));
 }
 
 void CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter()
@@ -261,9 +206,9 @@ void CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter()
 	service.storeCoatService("name1", "size", "source", "5");
 	service.storeCoatService("name2", "size2", "source", "3");
 
-	DynamicVector<TrenchCoat> filtered = service.listFilteredCoats("size", "3");
+	std::vector<TrenchCoat> filtered = service.listFilteredCoats("size", "3");
 
-	assert(filtered.getElement(0) == TrenchCoat("name", "size", "source", 3) && filtered.getLength() == 1);
+	assert(filtered[0] == TrenchCoat("name", "size", "source", 3) && filtered.size() == 1);
 }
 
 void test_CoatService()
@@ -280,8 +225,8 @@ void test_CoatService()
 void CoatsIteratorGetCurrent_DynamicVectorWithOneElement_CorrectElement()
 {
 	TrenchCoat coat{ "a","a","a",1 };
-	DynamicVector<TrenchCoat> dynVector;
-	dynVector.addElement(coat);
+	std::vector<TrenchCoat> dynVector;
+	dynVector.push_back(coat);
 
 	CoatsIterator iterator{ dynVector };
 
@@ -292,9 +237,9 @@ void CoatsIteratorNext_DynamicVectorWithTwoElements_CorrectSecondElement()
 {
 	TrenchCoat coat1{ "a","a","a",1 };
 	TrenchCoat coat2{ "b","a","a",1 };
-	DynamicVector<TrenchCoat> dynVector;
-	dynVector.addElement(coat1);
-	dynVector.addElement(coat2);
+	std::vector<TrenchCoat> dynVector;
+	dynVector.push_back(coat1);
+	dynVector.push_back(coat2);
 
 	CoatsIterator iterator{ dynVector };
 	iterator.next();
@@ -306,9 +251,9 @@ void CoatsIteratorNext_DynamicVectorWithTwoElements_LoopsBack()
 {
 	TrenchCoat coat1{ "a","a","a",1 };
 	TrenchCoat coat2{ "b","a","a",1 };
-	DynamicVector<TrenchCoat> dynVector;
-	dynVector.addElement(coat1);
-	dynVector.addElement(coat2);
+	std:: vector<TrenchCoat> dynVector;
+	dynVector.push_back(coat1);
+	dynVector.push_back(coat2);
 
 	CoatsIterator iterator{ dynVector };
 	iterator.next();
@@ -327,7 +272,6 @@ void test_CoatsIterator()
 void testAll()
 {
 	test_TrenchCoat();
-	test_DynamicVector();
 	test_CoatRepository();
 	test_CoatService();
 	test_CoatsIterator();
