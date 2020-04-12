@@ -74,17 +74,21 @@ std::string TrenchCoat::to_string()
 	return this->name + " " + this->size + " " + std::to_string(this->price) + " " + this->photographSource;
 }
 
-std::vector<std::string> tokenize(std::string string, char delimiter[])
+std::vector<std::string> tokenize(std::string string, const char delimiter)
 {
-	std::vector <std::string> result;
+	std::vector<std::string> result;
+	
+	std::stringstream stringStream{ string };
 	std::string token;
-	char convertedString[256];
-	strcpy(convertedString, string.c_str());
-	for (char* i = strtok(convertedString, delimiter); i != NULL; i = strtok(NULL, delimiter))
-	{
-		token = i;
-		result.push_back(token);
-	}
+
+	while (std::getline(stringStream, token, delimiter))
+		if (token.size() != 0)
+		{
+			std::stringstream tokenStringStream { token };
+			while (std::getline(tokenStringStream, token, ' '))
+				if(token.size() != 0)
+					result.push_back(token);
+		}
 
 	return result;
 }
@@ -94,8 +98,7 @@ std::istream& operator>>(std::istream& istream, TrenchCoat& coat)
 {
 	std::string line;
 	std::getline(istream, line);
-	char delimiters[3]{ ", " };
-	std::vector<std::string> tokens = tokenize(line, delimiters);
+	std::vector<std::string> tokens = tokenize(line, ',');
 
 	if (tokens.size() != 4) // bad data
 		return istream;

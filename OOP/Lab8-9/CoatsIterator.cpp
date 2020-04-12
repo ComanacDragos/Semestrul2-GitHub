@@ -33,7 +33,7 @@ void CoatsIterator::first()
 
 bool CoatsIterator::valid()
 {
-	if (this->currentPosition < 0 || this->currentPosition >= this->coats.size())
+	if (this->currentPosition < 0 || this->currentPosition >= (int)this->coats.size())
 		return false;
 	return true;
 }

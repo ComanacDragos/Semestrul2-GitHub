@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <string.h>
+#include <sstream>
 #include <vector>
 #include <utility>
 #include <algorithm>
@@ -40,7 +41,9 @@ public:
 
 };
 
-std::vector<std::string> tokenize(std::string str, char delimiter[]);
+
+//returns a vector composed of all words delimited by space and a delimiter
+std::vector<std::string> tokenize(std::string str,const char delimiter);
 
 std::istream& operator>>(std::istream& istream, TrenchCoat& coat);
 

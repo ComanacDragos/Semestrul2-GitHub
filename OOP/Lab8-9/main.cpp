@@ -9,9 +9,10 @@ int main()
 		FileRepository coatRepository;
 		CoatService coatService{ coatRepository };
 		CommandUserInterface commandUserInterface{ coatService };
-		//commandUserInterface.startProgram();
+		commandUserInterface.startProgram();
 	}
 	_CrtDumpMemoryLeaks();
+
 
 	return 0;
 }

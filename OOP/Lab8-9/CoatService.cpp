@@ -28,9 +28,6 @@ void CoatService::storeCoatService(const std::string& name, const std::string& s
 	if (this->isNumber(price) == false)
 		throw BadPrice{ "Bad price\n" };
 
-	if (atoi(price.c_str()) <= 0)
-		throw BadPrice{ "Bad price\n" };
-
 	TrenchCoat newCoat{ name, size, photographSource, atoi(price.c_str()) };
 	this->coatRepository.storeCoat(newCoat);
 }
@@ -39,15 +36,7 @@ void CoatService::deleteCoatService(const std::string name)
 {
 	this->coatRepository.deleteCoat(name);
 
-	std::remove_if(this->userCoats.begin(), this->userCoats.end(), [name](const TrenchCoat& coat) {return coat.getName() == name; });
-	/*
-	for (int i = 0; i < this->userCoats.size(); i++)
-		if (strcmp(this->userCoats[i].getName().c_str(), name.c_str()) == 0)
-		{
-			this->userCoats.erase(this->userCoats.begin()+i);
-			break;
-		}
-	*/
+	auto iterator = std::remove_if(this->userCoats.begin(), this->userCoats.end(), [name](const TrenchCoat& coat) {return coat.getName() == name; });
 }
 
 void CoatService::updateCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price)
@@ -55,19 +44,11 @@ void CoatService::updateCoatService(const std::string& name, const std::string& 
 	if (this->isNumber(price) == false)
 		throw BadPrice{ "Bad price\n" };
 
-	if (atoi(price.c_str()) <= 0)
-		throw BadPrice{ "Bad price\n" };
-
 	TrenchCoat updatedCoat{ name, size, photographSource, atoi(price.c_str()) };
 	this->coatRepository.updateCoat(updatedCoat);
 
 	std::replace_if(this->userCoats.begin(), this->userCoats.end(),
-					[updatedCoat](const TrenchCoat& coat) {return coat.getName == updatedCoat.getName(); }, updatedCoat);
-	/*
-	for (int i = 0; i < this->userCoats.size(); i++)
-		if (this->userCoats[i].getName().compare(name.c_str()) == 0)
-			this->userCoats[i] = updatedCoat;
-	*/
+					[updatedCoat](const TrenchCoat& coat) {return coat.getName() == updatedCoat.getName(); }, updatedCoat);
 }
 
 std:: vector<TrenchCoat> CoatService::listCoats()
@@ -100,15 +81,13 @@ void CoatService::saveTrenchCoatToUserList(const std::string& name)
 
 std:: vector<TrenchCoat> CoatService::listFilteredCoats(const std::string& size, const std::string& price)
 {
-	std::vector<TrenchCoat> filteredCoats;
-	
-	for (int i = 0; i < this->getRepositoryLenght(); i++)
-	{
-		TrenchCoat currentCoat = this->getCoatFromRepository(i);
+	std::vector<TrenchCoat> coatsFromRepository = this->listCoats();
+	std::vector<TrenchCoat> filteredCoats{ coatsFromRepository.size() };
+	auto iterator = std::copy_if(coatsFromRepository.begin(), coatsFromRepository.end(), filteredCoats.begin(),
+		[size, price](const TrenchCoat& currentCoat) {return currentCoat.getSize().compare(size) == 0 && currentCoat.getPrice() <= atoi(price.c_str()); });
 
-		if (currentCoat.getSize().compare(size) == 0 && currentCoat.getPrice() <= atoi(price.c_str()))
-			filteredCoats.push_back(currentCoat);
-	}
+	filteredCoats.resize(iterator - filteredCoats.begin());
+	
 	return filteredCoats;
 }
 
@@ -152,3 +131,4 @@ void CoatService::clearFile()
 {
 	this->coatRepository.clearFile();
 }
+

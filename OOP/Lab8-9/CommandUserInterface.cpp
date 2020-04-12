@@ -23,56 +23,65 @@ CommandUserInterface& CommandUserInterface::operator=(const CommandUserInterface
 
 void CommandUserInterface::startProgram()
 {
-	int isRunning = -1; // is -1 until the user chooses a mode
+	int isRunning = 1;
+	while (isRunning)
+	{
+		std::string userInput;
+		std::cout << "> ";
+		std::getline(std::cin, userInput);
+
+		if (userInput == "exit")
+			return;
+
+		std::vector <std::string> commandParameters{ tokenize(userInput, ',') };
+		int numberOfParameters = commandParameters.size();
+		std::string command = commandParameters[0];
+
+		if (command == "fileLocation")
+		{
+
+			std::string filePath;
+
+			commandParameters.erase(commandParameters.begin());
+
+			for (const std::string& string : commandParameters)
+			{
+				filePath += string;
+				if (*(string.end()-1) != '\\')
+					filePath += ' ';
+			}
+			filePath = filePath.substr(0, filePath.size() - 1);
+			this->coatService.setPath(filePath);
+			break;
+		}
+	}
+	isRunning = -1; // is -1 until the user chooses a mode
 	while (isRunning == -1)
 	{
-		char userInput[CommandLenght];
+		std::string userInput;
 		std::cout << "> ";
+		std::getline(std::cin, userInput);
 
-		std::cin.get(userInput, CommandLenght);
-		std::cin.get();
+		if (userInput == "exit")
+			return;
 
-		if (strcmp(userInput, "exit") == 0)
-			break;
-
-		char* splitPointer = strtok(userInput, " ,");
-
-		char** commandParameters = new char* [CommandLenght];
-
-		int i = 0, numberOfParameters;
-
-		while (splitPointer != NULL)
-		{
-			commandParameters[i] = new char[strlen(splitPointer) + 1];
-
-			strcpy(commandParameters[i], splitPointer);
-			splitPointer = strtok(NULL, " ,");
-			i++;
-		}
-
-		numberOfParameters = i;
-		char command[WordInCommandLenght];
-
-
-		strcpy(command, commandParameters[0]);
+		std::vector <std::string> commandParameters{ tokenize(userInput, ',') };
+		int numberOfParameters = commandParameters.size();
+		std::string command = commandParameters[0];
 
 		if (numberOfParameters == 2)
 		{
-			
-			if(strcmp(command, "mode") == 0 && strcmp(commandParameters[1], "A") == 0)
+
+			if (command == "mode" && commandParameters[1] == "A")
 			{
 				isRunning = AdministratorMode;
 			}
 
-			if (strcmp(command, "mode") == 0 && strcmp(commandParameters[1], "B") == 0)
+			if (command == "mode" && commandParameters[1] == "B")
 			{
 				isRunning = ClientMode;
 			}
 		}
-
-		for (i = 0; i < numberOfParameters; i++)
-			delete[] commandParameters[i];
-		delete[] commandParameters;
 	}
 
 	while (isRunning == AdministratorMode || isRunning == ClientMode)
@@ -88,27 +97,6 @@ void CommandUserInterface::startProgram()
 		}
 	}
 }
-
-/*
-void CommandUserInterface::startProgram()
-{
-	int isRunning = -1; // is -1 until the user chooses a mode
-	while (isRunning == -1)
-	{
-		char userInput[CommandLenght];
-		std::cout << "> ";
-
-		std::cin.get(userInput, CommandLenght);
-		std::cin.get();
-
-		if (strcmp(userInput, "exit") == 0)
-			break;
-
-	
-	}
-}
-*/
-
 
 
 void CommandUserInterface::initializeRepository()
@@ -128,70 +116,46 @@ void CommandUserInterface::initializeRepository()
 
 int CommandUserInterface::startAdministratorMode()
 {
-
 	while (1)
 	{
-		char userInput[CommandLenght];
+		std::string userInput;
 		std::cout << "> ";
+		std::getline(std::cin, userInput);
 
-		std::cin.get(userInput, CommandLenght);
-		std::cin.get();
+		if (userInput == "exit")
+			return ExitCode;
 
-		if (strcmp(userInput, "exit") == 0)
-			return 0;
+		std::vector<std::string> commandParameters{ tokenize(userInput, ',') };
+		int numberOfParameters = commandParameters.size();
+		std::string command = commandParameters[0];
 
-		char* splitPointer = strtok(userInput, " ,");
-
-		char** commandParameters = new char* [CommandLenght];
-
-		int i = 0, numberOfParameters;
-
-		while (splitPointer != NULL)
-		{
-			commandParameters[i] = new char[strlen(splitPointer) + 1];
-
-			strcpy(commandParameters[i], splitPointer);
-			splitPointer = strtok(NULL, " ,");
-			i++;
-		}
-		numberOfParameters = i;
-		char command[WordInCommandLenght];
-		strcpy(command, commandParameters[0]);
-
-		if (strcmp(command, "add") == 0)
+		if (command == "add")
 			this->storeCoat(commandParameters, numberOfParameters);
 
-		if (strcmp(command, "list") == 0)
+		if (command == "list")
 			this->listCoats(commandParameters, numberOfParameters);
 
-		if (strcmp(command, "delete") == 0)
+		if (command == "delete") 
 			this->deleteCoat(commandParameters, numberOfParameters);
 
-		if (strcmp(command, "update") == 0)
+		if (command == "update") 
 			this->updateCoat(commandParameters, numberOfParameters);
 
 
 		if (numberOfParameters == 2)
 		{
-			char mode[WordInCommandLenght];
-			strcpy(mode, commandParameters[1]);
-			if (strcmp(command, "mode") == 0 && strcmp(mode, "B") == 0)
-			{
-				for (i = 0; i < numberOfParameters; i++)
-					delete[] commandParameters[i];
-				delete[] commandParameters;
+			std::string mode = commandParameters[1];
 
+			if (command == "mode" && mode == "B")
+			{
 				return ClientMode;
 			}
 		}
 
-		for (i = 0; i < numberOfParameters; i++)
-			delete[] commandParameters[i];
-		delete[] commandParameters;
 	}
 }
 
-void CommandUserInterface::storeCoat(char** parameters, int numberOfParameters)
+void CommandUserInterface::storeCoat(std::vector<std::string> parameters, int numberOfParameters)
 {
 	if (numberOfParameters != 5)
 	{
@@ -206,6 +170,7 @@ void CommandUserInterface::storeCoat(char** parameters, int numberOfParameters)
 	try
 	{
 		this->coatService.storeCoatService(name, size, photographSource, price);
+		std::cout << "The coat was stored succesfully\n";
 	}
 	catch (Exceptions & exception)
 	{
@@ -213,7 +178,7 @@ void CommandUserInterface::storeCoat(char** parameters, int numberOfParameters)
 	}
 }
 
-void CommandUserInterface::deleteCoat(char** parameters, int numberOfParameters)
+void CommandUserInterface::deleteCoat(std::vector<std::string> parameters, int numberOfParameters)
 {
 	if (numberOfParameters != 2)
 	{
@@ -225,6 +190,7 @@ void CommandUserInterface::deleteCoat(char** parameters, int numberOfParameters)
 	try
 	{
 		this->coatService.deleteCoatService(name);
+		std::cout << "The coat was deleted succesfully\n";
 	}
 	catch (Exceptions & exception)
 	{
@@ -232,7 +198,7 @@ void CommandUserInterface::deleteCoat(char** parameters, int numberOfParameters)
 	}
 }
 
-void CommandUserInterface::updateCoat(char** parameters, int numberOfParameters)
+void CommandUserInterface::updateCoat(std::vector<std::string> parameters, int numberOfParameters)
 {
 	if (numberOfParameters != 5)
 	{
@@ -247,6 +213,7 @@ void CommandUserInterface::updateCoat(char** parameters, int numberOfParameters)
 	try
 	{
 		this->coatService.updateCoatService(name, size, photographSource, price);
+		std::cout << "The coat was updated succesfully\n";
 	}
 	catch (Exceptions& exception)
 	{
@@ -254,7 +221,7 @@ void CommandUserInterface::updateCoat(char** parameters, int numberOfParameters)
 	}
 }
 
-void CommandUserInterface::listCoats(char** parameters, int numberOfParameters)
+void CommandUserInterface::listCoats(std::vector<std::string> parameters, int numberOfParameters)
 {
 	if (numberOfParameters != 1)
 		std::cout << "Bad command\n";
@@ -262,7 +229,7 @@ void CommandUserInterface::listCoats(char** parameters, int numberOfParameters)
 	std::vector<TrenchCoat> coatList = this->coatService.listCoats();
 
 	for (TrenchCoat coat:coatList)
-		std::cout << coat.to_string() << '\n';
+		std::cout << coat.to_string()<< '\n';
 }
 
 
@@ -270,66 +237,39 @@ void CommandUserInterface::listCoats(char** parameters, int numberOfParameters)
 int CommandUserInterface::startClientUserInterface()
 {
 	this->setIterator();
-	//this->coatService.emptyUserCoats();
 	while (1)
 	{
-		char userInput[CommandLenght];
+		std::string userInput;
 		std::cout << "> ";
+		std::getline(std::cin, userInput);
 
-		std::cin.get(userInput, CommandLenght);
-		std::cin.get();
+		if (userInput == "exit")
+			return ExitCode;
 
-		if (strcmp(userInput, "exit") == 0)
-			return 0;
-
-		char* splitPointer = strtok(userInput, " ,");
-
-		char** commandParameters = new char* [CommandLenght];
-
-		int i = 0, numberOfParameters;
-
-		while (splitPointer != NULL)
-		{
-			commandParameters[i] = new char[strlen(splitPointer) + 1];
-
-			strcpy(commandParameters[i], splitPointer);
-			splitPointer = strtok(NULL, " ,");
-			i++;
-		}
-		numberOfParameters = i;
-		char command[WordInCommandLenght];
-		strcpy(command, commandParameters[0]);
-
-
-		if (strcmp(command, "next") == 0)
+		std::vector<std::string> commandParameters{ tokenize(userInput, ',') };
+		int numberOfParameters = commandParameters.size();
+		std::string command = commandParameters[0];
+		
+		if (command == "next")
 			this->nextCoat(commandParameters, numberOfParameters);
 
-		if (strcmp(command, "save") == 0)
+		if (command == "save")
 			this->saveTrenchCoatToUserList(commandParameters, numberOfParameters);
 
-		if (strcmp(command, "list") == 0)
+		if (command == "list")
 			this->listFilteredCoats(commandParameters, numberOfParameters);
 
-		if (strcmp(command, "mylist") == 0)
+		if (command == "mylist")
 			this->listUsersCoats(commandParameters, numberOfParameters);
 
 		if (numberOfParameters == 2)
 		{
-			char mode[WordInCommandLenght];
-			strcpy(mode, commandParameters[1]);
-			if (strcmp(command, "mode") == 0 && strcmp(mode, "A") == 0)
+			std::string mode = commandParameters[1];
+			if (command == "mode" && mode == "A")
 			{
-				for (i = 0; i < numberOfParameters; i++)
-					delete[] commandParameters[i];
-				delete[] commandParameters;
-
 				return AdministratorMode;
 			}
 		}
-
-		for (i = 0; i < numberOfParameters; i++)
-			delete[] commandParameters[i];
-		delete[] commandParameters;
 	}
 }
 
@@ -338,7 +278,7 @@ void CommandUserInterface::setIterator()
 	this->coatService.setCoatIteratorToFirst();
 }
 
-void CommandUserInterface::nextCoat(char** parameters, int numberOfParameters)
+void CommandUserInterface::nextCoat(std::vector<std::string> parameters, int numberOfParameters)
 {
 	if (numberOfParameters != 1)
 	{
@@ -349,7 +289,7 @@ void CommandUserInterface::nextCoat(char** parameters, int numberOfParameters)
 	std::cout << this->coatService.getNextCoatFromIterator().to_string() << '\n';
 }
 
-void CommandUserInterface::saveTrenchCoatToUserList(char** parameters, int numberOfParameters)
+void CommandUserInterface::saveTrenchCoatToUserList(std::vector<std::string> parameters, int numberOfParameters)
 {
 	if (numberOfParameters != 2)
 	{
@@ -357,11 +297,19 @@ void CommandUserInterface::saveTrenchCoatToUserList(char** parameters, int numbe
 		return;
 	}
 	std::string name = parameters[1];
-	this->coatService.saveTrenchCoatToUserList(name);
-	std::cout << "The coat was added to shopping basket\n";
+	try
+	{
+		this->coatService.saveTrenchCoatToUserList(name);
+		std::cout << "The coat was added to shopping basket\n";
+	}
+	catch (Exceptions & exception)
+	{
+		std::cout << exception.what();
+	}
+	
 }
 
-void CommandUserInterface::listFilteredCoats(char** parameters, int numberOfParameters)
+void CommandUserInterface::listFilteredCoats(std::vector<std::string> parameters, int numberOfParameters)
 {
 	if (numberOfParameters != 3)
 	{
@@ -376,7 +324,7 @@ void CommandUserInterface::listFilteredCoats(char** parameters, int numberOfPara
 		std::cout << coat.to_string() << '\n';
 }
 
-void CommandUserInterface::listUsersCoats(char** parameters, int numberOfParameters)
+void CommandUserInterface::listUsersCoats(std::vector<std::string> parameters, int numberOfParameters)
 {
 	if (numberOfParameters != 1)
 	{

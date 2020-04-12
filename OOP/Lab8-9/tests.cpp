@@ -303,6 +303,27 @@ void CoatServiceStoreCoat_InvalidCoat_CoatNotAdded()
 	service.clearFile();
 }
 
+void CoatServiceStoreCoat_InvalidCoatPrice_ExceptionRaised()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+
+	service.storeCoatService("name", "size", "photoSource", "3");
+
+	try
+	{
+		service.storeCoatService("name1", "size", "source", "4asd");
+		assert(false);
+	}
+	catch (BadPrice&)
+	{
+		assert(true);
+	}
+
+	service.clearFile();
+}
+
 void CoatServiceDeleteCoat_ValidCoat_CoatDeleted()
 {
 	FileRepository repo;
@@ -313,8 +334,9 @@ void CoatServiceDeleteCoat_ValidCoat_CoatDeleted()
 
 	service.storeCoatService("name1", "size", "photoSource", "3");
 
-	//assert(service.deleteCoatService("name") == 0 && service.getCoatFromRepository(0) == TrenchCoat("name1", "size", "photoSource", 3));
-
+	service.deleteCoatService("name");
+	assert(service.getCoatFromRepository(0) == TrenchCoat("name1", "size", "photoSource", 3)
+			&& service.getRepositoryLenght() == 1);
 
 	service.clearFile();
 }
@@ -329,8 +351,15 @@ void CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted()
 
 	service.deleteCoatService("name");
 
-	//assert(service.deleteCoatService("name") == 1);
-
+	try
+	{
+		service.deleteCoatService("name");
+		assert(false);
+	}
+	catch(InexistentTrenchCoat&)
+	{
+		assert(true);
+	}
 	service.clearFile();
 }
 
@@ -347,7 +376,47 @@ void CoatServiceUpdateCoat_ValidCoat_UpdatedCoat()
 
 	TrenchCoat coat = listOfCoats[0];
 
-	assert(coat.to_string().compare("name newSize 5 newPhotoSource") == 0);
+	assert(coat.to_string() == TrenchCoat("name", "newSize", "newPhotoSource", 5).to_string());
+
+	service.clearFile();
+}
+
+void CoatServiceUpdateCoat_InvalidCoat_Exception()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+
+	service.storeCoatService("name", "size", "photoSource", "3");
+	try
+	{
+		service.updateCoatService("name1", "newSize", "newPhotoSource", "5");
+		assert(false);
+	}
+	catch(InexistentTrenchCoat&)
+	{
+		assert(true);
+	}
+	service.clearFile();
+}
+
+void CoatServiceUpdateCoat_InvalidCoatPrice_ExceptionRaised()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+
+	service.storeCoatService("name", "size", "photoSource", "3");
+
+	try
+	{
+		service.updateCoatService("name", "size", "source", "4asd");
+		assert(false);
+	}
+	catch (BadPrice&)
+	{
+		assert(true);
+	}
 
 	service.clearFile();
 }
@@ -379,7 +448,8 @@ void CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter()
 
 	std::vector<TrenchCoat> filtered = service.listFilteredCoats("size", "3");
 
-	assert(filtered[0] == TrenchCoat("name", "size", "source", 3) && filtered.size() == 1);
+	assert(filtered[0] == TrenchCoat("name", "size", "source", 3) 
+		&& filtered.size() == 1);
 
 	service.clearFile();
 }
@@ -397,18 +467,62 @@ void CoatServiceIsNumber_NotNumber_False()
 	std::string number = "234a";
 	assert(srv.isNumber(number) == false);
 }
+
+void CoatServiceConstructors_ValidConstructors()
+{
+	CoatService service;
+	CoatService srv = service;
+	service = service;
+
+	assert(service.listCoats().size() == 0);
+}
+
+void CoatServiceGetNextFromCoatService_RepositoryWithOneElement_FirstElement()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+
+	service.storeCoatService("name", "size", "source", "3");
+	service.setCoatIteratorToFirst();
+
+	assert(service.getNextCoatFromIterator().to_string() == TrenchCoat("name", "size", "source", 3).to_string());
+	service.clearFile();
+}
+
+void CoatServiceEmptyUserList_UserListWithOneElement_EmptyList()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+	service.storeCoatService("name", "size", "source", "3");
+	
+	service.saveTrenchCoatToUserList("name");
+
+	service.emptyUserCoats();
+	assert(service.getUserCoats().size() == 0);
+
+	service.clearFile();
+}
+
 void test_CoatService()
 {
 	CoatServiceStoreCoat_ValidCoat_CoatAdded();
-	//CoatServiceStoreCoat_InvalidCoat_CoatNotAdded();
-	//CoatServiceDeleteCoat_ValidCoat_CoatDeleted();
-	//CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted();
-	//CoatServiceUpdateCoat_ValidCoat_UpdatedCoat();
-	//CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded();
-	//CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter();
+	CoatServiceStoreCoat_InvalidCoat_CoatNotAdded();
+	CoatServiceDeleteCoat_ValidCoat_CoatDeleted();
+	CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted();
+	CoatServiceUpdateCoat_ValidCoat_UpdatedCoat();
+	CoatServiceUpdateCoat_InvalidCoat_Exception();
+	CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded();
+	CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter();
 	CoatServiceIsNumber_NotNumber_False();
 	CoatServiceIsNumber_Number_True();
-
+	CoatServiceConstructors_ValidConstructors();
+	CoatServiceStoreCoat_InvalidCoatPrice_ExceptionRaised();
+	CoatServiceUpdateCoat_InvalidCoatPrice_ExceptionRaised();
+	CoatServiceConstructors_ValidConstructors();
+	CoatServiceGetNextFromCoatService_RepositoryWithOneElement_FirstElement();
+	CoatServiceEmptyUserList_UserListWithOneElement_EmptyList();
 }
 
 
@@ -472,10 +586,17 @@ void test_CoatsIterator()
 
 void tokenize_String_SplitString()
 {
-	std::string stringToBeSplit{"abc , , , 123"};
-	char delimiters[3]=", ";
-	std::vector<std::string> splitString{ tokenize(stringToBeSplit, delimiters) };
+	std::string stringToBeSplit{" , ,,,   abc ,, , , 123 , , , "};
+	std::vector<std::string> splitString{ tokenize(stringToBeSplit, ',') };
 	assert(splitString[0].compare("abc") == 0 
+		&& splitString[1].compare("123") == 0);
+}
+
+void tokenize_stringWithourDelimiter_SplitStringWithRespectToSpaces()
+{
+	std::string stringToBeSplit{ "    abc    123    " };
+	std::vector<std::string> splitString{ tokenize(stringToBeSplit, ',') };
+	assert(splitString[0].compare("abc") == 0
 		&& splitString[1].compare("123") == 0);
 }
 
@@ -499,6 +620,7 @@ void testAll()
 	test_FileRepository();  
 	tokenize_String_SplitString();
 	Exceptions_Message_CorrectMessage();
+	tokenize_stringWithourDelimiter_SplitStringWithRespectToSpaces();
 	std::cout << "The tests were successful\n";
 }
 

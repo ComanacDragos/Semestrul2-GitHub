@@ -41,7 +41,7 @@ void FileRepository::updateCoat(const TrenchCoat& coat)
 TrenchCoat FileRepository::getCoatFromRepository(int position)
 {
 	std::vector<TrenchCoat> coats = this->getAllCoats();
-	if (position < 0 || position >= coats.size())
+	if (position < 0 || position >= (int)coats.size())
 		throw BadPosition{ "Invalid position\n" };
 
 	return *(coats.begin() + position);
@@ -71,6 +71,7 @@ std::vector<TrenchCoat> FileRepository::getAllCoats()
 void FileRepository::setPath(std::string filePath)
 {
 	this->filePath = filePath;
+	this->clearFile();
 }
 
 void FileRepository::clearFile()
