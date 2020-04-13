@@ -436,6 +436,23 @@ void CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded()
 	service.clearFile();
 }
 
+void CoatServiceDeleteCoat_UserListWithOneCoat_DeletesTheCoatFromUserList()
+{
+	FileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile);
+
+	service.storeCoatService("name", "size", "source", "3");
+
+	service.saveTrenchCoatToUserList("name");
+
+	service.deleteCoatService("name");
+
+	assert(service.getUserCoats().size() == 0);
+	
+	service.clearFile();
+}
+
 void CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter()
 {
 	FileRepository repo;
@@ -523,6 +540,7 @@ void test_CoatService()
 	CoatServiceConstructors_ValidConstructors();
 	CoatServiceGetNextFromCoatService_RepositoryWithOneElement_FirstElement();
 	CoatServiceEmptyUserList_UserListWithOneElement_EmptyList();
+	CoatServiceDeleteCoat_UserListWithOneCoat_DeletesTheCoatFromUserList();
 }
 
 

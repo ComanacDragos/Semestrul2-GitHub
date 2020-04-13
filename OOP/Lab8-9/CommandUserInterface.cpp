@@ -39,7 +39,6 @@ void CommandUserInterface::startProgram()
 
 		if (command == "fileLocation")
 		{
-
 			std::string filePath;
 
 			commandParameters.erase(commandParameters.begin());
@@ -229,7 +228,7 @@ void CommandUserInterface::listCoats(std::vector<std::string> parameters, int nu
 	std::vector<TrenchCoat> coatList = this->coatService.listCoats();
 
 	for (TrenchCoat coat:coatList)
-		std::cout << coat.to_string()<< '\n';
+		std::cout << coat;
 }
 
 
@@ -286,7 +285,7 @@ void CommandUserInterface::nextCoat(std::vector<std::string> parameters, int num
 		return;
 	}
 
-	std::cout << this->coatService.getNextCoatFromIterator().to_string() << '\n';
+	std::cout << this->coatService.getNextCoatFromIterator();
 }
 
 void CommandUserInterface::saveTrenchCoatToUserList(std::vector<std::string> parameters, int numberOfParameters)
@@ -321,7 +320,7 @@ void CommandUserInterface::listFilteredCoats(std::vector<std::string> parameters
 	std::vector<TrenchCoat> filteredCoats = this->coatService.listFilteredCoats(size, price);
 
 	for (TrenchCoat coat : filteredCoats)
-		std::cout << coat.to_string() << '\n';
+		std::cout << coat;
 }
 
 void CommandUserInterface::listUsersCoats(std::vector<std::string> parameters, int numberOfParameters)
@@ -333,5 +332,5 @@ void CommandUserInterface::listUsersCoats(std::vector<std::string> parameters, i
 	std:: vector<TrenchCoat> userCoats = this->coatService.getUserCoats();
 	
 	for (TrenchCoat coat : userCoats)
-		std::cout << coat.to_string() << '\n';
+		std::cout << coat;
 }

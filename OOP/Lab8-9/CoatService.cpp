@@ -36,7 +36,8 @@ void CoatService::deleteCoatService(const std::string name)
 {
 	this->coatRepository.deleteCoat(name);
 
-	auto iterator = std::remove_if(this->userCoats.begin(), this->userCoats.end(), [name](const TrenchCoat& coat) {return coat.getName() == name; });
+	auto iterator = std::remove_if(this->userCoats.begin(), this->userCoats.end(), [name] (const TrenchCoat& coat)->bool {return coat.getName() == name; });
+	this->userCoats.erase(iterator, this->userCoats.end());
 }
 
 void CoatService::updateCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price)
@@ -116,8 +117,8 @@ TrenchCoat CoatService::getNextCoatFromIterator()
 
 bool CoatService::isNumber(const std::string& number)
 {
-	for (auto it : number)
-		if (isdigit(it) == false)
+	for (auto iterator : number)
+		if (isdigit(iterator) == false)
 			return false;
 	return true;
 }

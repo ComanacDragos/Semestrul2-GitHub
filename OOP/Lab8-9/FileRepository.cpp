@@ -24,7 +24,6 @@ void FileRepository::deleteCoat(const std::string& name)
 
 	coats.erase(iterator);
 	this->storeCoatsToFile(coats);
-
 }
 
 void FileRepository::updateCoat(const TrenchCoat& coat)
@@ -71,7 +70,7 @@ std::vector<TrenchCoat> FileRepository::getAllCoats()
 void FileRepository::setPath(std::string filePath)
 {
 	this->filePath = filePath;
-	this->clearFile();
+	//this->clearFile();
 }
 
 void FileRepository::clearFile()
@@ -86,7 +85,6 @@ void FileRepository::storeCoatsToFile(const std::vector<TrenchCoat>& coats)
 	std::ofstream fout (this->filePath, std::ios::trunc | std::ios::out);
 	for (auto& coat : coats)
 		fout << coat;
-
 	fout.close();
 }
 

@@ -5,7 +5,7 @@
 int main()
 {
 	{
-		testAll();
+		//testAll();
 		FileRepository coatRepository;
 		CoatService coatService{ coatRepository };
 		CommandUserInterface commandUserInterface{ coatService };
