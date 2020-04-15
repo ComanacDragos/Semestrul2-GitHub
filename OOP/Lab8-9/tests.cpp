@@ -77,7 +77,7 @@ void FileRepositoryStoreCoat_ValidCoat_CoatStored()
 	repo.clearFile();
 }
 
-void FileRepositoryStoreCoat_InvalidCoat_CoatNotStored()
+void FileRepositoryStoreCoat_DuplicateCoat_CoatNotStored()
 {
 	FileRepository repo{ TestFile };
 
@@ -257,7 +257,7 @@ void FileRepositoryGetRepositoryLength_RepositoryWithOneElement_One()
 void test_FileRepository()
 {
 	FileRepositoryStoreCoat_ValidCoat_CoatStored();
-	FileRepositoryStoreCoat_InvalidCoat_CoatNotStored();
+	FileRepositoryStoreCoat_DuplicateCoat_CoatNotStored();
 	FileRepositoryDeleteCoat_ValidCoat_CoatDeleted();
 	FileRepositoryDeleteCoat_InvalidCoat_CoatNotDeleted();
 	FileRepositoryUpdateCoat_ValidCoat_CoatUpdated();

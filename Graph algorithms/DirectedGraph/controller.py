@@ -1,5 +1,6 @@
 from DirectedGraph import *
 from Traversals import *
+from Walks import *
 
 class Controller:
     def __init__(self, graph):
@@ -141,3 +142,52 @@ class Controller:
             components[map[i]].append(i)
 
         return components
+
+    def lowest_lenghth_path_forward_breadth_first(self, start, end):
+        predecesors = lowest_length_path_forward_breadth_first(self._graph, int(start))
+        path = []
+        current = int(end)
+        if current in predecesors:
+            while current != -1:
+                path.insert(0, current)
+                current = predecesors[current]
+        return path
+
+    def forward_dijkstra(self, start, end):
+        start = int(start)
+        end = int(end)
+
+        info = forward_Dijkstra(self._graph, start, end)
+        predecesors = info[0]
+        distances = info[1]
+
+        path = []
+        distance = -1
+        if end in predecesors.keys():
+            current = end
+            while current != -1:
+                path.insert(0, current)
+                current = predecesors[current]
+            distance = distances[end]
+
+        return (path, distance)
+
+    def backwards_dijkstra(self, start, end):
+        start = int(start)
+        end = int(end)
+
+        info = backwards_dijkstra(self._graph, start, end)
+        sucesors = info[0]
+        distances = info[1]
+
+        path = []
+        distance = -1
+        if start in sucesors.keys():
+            current = start
+            while current != -1:
+                path.insert(0, current)
+                current = sucesors[current]
+            distance = distances[start]
+
+        return (path, distance)
+

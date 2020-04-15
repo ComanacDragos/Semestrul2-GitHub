@@ -1,4 +1,5 @@
 from UI import *
+import sys, threading
 
 class Main:
     def __init__(self):
@@ -7,5 +8,10 @@ class Main:
         self.UI = UI(self.controller)
         self.UI.start()
 
-Main()
+sys.setrecursionlimit(400000)
+threading.stack_size(2**27)
 
+def run():
+    Main()
+#threading.Thread(target=run).start()
+run()

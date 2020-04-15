@@ -10,6 +10,7 @@ class UI:
 1. Information about the graph
 2. Change the graph
 3. Traversals
+4. Walks
 x. Exit
  """
         print(menu)
@@ -61,6 +62,16 @@ x. Exit traversal menu
         """
         print(menu)
 
+    @staticmethod
+    def walks_menu():
+        menu="""
+1. State of the graph
+2. Lowest length path using forward breadth first
+3. Forward Dijkstra
+4. Backwards Dijkstra
+        """
+        print(menu)
+
     def UI_get_nr_vertices(self):
         print("The number of vertices is: " + str(self._controller.get_nr_vertices()))
 
@@ -87,6 +98,8 @@ x. Exit traversal menu
             print("The out degree of %d is: %d" %(vertex, degrees[1]))
         except VertexException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_in_bound_parse(self):
         vertex = int(input("Give vertex: "))
@@ -98,6 +111,8 @@ x. Exit traversal menu
             print()
         except VertexException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_out_bound_parse(self):
         vertex = int(input("Give vertex: "))
@@ -109,6 +124,8 @@ x. Exit traversal menu
             print()
         except VertexException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_get_cost(self):
         left = int(input("Give left end-point: "))
@@ -119,6 +136,8 @@ x. Exit traversal menu
             print(cost)
         except EdgeException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_modify_cost(self):
         left = int(input("Give left end-point: "))
@@ -129,6 +148,8 @@ x. Exit traversal menu
             print("The cost was updated succesfully")
         except EdgeException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_add_vertex(self):
         try:
@@ -136,6 +157,8 @@ x. Exit traversal menu
             print("The vertex was added successfuly")
         except VertexException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_remove_vertex(self):
         vertex = int(input("Give vertex to be removed: "))
@@ -144,6 +167,8 @@ x. Exit traversal menu
             print("The vertex was removed successfuly")
         except VertexException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_add_edge(self):
         left = int(input("Give left end-point: "))
@@ -156,6 +181,8 @@ x. Exit traversal menu
             print(err)
         except VertexException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_remove_edge(self):
         left = int(input("Give left end-point: "))
@@ -165,9 +192,12 @@ x. Exit traversal menu
             print("The edge was removed successfuly")
         except EdgeException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_load_graph(self):
         filename = input("Give filename: ")
+        filename="Graphs/"+filename
         try:
             t1 = datetime.now()
             self._controller.load_graph(filename)
@@ -176,9 +206,12 @@ x. Exit traversal menu
             print("The graph was loaded successfuly in: " + str(t))
         except Exception:
             print("The requested graph does not exist")
+        except ValueError:
+            print("Bad number\n")
 
     def UI_load_undirected_graph(self):
         filename = input("Give filename: ")
+        filename = "Graphs/" + filename
         try:
             t1 = datetime.now()
             self._controller.load_undirected_graph(filename)
@@ -187,9 +220,12 @@ x. Exit traversal menu
             print("The graph was loaded successfuly in: " + str(t))
         except FileNotFoundError:
             print("The requested graph does not exist")
+        except ValueError:
+            print("Bad number\n")
 
     def UI_store_graph(self):
         filename = input("Give filename: ")
+        filename = "Graphs/" + filename
         self._controller.store_graph(filename)
         print("The graph was stored successfuly")
 
@@ -223,6 +259,8 @@ x. Exit traversal menu
             print("\n")
         except VertexException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_DepthFirstTraversal(self):
         vertex = input("Give vertex: ")
@@ -234,6 +272,8 @@ x. Exit traversal menu
             print("\n")
         except VertexException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_ConnectedComponents(self):
         components = self._controller.connected_components()
@@ -255,6 +295,8 @@ x. Exit traversal menu
             print("\n")
         except VertexException as err:
             print(err)
+        except ValueError:
+            print("Bad number\n")
 
     def UI_strongly_connected_components(self):
         components = self._controller.strongly_connected_components()
@@ -266,6 +308,59 @@ x. Exit traversal menu
                 print(str(j) + " ", end=' ')
             print("\n")
             cont += 1
+
+    def UI_lowest_length_path_forward_breath_first(self):
+        start = input("Give start vertex: ")
+        end = input("Give end vertex: ")
+        try:
+            path=self._controller.lowest_lenghth_path_forward_breadth_first(start,end)
+            if len(path) == 0:
+                print("The end vertex is not accessible\n")
+            else:
+                print(path[0], end='')
+                path.pop(0)
+                for i in path:
+                    print("->", i, end='')
+                print(" Length: ", len(path))
+        except VertexException as err:
+            print(err)
+        except ValueError:
+            print("Bad number\n")
+
+    def UI_forward_dijkstra(self):
+        start = input("Give start vertex: ")
+        end = input("Give end vertex: ")
+        try:
+            info = self._controller.forward_dijkstra(start, end)
+            if info[1] == -1:
+                print("The end vertex is not accessible")
+            else:
+                path = info[0]
+                print(path[0], end='')
+                path.pop(0)
+                for i in path:
+                    print("->", i, end='')
+                print(" Length: ", info[1])
+        except VertexException as err:
+            print(err)
+
+    def UI_backwards_dijkstra(self):
+        start = input("Give start vertex: ")
+        end = input("Give end vertex: ")
+        try:
+            info = self._controller.backwards_dijkstra(start, end)
+            if info[1] == -1:
+                print("The start vertex is not accessible")
+            else:
+                path = info[0]
+                print(path[0], end='')
+                path.pop(0)
+                for i in path:
+                    print("<-", i, end='')
+                print(" Length: ", info[1])
+        except VertexException as err:
+            print(err)
+
 
     def start_information_menu(self):
         commands = {
@@ -334,11 +429,30 @@ x. Exit traversal menu
             else:
                 print("Invalid command\n")
 
+    def start_walks_menu(self):
+        commands = {
+            "1": self.UI_print_state,
+            "2": self.UI_lowest_length_path_forward_breath_first,
+            "3": self.UI_forward_dijkstra,
+            "4": self.UI_backwards_dijkstra,
+        }
+
+        while (True):
+            self.walks_menu()
+            choice = input("> ")
+            if choice in commands:
+                commands[choice]()
+            elif choice == "x":
+                return
+            else:
+                print("Invalid command\n")
+
     def start(self):
         commands ={
             "1": self.start_information_menu,
             "2": self.start_modify_menu,
-            "3": self.start_traversal_menu
+            "3": self.start_traversal_menu,
+            "4": self.start_walks_menu
         }
         while True:
             self.menu()
