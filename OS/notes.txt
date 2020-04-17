@@ -102,3 +102,10 @@ ps -e -f (+all processes and details)
 exit(0) - exits the process
 
 kill id
+
+
+Lab8 
+
+${}- expresie
+arr[@] - valori
+!arr[@] - chei

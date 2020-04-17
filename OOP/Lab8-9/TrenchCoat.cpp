@@ -94,7 +94,7 @@ std::vector<std::string> tokenize(std::string string, const char delimiter)
 }
 
 
-std::istream& operator>>(std::istream& istream, TrenchCoat& coat)
+std::istream& operator>>(std::istream& istream, CSVTrenchCoat& coat)
 {
 	std::string line;
 	std::getline(istream, line);
@@ -108,14 +108,67 @@ std::istream& operator>>(std::istream& istream, TrenchCoat& coat)
 	std::string photographSource{ tokens[3] };
 	std::string price{ tokens[2] };
 
-	TrenchCoat newCoat{ name, size, photographSource, stoi(price) };
+
+
+	CSVTrenchCoat newCoat{ name, size, photographSource, stoi(price) };
 	coat = newCoat;
 	
 	return istream;
 }
 
+std::istream& operator>>(std::istream& istream, HTMLTrenchCoat& coat)
+{
+	std::string line;
+	std::getline(istream, line);
+
+	if (line != "<tr>")
+		return istream;
+
+	std::vector<std::string> coatFields{ 4 };
+
+	for (auto& field : coatFields)
+	{
+		std::getline(istream, field);
+		field.erase(field.begin(), field.begin() + 4);
+		field.erase(field.end()-5, field.end());
+	}
+	std::getline(istream, line);
+
+	std::string name = coatFields[0];
+	std::string size = coatFields[1];
+	std::string price = coatFields[2];
+	std::string photographSource = coatFields[3];
+
+	photographSource.erase(photographSource.begin(), photographSource.begin() + 10);
+	photographSource.erase(photographSource.end() - 11, photographSource.end());
+
+	HTMLTrenchCoat newCoat{ name, size, photographSource, stoi(price)};
+
+	coat = newCoat;
+
+	return istream;
+}
+
 std::ostream& operator<<(std::ostream& ostream, const TrenchCoat& coat)
 {
-	ostream << coat.getName() << "," << coat.getSize() << "," << coat.getPrice() << "," << coat.getPhotographSource() << '\n';
+	ostream << coat.getName() << " " << coat.getSize() << " " << coat.getPrice() << " " << coat.getPhotographSource() << std::endl;
 	return ostream;
 }
+
+std::ostream& operator<<(std::ostream& ostream, const CSVTrenchCoat& coat)
+{
+	ostream << coat.getName() << "," << coat.getSize() << "," << coat.getPrice() << "," << coat.getPhotographSource() << std::endl;
+	return ostream;
+}
+
+std::ostream& operator<<(std::ostream& ostream, const HTMLTrenchCoat& coat)
+{
+	ostream << "<tr>\n";
+	ostream << "<td>" << coat.getName() << "</td>\n";
+	ostream << "<td>" << coat.getSize() << "</td>\n";
+	ostream << "<td>" << coat.getPrice() << "</td>\n";
+	ostream << "<td>" << "<a href= \"" << coat.getPhotographSource() << "\"> Link</a></td>\n";
+	ostream << "</tr>\n";
+	return ostream;
+}
+

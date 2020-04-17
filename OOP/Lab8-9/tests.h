@@ -8,4 +8,7 @@
 
 
 #define TestFile "tests.txt"
+#define UserListTestFileHTML "userTests.html"
+#define UserListTestFileCSV "userTests.csv"
+
 void testAll();

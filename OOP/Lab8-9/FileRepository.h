@@ -9,7 +9,7 @@
 
 class FileRepository
 {
-private:
+protected:
 	std::string filePath;
 
 public:
@@ -17,7 +17,7 @@ public:
 
 	FileRepository(const std::string& filePath);
 
-	~FileRepository(){}
+	virtual ~FileRepository(){}
 
 	//throws an exception if the coat already exists
 	void storeCoat(const TrenchCoat& coat);
@@ -42,8 +42,38 @@ public:
 
 	void clearFile();
 
-private:
+protected:
 
+	virtual void storeCoatsToFile(const std::vector<TrenchCoat>& coats) = 0;
+
+	virtual std::vector<TrenchCoat> loadCoatsFromFile() = 0;
+};
+
+class CSVFileRepository : public FileRepository
+{
+public:
+	CSVFileRepository():FileRepository(){}
+	
+	CSVFileRepository(const std::string& filePath):FileRepository{filePath}{}
+
+	~CSVFileRepository(){}
+
+protected:
+	void storeCoatsToFile(const std::vector<TrenchCoat>& coats);
+
+	std::vector<TrenchCoat> loadCoatsFromFile();
+};
+
+class HTMLFileRepository : public FileRepository
+{
+public:
+	HTMLFileRepository():FileRepository(){}
+
+	HTMLFileRepository(const std::string& filePath):FileRepository{filePath}{}
+
+	~HTMLFileRepository(){}
+
+protected:
 	void storeCoatsToFile(const std::vector<TrenchCoat>& coats);
 
 	std::vector<TrenchCoat> loadCoatsFromFile();

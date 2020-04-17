@@ -7,9 +7,10 @@
 #include <algorithm>
 #include <iostream>
 
+
 class TrenchCoat
 {
-private:
+protected:
 	std::string name;
 	std::string size;
 	std::string photographSource;
@@ -27,7 +28,7 @@ public:
 
 	TrenchCoat& operator= (const TrenchCoat & trenchCoat);
 
-	~TrenchCoat(){}
+	virtual ~TrenchCoat(){}
 
 	std::string getName() const;
 	std::string getSize() const;
@@ -38,13 +39,37 @@ public:
 	bool operator==(const TrenchCoat& trenchCoat);
 
 	std::string to_string();
-
 };
 
+class CSVTrenchCoat : public TrenchCoat
+{
+public:
+	CSVTrenchCoat() :TrenchCoat{} {}
+
+	CSVTrenchCoat(const std::string& name, const std::string& size, const std::string photographSource, const int price) :TrenchCoat{ name, size, photographSource, price } {}
+
+	~CSVTrenchCoat() {}
+};
+
+class HTMLTrenchCoat : public TrenchCoat
+{
+public:
+	HTMLTrenchCoat() :TrenchCoat{} {}
+
+	HTMLTrenchCoat(const std::string& name, const std::string& size, const std::string photographSource, const int price) :TrenchCoat{ name, size, photographSource, price } {}
+
+	~HTMLTrenchCoat() {}
+};
 
 //returns a vector composed of all words delimited by space and a delimiter
 std::vector<std::string> tokenize(std::string str,const char delimiter);
 
-std::istream& operator>>(std::istream& istream, TrenchCoat& coat);
+std::istream& operator>>(std::istream& istream, CSVTrenchCoat& coat);
+
+std::istream& operator>>(std::istream& istream, HTMLTrenchCoat& coat);
 
 std::ostream& operator<<(std::ostream& ostream, const TrenchCoat& coat);
+
+std::ostream& operator<<(std::ostream& ostream, const CSVTrenchCoat& coat);
+
+std::ostream& operator<<(std::ostream& ostream, const HTMLTrenchCoat& coat);

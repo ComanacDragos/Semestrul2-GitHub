@@ -21,7 +21,7 @@ void TrenchCoatgetPhotographSource_TrenchCoat_CorrectPhotographSource()
 	assert(coat.getPhotographSource().compare("photographSource") == 0);
 }
 
-void TrenchCoatInsertionExtractionOperator_Coat_CoatWrittenInFile()
+void TrenchCoatCSVInsertionExtractionOperator_Coat_CoatWrittenInFile()
 {
 	std::ofstream fout(TestFile);
 
@@ -33,7 +33,7 @@ void TrenchCoatInsertionExtractionOperator_Coat_CoatWrittenInFile()
 
 	std::ifstream fin(TestFile);
 
-	TrenchCoat coatFromFile;
+	CSVTrenchCoat coatFromFile;
 
 	fin >> coatFromFile;
 
@@ -53,18 +53,43 @@ void TrenchCoatOperatorEqual_ValidCoat_SameCoat()
 	assert(coat1.to_string() == coat2.to_string());
 }
 
+void TrenchCoatHTMLInsertionExtractionOperator_Coat_CoatWrittenInFile()
+{
+	std::ofstream fout(TestFile);
+
+	HTMLTrenchCoat coat{ "name", "size", "source", 4 };
+
+	fout << coat;
+
+	fout.close();
+
+	std::ifstream fin(TestFile);
+
+	HTMLTrenchCoat coatFromFile;
+
+	fin >> coatFromFile;
+
+	assert(coatFromFile.to_string() == coat.to_string());
+
+	fin.close();
+
+	std::ofstream clearFile(TestFile);
+	clearFile.close();
+
+}
 void test_TrenchCoat()
 {
 	TrenchCoatgetName_TrenchCoat_CorrectName();
 	TrenchCoatgetSize_TrenchCoat_CorrectSize();
 	TrenchCoatgetPhotographSource_TrenchCoat_CorrectPhotographSource();
-	TrenchCoatInsertionExtractionOperator_Coat_CoatWrittenInFile();
+	TrenchCoatCSVInsertionExtractionOperator_Coat_CoatWrittenInFile();
+	TrenchCoatHTMLInsertionExtractionOperator_Coat_CoatWrittenInFile();
 	TrenchCoatOperatorEqual_ValidCoat_SameCoat();
 }
 
 void FileRepositoryStoreCoat_ValidCoat_CoatStored()
 {
-	FileRepository repo{ TestFile };
+	CSVFileRepository repo{ TestFile };
 
 	TrenchCoat coat{ "name", "size","source", 5 };
 
@@ -79,7 +104,7 @@ void FileRepositoryStoreCoat_ValidCoat_CoatStored()
 
 void FileRepositoryStoreCoat_DuplicateCoat_CoatNotStored()
 {
-	FileRepository repo{ TestFile };
+	CSVFileRepository repo{ TestFile };
 
 	TrenchCoat coat{ "name", "size","source", 5 };
 
@@ -99,7 +124,7 @@ void FileRepositoryStoreCoat_DuplicateCoat_CoatNotStored()
 
 void FileRepositoryDeleteCoat_ValidCoat_CoatDeleted()
 {
-	FileRepository repo{ TestFile };
+	CSVFileRepository repo{ TestFile };
 
 	TrenchCoat coat{ "name", "size","source", 5 };
 
@@ -114,7 +139,7 @@ void FileRepositoryDeleteCoat_ValidCoat_CoatDeleted()
 
 void FileRepositoryDeleteCoat_InvalidCoat_CoatNotDeleted()
 {
-	FileRepository repo{ TestFile };
+	CSVFileRepository repo{ TestFile };
 
 	TrenchCoat coat{ "name", "size","source", 5 };
 
@@ -134,7 +159,7 @@ void FileRepositoryDeleteCoat_InvalidCoat_CoatNotDeleted()
 
 void FileRepositoryUpdateCoat_ValidCoat_CoatUpdated()
 {
-	FileRepository repo{ TestFile };
+	CSVFileRepository repo{ TestFile };
 
 	TrenchCoat coat{ "name", "size","source", 5 }, newCoat{ "name", "newSize", "newSource", 10 };
 
@@ -152,7 +177,7 @@ void FileRepositoryUpdateCoat_ValidCoat_CoatUpdated()
 
 void FileRepositoryUpdateCoat_InvalidCoat_ExceptionRaised()
 {
-	FileRepository repo{ TestFile };
+	CSVFileRepository repo{ TestFile };
 
 	TrenchCoat coat{ "name", "size","source", 5 }, newCoat{ "name", "newSize", "newSource", 10 };
 
@@ -174,7 +199,7 @@ void FileRepositoryUpdateCoat_InvalidCoat_ExceptionRaised()
 
 void FileRepositoryGetCoatFromRepository_ValidIndex_CorrectCoat()
 {
-	FileRepository repo{ TestFile };
+	CSVFileRepository repo{ TestFile };
 
 	TrenchCoat coat{ "name", "size","source", 5 };
 
@@ -187,7 +212,7 @@ void FileRepositoryGetCoatFromRepository_ValidIndex_CorrectCoat()
 
 void FileRepositoryGetCoatFromRepository_InvalidIndex_ExceptionThrown()
 {
-	FileRepository repo{ TestFile };
+	CSVFileRepository repo{ TestFile };
 
 	TrenchCoat coat{ "name", "size","source", 5 };
 
@@ -208,7 +233,7 @@ void FileRepositoryGetCoatFromRepository_InvalidIndex_ExceptionThrown()
 
 void FileRepositoryFindCoatFromRepository_ValidName_CorrectCoat()
 {
-	FileRepository repo{ TestFile };
+	CSVFileRepository repo{ TestFile };
 
 	TrenchCoat coat{ "name", "size","source", 5 };
 
@@ -223,7 +248,7 @@ void FileRepositoryFindCoatFromRepository_ValidName_CorrectCoat()
 
 void FileRepositoryFindCoatFromRepository_InvalidName_Exception()
 {
-	FileRepository repo{ TestFile };
+	CSVFileRepository repo{ TestFile };
 
 	TrenchCoat coat{ "name", "size","source", 5 };
 
@@ -243,7 +268,7 @@ void FileRepositoryFindCoatFromRepository_InvalidName_Exception()
 
 void FileRepositoryGetRepositoryLength_RepositoryWithOneElement_One()
 {
-	FileRepository repo{};
+	CSVFileRepository repo{};
 	repo.setPath(TestFile);
 
 	TrenchCoat coat{ "name", "size","source", 5 };
@@ -251,6 +276,19 @@ void FileRepositoryGetRepositoryLength_RepositoryWithOneElement_One()
 	repo.storeCoat(coat);
 
 	assert(repo.getRepositoryLength() == 1);
+	repo.clearFile();
+}
+
+void HTMLFileRepositoryGetAllCoats_RepositoryWithOneCoat_OneCoatReturned()
+{
+	HTMLFileRepository repo{ TestFile };
+	TrenchCoat coat{ "name", "size", "source", 4 };
+	repo.storeCoat(coat);
+
+	std::vector<TrenchCoat> coats = repo.getAllCoats();
+		
+	assert(coats.size() == 1 && coats[0].to_string() == coat.to_string());
+	
 	repo.clearFile();
 }
 
@@ -267,11 +305,13 @@ void test_FileRepository()
 	FileRepositoryFindCoatFromRepository_ValidName_CorrectCoat();
 	FileRepositoryFindCoatFromRepository_InvalidName_Exception();
 	FileRepositoryGetRepositoryLength_RepositoryWithOneElement_One();
+	HTMLFileRepositoryGetAllCoats_RepositoryWithOneCoat_OneCoatReturned();
+
 }
 
 void CoatServiceStoreCoat_ValidCoat_CoatAdded()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
 	service.setPath(TestFile);
 	
@@ -284,7 +324,7 @@ void CoatServiceStoreCoat_ValidCoat_CoatAdded()
 
 void CoatServiceStoreCoat_InvalidCoat_CoatNotAdded()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
 	service.setPath(TestFile);
 
@@ -305,7 +345,7 @@ void CoatServiceStoreCoat_InvalidCoat_CoatNotAdded()
 
 void CoatServiceStoreCoat_InvalidCoatPrice_ExceptionRaised()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
 	service.setPath(TestFile);
 
@@ -316,7 +356,7 @@ void CoatServiceStoreCoat_InvalidCoatPrice_ExceptionRaised()
 		service.storeCoatService("name1", "size", "source", "4asd");
 		assert(false);
 	}
-	catch (BadPrice&)
+	catch (InvalidCoat&)
 	{
 		assert(true);
 	}
@@ -326,7 +366,7 @@ void CoatServiceStoreCoat_InvalidCoatPrice_ExceptionRaised()
 
 void CoatServiceDeleteCoat_ValidCoat_CoatDeleted()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
 	service.setPath(TestFile);
 
@@ -343,7 +383,7 @@ void CoatServiceDeleteCoat_ValidCoat_CoatDeleted()
 
 void CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
 	service.setPath(TestFile);
 
@@ -365,7 +405,7 @@ void CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted()
 
 void CoatServiceUpdateCoat_ValidCoat_UpdatedCoat()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
 	service.setPath(TestFile);
 
@@ -381,9 +421,9 @@ void CoatServiceUpdateCoat_ValidCoat_UpdatedCoat()
 	service.clearFile();
 }
 
-void CoatServiceUpdateCoat_InvalidCoat_Exception()
+void CoatServiceUpdateCoat_InexistentCoat_Exception()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
 	service.setPath(TestFile);
 
@@ -402,7 +442,7 @@ void CoatServiceUpdateCoat_InvalidCoat_Exception()
 
 void CoatServiceUpdateCoat_InvalidCoatPrice_ExceptionRaised()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
 	service.setPath(TestFile);
 
@@ -413,7 +453,7 @@ void CoatServiceUpdateCoat_InvalidCoatPrice_ExceptionRaised()
 		service.updateCoatService("name", "size", "source", "4asd");
 		assert(false);
 	}
-	catch (BadPrice&)
+	catch (InvalidCoat&)
 	{
 		assert(true);
 	}
@@ -423,9 +463,9 @@ void CoatServiceUpdateCoat_InvalidCoatPrice_ExceptionRaised()
 
 void CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
-	service.setPath(TestFile);
+	service.setPath(TestFile, UserListTestFileCSV);
 
 	service.storeCoatService("name", "size", "source", "3");
 
@@ -438,9 +478,9 @@ void CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded()
 
 void CoatServiceDeleteCoat_UserListWithOneCoat_DeletesTheCoatFromUserList()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
-	service.setPath(TestFile);
+	service.setPath(TestFile, UserListTestFileCSV);
 
 	service.storeCoatService("name", "size", "source", "3");
 
@@ -455,9 +495,9 @@ void CoatServiceDeleteCoat_UserListWithOneCoat_DeletesTheCoatFromUserList()
 
 void CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
-	service.setPath(TestFile);
+	service.setPath(TestFile, UserListTestFileCSV);
 
 	service.storeCoatService("name", "size", "source", "3");
 	service.storeCoatService("name1", "size", "source", "5");
@@ -471,19 +511,6 @@ void CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter()
 	service.clearFile();
 }
 
-void CoatServiceIsNumber_Number_True()
-{
-	CoatService srv;
-	std::string number = "234";
-	assert(srv.isNumber(number) == true);
-}
-
-void CoatServiceIsNumber_NotNumber_False()
-{
-	CoatService srv;
-	std::string number = "234a";
-	assert(srv.isNumber(number) == false);
-}
 
 void CoatServiceConstructors_ValidConstructors()
 {
@@ -496,7 +523,7 @@ void CoatServiceConstructors_ValidConstructors()
 
 void CoatServiceGetNextFromCoatService_RepositoryWithOneElement_FirstElement()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
 	service.setPath(TestFile);
 
@@ -509,7 +536,7 @@ void CoatServiceGetNextFromCoatService_RepositoryWithOneElement_FirstElement()
 
 void CoatServiceEmptyUserList_UserListWithOneElement_EmptyList()
 {
-	FileRepository repo;
+	CSVFileRepository repo;
 	CoatService service{ repo };
 	service.setPath(TestFile);
 	service.storeCoatService("name", "size", "source", "3");
@@ -529,11 +556,9 @@ void test_CoatService()
 	CoatServiceDeleteCoat_ValidCoat_CoatDeleted();
 	CoatServiceDeleteCoat_InvalidCoat_CoatNotDeleted();
 	CoatServiceUpdateCoat_ValidCoat_UpdatedCoat();
-	CoatServiceUpdateCoat_InvalidCoat_Exception();
+	CoatServiceUpdateCoat_InexistentCoat_Exception();
 	CoatServiceSaveTrenchCoatToUserList_ValidCoat_CoatAdded();
 	CoatServiceListFilteredCoats_ThreeCoats_OneCoatAfterFilter();
-	CoatServiceIsNumber_NotNumber_False();
-	CoatServiceIsNumber_Number_True();
 	CoatServiceConstructors_ValidConstructors();
 	CoatServiceStoreCoat_InvalidCoatPrice_ExceptionRaised();
 	CoatServiceUpdateCoat_InvalidCoatPrice_ExceptionRaised();
@@ -630,6 +655,95 @@ void Exceptions_Message_CorrectMessage()
 	}
 }
 
+void CoatValidatorValidateName_EmptyName_ErrorMessageReturned()
+{
+	CoatValidator coatsValidator;
+	assert(coatsValidator.validateName("").size() != 0);
+}
+
+void CoatValidatorValidateName_NonEmptyName_NoErrorMessage()
+{
+	CoatValidator coatsValidator;
+	assert(coatsValidator.validateName("name").size() == 0);
+}
+
+void CoatValidatorValidateSize_EmptySize_ErrorMessageReturned()
+{
+	CoatValidator coatsValidator;
+	assert(coatsValidator.validateSize("").size() != 0);
+}
+
+void CoatValidatorValidateSize_NonEmptySize_NoErrorMessageReturned()
+{
+	CoatValidator coatsValidator;
+	assert(coatsValidator.validateSize("size").size() == 0);
+}
+
+void CoatValidatorValidateSource_EmptySource_ErrorMessageReturned()
+{
+	CoatValidator coatsValidator;
+	assert(coatsValidator.validatePhotographSource("").size() != 0);
+}
+
+void CoatValidatorValidateSource_NonEmptySource_NoErrorMessageReturned()
+{
+	CoatValidator coatsValidator;
+	assert(coatsValidator.validatePhotographSource("source").size() == 0);
+}
+
+void CoatValidatorValidatePrice_EmptyPrice_ErrorMessageReturned()
+{
+	CoatValidator coatsValidator;
+	assert(coatsValidator.validatePrice("").size() != 0);
+}
+
+void CoatValidatorValidatePrice_NonNaturalNumber_ErrorMessageReturned()
+{
+	CoatValidator coatsValidator;
+	assert(coatsValidator.validatePrice("price").size() != 0);
+}
+
+void CoatValidatorValidatePrice_NaturalNumber_NoErrorMessageReturned()
+{
+	CoatValidator coatsValidator;
+	assert(coatsValidator.validatePrice("3").size() == 0);
+}
+
+void CoatValidatorValidateCoat_ValidCoat_NoExceptionThrown()
+{
+	CoatValidator coatsValidator;
+	coatsValidator.validateCoat("name", "size", "source", "4");
+}
+
+void CoatValidatorValidateCoat_InValidCoatFields_InvalidCoatExceptionThrown()
+{
+	CoatValidator coatsValidator;
+	try
+	{
+	coatsValidator.validateCoat("", "", "", "asd4");
+	assert(false);
+	}
+	catch(InvalidCoat&)
+	{
+		assert(true);
+	}
+}
+
+void test_CoatValidator()
+{
+	CoatValidatorValidateCoat_ValidCoat_NoExceptionThrown();
+	CoatValidatorValidatePrice_NonNaturalNumber_ErrorMessageReturned();
+	CoatValidatorValidatePrice_NaturalNumber_NoErrorMessageReturned();
+	CoatValidatorValidatePrice_EmptyPrice_ErrorMessageReturned();
+	CoatValidatorValidateSource_NonEmptySource_NoErrorMessageReturned();
+	CoatValidatorValidateSource_EmptySource_ErrorMessageReturned();
+	CoatValidatorValidateName_EmptyName_ErrorMessageReturned();
+	CoatValidatorValidateName_NonEmptyName_NoErrorMessage();
+	CoatValidatorValidateSize_EmptySize_ErrorMessageReturned();
+	CoatValidatorValidateSize_NonEmptySize_NoErrorMessageReturned();
+	CoatValidatorValidateCoat_InValidCoatFields_InvalidCoatExceptionThrown();
+}
+
 void testAll()
 {
 	test_TrenchCoat();
@@ -639,6 +753,7 @@ void testAll()
 	tokenize_String_SplitString();
 	Exceptions_Message_CorrectMessage();
 	tokenize_stringWithourDelimiter_SplitStringWithRespectToSpaces();
+	test_CoatValidator();
 	std::cout << "The tests were successful\n";
 }
 

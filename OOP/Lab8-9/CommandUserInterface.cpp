@@ -24,6 +24,7 @@ CommandUserInterface& CommandUserInterface::operator=(const CommandUserInterface
 void CommandUserInterface::startProgram()
 {
 	int isRunning = 1;
+	std::string filePath, userRepositoryPath;
 	while (isRunning)
 	{
 		std::string userInput;
@@ -39,7 +40,6 @@ void CommandUserInterface::startProgram()
 
 		if (command == "fileLocation")
 		{
-			std::string filePath;
 
 			commandParameters.erase(commandParameters.begin());
 
@@ -50,10 +50,44 @@ void CommandUserInterface::startProgram()
 					filePath += ' ';
 			}
 			filePath = filePath.substr(0, filePath.size() - 1);
-			this->coatService.setPath(filePath);
 			break;
 		}
 	}
+
+	isRunning = 1;
+	while (isRunning)
+	{
+		std::string userInput;
+		std::cout << "> ";
+		std::getline(std::cin, userInput);
+
+		if (userInput == "exit")
+			return;
+
+		std::vector <std::string> commandParameters{ tokenize(userInput, ',') };
+		int numberOfParameters = commandParameters.size();
+		std::string command = commandParameters[0];
+
+		if (command == "mylistLocation")
+		{
+			commandParameters.erase(commandParameters.begin());
+
+			for (const std::string& string : commandParameters)
+			{
+				userRepositoryPath += string;
+				if (*(string.end() - 1) != '\\')
+					userRepositoryPath += ' ';
+			}
+			userRepositoryPath = userRepositoryPath.substr(0, userRepositoryPath.size() - 1);
+			std::string fileType = userRepositoryPath.substr(userRepositoryPath.find('.') + 1, std::string::npos);
+			
+			if (fileType == "html" || fileType == "csv")
+				break;
+		}
+	}
+
+	this->coatService.setPath(filePath, userRepositoryPath);
+
 	isRunning = -1; // is -1 until the user chooses a mode
 	while (isRunning == -1)
 	{

@@ -1,11 +1,2 @@
-﻿  CoatService.cpp
-  CoatsIterator.cpp
-  CommandUserInterface.cpp
-  Exceptions.cpp
-  FileRepository.cpp
-  main.cpp
-  tests.cpp
-  TrenchCoat.cpp
-  Compiling...
-  Generating Code...
+﻿  main.cpp
   Lab8-9.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\Lab8-9\Debug\Lab8-9.exe

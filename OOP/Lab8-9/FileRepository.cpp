@@ -79,21 +79,20 @@ void FileRepository::clearFile()
 	fout.close();
 }
 
-
-void FileRepository::storeCoatsToFile(const std::vector<TrenchCoat>& coats)
+void CSVFileRepository::storeCoatsToFile(const std::vector<TrenchCoat>& coats)
 {
 	std::ofstream fout (this->filePath, std::ios::trunc | std::ios::out);
-	for (auto& coat : coats)
-		fout << coat;
+	for (const TrenchCoat& coat : coats)
+		fout << *(static_cast<const CSVTrenchCoat*>(&coat));
 	fout.close();
 }
 
-std::vector<TrenchCoat> FileRepository::loadCoatsFromFile()
+std::vector<TrenchCoat> CSVFileRepository::loadCoatsFromFile()
 {
 	std::ifstream fin(this->filePath, std::ios::in);
 
 	std::vector<TrenchCoat> coats;
-	TrenchCoat currentCoat;
+	CSVTrenchCoat currentCoat;
 
 	while (fin >> currentCoat)
 		coats.push_back(currentCoat);
@@ -102,3 +101,48 @@ std::vector<TrenchCoat> FileRepository::loadCoatsFromFile()
 	return coats;
 }
 
+void HTMLFileRepository::storeCoatsToFile(const std::vector<TrenchCoat>& coats)
+{
+	std::ofstream fout{ this->filePath };
+	fout << "<!DOCTYPE html>\n";
+	fout << "<html>\n";
+	fout << "<head>\n" << "<title>Coats</title>\n" << "</head>\n";
+	fout << "<body>\n" << "<table border=\"1\">\n";
+	
+	fout << "<tr>\n";
+	fout << "<td>" << "Name" << "</td>\n";
+	fout << "<td>" << "Size" << "</td>\n";
+	fout << "<td>" << "Price" << "</td>\n";
+	fout << "<td>" << "Photograph Source" << "</td>\n";
+	fout << "</tr>\n";
+
+
+	for (const TrenchCoat& coat : coats)
+		fout << *(static_cast<const HTMLTrenchCoat*>(&coat));
+
+	fout << "</table>\n";
+	fout << "</body>\n";
+	fout << "</html>\n";
+
+	fout.close();
+}
+
+std::vector<TrenchCoat> HTMLFileRepository::loadCoatsFromFile()
+{
+	std::ifstream fin{ this->filePath };
+	std::vector<TrenchCoat> coats;
+	std::string line;
+	HTMLTrenchCoat currentCoat;
+	int numberOfLinesToSkip = 13;
+	for (int i = 0; i < numberOfLinesToSkip; i++)
+		std::getline(fin, line);
+
+	while (fin >> currentCoat)
+		if (currentCoat.getName().size() != 0)
+		{
+			coats.push_back(currentCoat);
+			currentCoat = HTMLTrenchCoat{};
+		}
+	fin.close();
+	return coats;
+}

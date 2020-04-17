@@ -18,6 +18,7 @@ Penguin::~Penguin()
 std::string Penguin::getType() const
 {
 	return this->type;
+ 
 }
 
 std::string Penguin::toString() const

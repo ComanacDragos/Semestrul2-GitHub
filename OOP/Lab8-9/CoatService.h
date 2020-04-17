@@ -2,25 +2,29 @@
 #include "FileRepository.h"
 #include "CoatsIterator.h"
 #include "FileRepository.h"
+#include "CoatValidator.h"
 
 class CoatService
 {
 private:
-	FileRepository coatRepository;
+	CSVFileRepository coatRepository;
 	std::vector <TrenchCoat> userCoats;
 	CoatsIterator coatsIterator;
+	CoatValidator* coatsValidator;
+	FileRepository* userRepository;
 
 public:
-	CoatService(){}
+	CoatService() :coatsValidator{ new CoatValidator }, userRepository{ new CSVFileRepository } {}
 
-	//copy constructor
-	CoatService(FileRepository& coatRepository);
+	CoatService(CSVFileRepository& coatRepository, CoatValidator* coatsValidator);
+
+	CoatService(CSVFileRepository& coatRepository);
 
 	CoatService(const CoatService& coatService);
 
 	CoatService& operator=(const CoatService& coatService);
 
-	~CoatService(){}
+	~CoatService();
 
 	//raises an exception if price is not a number
 	void storeCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price);
@@ -51,9 +55,7 @@ public:
 
 	TrenchCoat getNextCoatFromIterator();
 
-	bool isNumber(const std::string& number);
-
-	void setPath(const std::string& filePath);
+	void setPath(const std::string& filePath, const std::string& userRepositoryPath="");
 
 	void clearFile();
 };

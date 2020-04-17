@@ -2,6 +2,10 @@
 #include "Dog.h"
 #include <Windows.h>
 #include <iostream>
+#include <crtdbg.h>
+#include <vector>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -57,7 +61,7 @@ void methodOverriding()
 	cout << dog.toString() << endl;
 }
 
-int main()
+int bla()
 {
 	system("color f4");
 
@@ -91,4 +95,88 @@ int main()
 
 	system("pause");
 	return 0;
+}
+
+
+std::vector<std::string> tokenize(std::string string, const char delimiter)
+{
+	std::vector<std::string> result;
+
+	std::stringstream stringStream{ string };
+	std::string token;
+
+	while (std::getline(stringStream, token, delimiter))
+		if (token.size() != 0)
+		{
+			std::stringstream tokenStringStream{ token };
+			while (std::getline(tokenStringStream, token, ' '))
+				if (token.size() != 0)
+					result.push_back(token);
+		}
+
+	return result;
+}
+
+
+std::istream& operator>>(std::istream& istream, Animal& animal)
+{
+	std::string line;
+	std::getline(istream, line);
+	std::vector<std::string> tokens = tokenize(line, ',');
+
+	if (tokens.size() != 2) // bad data
+		return istream;
+
+	std::string color{ tokens[0] };
+	std::string weight{ tokens[1] };
+	
+	Animal newAnimal { color, stod(weight) };
+	animal = newAnimal;
+
+	return istream;
+}
+
+std::ostream& operator<<(std::ostream& ostream, const Animal& animal)
+{
+	ostream << "Animal \n\t weight: " << animal.getWeight() << " kg" << endl << "\t colour: " << animal.getColour() << endl;
+	return ostream;
+}
+
+std::ostream& operator<<(std::ostream& ostream, const AnimalToCSV& animal)
+{
+	ostream << animal.getWeight() << ", " << ", " << animal.getColour() << endl;
+	return ostream;
+}
+
+
+std::ostream& operator<<(std::ostream& ostream, const Penguin& animal)
+{
+	ostream << "SDGSGSRGERGERG";
+	ostream << "Animal \n\t weight: " << animal.getWeight() << " kg" << endl << "\t colour: " << animal.getColour() <<"\t type: "<<animal.getType()<< endl;
+	return ostream;
+}
+
+
+int main()
+{
+	{
+		Animal* animal;
+		animal = new Penguin{ "color", 4, "type" };
+		std::cout << *(static_cast<Penguin*>(animal));
+
+		Penguin* penguin = new Penguin{ "colr", 5,"asf" };
+
+		std::cout << *(static_cast<Animal*>(penguin));
+
+
+		Animal animalasd{ "colrasd", 54 };
+		std::cout << animalasd;
+
+		std::cout << *(static_cast<AnimalToCSV*>(&animalasd));
+
+
+		delete animal;
+	}
+
+
 }

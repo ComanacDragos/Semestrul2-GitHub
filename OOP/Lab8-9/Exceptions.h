@@ -32,8 +32,8 @@ public:
 	BadPosition(const std::string& message) : Exceptions{ message } {}
 };
 
-class BadPrice : public Exceptions
+class InvalidCoat : public Exceptions
 {
 public:
-	BadPrice(const std::string& message):Exceptions{message}{}
+	InvalidCoat(const std::string& message): Exceptions{message}{}
 };
