@@ -182,12 +182,31 @@ class Controller:
 
         path = []
         distance = -1
+
+        print("Initial state: ")
+        print("Path: " + str(path))
+        print("Distance: " + str(distance))
+        print()
+        count = 0
+
         if start in sucesors.keys():
             current = start
+
+            count += 1
+            print("Step " + str(count))
+            print("Current:  " + str(current))
+            print()
             while current != -1:
                 path.insert(0, current)
                 current = sucesors[current]
+
+                count += 1
+                print("Step " + str(count))
+                print("Current:  " + str(current))
+                print("Path: " + str(path))
+                print()
             distance = distances[start]
+            print(distance)
 
         return (path, distance)
 

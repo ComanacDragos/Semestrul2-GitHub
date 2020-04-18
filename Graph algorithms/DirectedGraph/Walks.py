@@ -66,6 +66,16 @@ def forward_Dijkstra(graph, start, end):
 
     return  (predecesors, distances)
 
+def printQueque(q):
+    list=[]
+    while q.qsize():
+        x = q.get()
+        list.append(x)
+        print(x, end=' ')
+    print()
+    for x in list:
+        q.put(x)
+
 def backwards_dijkstra(graph, start, end):
     '''
         :param graph: directed graph with positive costs
@@ -79,24 +89,54 @@ def backwards_dijkstra(graph, start, end):
         raise VertexException("End vertex doesn't exist\n")
 
     queue = PriorityQueue()
-    sucesors = {}
-    sucesors[end] = -1
+    successors = {}
+    successors[end] = -1
     distances = {}
     queue.put((0, end))  # first argument in tuple is priority
     distances[end] = 0
     found = False
 
+    print("Initial state:")
+    print("Queue: ", end=' ')
+    printQueque(queue)
+    print("Successors: " + str(successors))
+    print("Distances: " + str(distances))
+
+    count = 0
+
     while queue.qsize() != 0 and not found:
+        count += 1
+        print()
+        print("Step " + str(count))
+        print("Before changes")
+        print("Queue after change: ", end=' ')
+        printQueque(queue)
+
+        print("Successors: " + str(successors))
+        print("Distances: " + str(distances))
+
+
         x = queue.get()[1]
         for y in graph.parse_inbound(x):
             if y not in distances.keys() or distances[x] + graph.get_cost(y, x) < distances[y]:
                 distances[y] = distances[x] + graph.get_cost(y, x)
                 queue.put((distances[y], y))
-                sucesors[y] = x
+                successors[y] = x
+
+                print()
+                print("After " + str(y) + " is processed")
+                print("Queue after change: ", end=' ')
+                printQueque(queue)
+
+                print("Successors: " + str(successors))
+                print("Distances: " + str(distances))
+
+        print()
+
         if x == start:
             found = True
 
-    return (sucesors, distances)
+    return (successors, distances)
 
 def dynamic_programming_minimum_cost_walk(graph, mxLen, start):
     '''
@@ -137,6 +177,7 @@ def distinct_walks_of_minimum_cost(graph, start, end):
 
 g = DoubleDictGraph()
 
-loadGraph(g, "Graphs/min_walks.txt")
-print(dynamic_programming_minimum_cost_walk(g, 10, 0))
+loadGraph(g, "Graphs/Example2.txt")
+print(backwards_dijkstra(g, 0, 1))
+#print(dynamic_programming_minimum_cost_walk(g, 10, 0))
 

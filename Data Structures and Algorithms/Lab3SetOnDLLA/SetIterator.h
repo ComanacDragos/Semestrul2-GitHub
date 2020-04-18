@@ -19,6 +19,7 @@ public:
 	void next();
 	TElem getCurrent();
 	bool valid() const;
+
 };
 
 

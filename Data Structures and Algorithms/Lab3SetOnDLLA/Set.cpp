@@ -1,8 +1,8 @@
 #include "Set.h"
 #include "SetITerator.h"
-
 #include <iostream>
-//Theta(1) (the two loops execute once always)
+
+//Theta(1)
 Set::Set() {
 	//TODO - Implementation
 	this->capacity = 2;
@@ -13,16 +13,14 @@ Set::Set() {
 	this->tail = -1;
 	this->firstEmpty = 0;
 	
-	for (int i = 0; i < this->capacity - 1; i++)
-		this->nodes[i].next = i + 1;
-	this->nodes[this->capacity - 1].next = -1;
+	this->nodes[0].next = 1;
+	this->nodes[1].next = -1;
 
 	this->nodes[0].prev = -1;
-	for (int i = 1; i < this->capacity; i++)
-		this->nodes[i].prev = i - 1;
+	this->nodes[1].prev = 0;
 }
 
-
+//O(n) - n is the number of elements in the set
 bool Set::add(TElem elem) {
 	//TODO - Implementation
 	if (this->head == -1)
@@ -46,7 +44,7 @@ bool Set::add(TElem elem) {
 	if (this->length == this->capacity)
 	{
 		this->capacity *= 2;
-		DLLANode* largerNodes = new DLLANode[this->capacity+1];
+		DLLANode* largerNodes = new DLLANode[this->capacity];
 
 		for (int i = 0; i < this->length; i++)
 			largerNodes[i] = this->nodes[i];
@@ -81,37 +79,12 @@ bool Set::add(TElem elem) {
 
 	this->length += 1;
 
-	/*
-	std::cout << '\n';
-	std::cout << "\n\nelems: ";
-	for (int i = 0; i < this->capacity; i++)
-	{
-		std::cout << this->nodes[i].info << ' ';
-	}
-	
-	std::cout << "\nnext: ";
-	for (int i = 0; i < this->capacity; i++)
-	{
-		std::cout << this->nodes[i].next << ' ';
-	}
-
-	std::cout << '\n';
-	std::cout << "prev: ";
-	for (int i = 0; i < this->capacity; i++)
-	{
-		std::cout << this->nodes[i].prev << ' ';
-	}
-
-	std::cout << "\nFirst empty: " << this->firstEmpty << "\nHead: " << this->head << "\nTail: " << this->tail;
-	*/
-
 	return true;
 }
 
-
+//O(n) - n is the number of elements in the set
 bool Set::remove(TElem elem) {
 	//TODO - Implementation
-	int current = this->head;
 
 	if (this->length == 1)
 	{
@@ -126,34 +99,10 @@ bool Set::remove(TElem elem) {
 
 		this->length -= 1;
 
-
-		/*
-		std::cout << '\n';
-		std::cout << "\n\nelems: ";
-		for (int i = 0; i < this->capacity; i++)
-		{
-			std::cout << this->nodes[i].info << ' ';
-		}
-
-		std::cout << "\nnext: ";
-		for (int i = 0; i < this->capacity; i++)
-		{
-			std::cout << this->nodes[i].next << ' ';
-		}
-
-		std::cout << '\n';
-		std::cout << "prev: ";
-		for (int i = 0; i < this->capacity; i++)
-		{
-			std::cout << this->nodes[i].prev << ' ';
-		}
-
-		std::cout << "\nFirst empty: " << this->firstEmpty << "\nHead: " << this->head << "\nTail: " << this->tail;
-		*/
-
 		return true;
 	}
 
+	int current = this->head;
 	while (current != -1)
 	{
 		if (this->nodes[current].info == elem)
@@ -169,31 +118,6 @@ bool Set::remove(TElem elem) {
 
 				this->length -= 1;
 
-
-				/*
-				std::cout << '\n';
-				std::cout << "\n\nelems: ";
-				for (int i = 0; i < this->capacity; i++)
-				{
-					std::cout << this->nodes[i].info << ' ';
-				}
-
-				std::cout << "\nnext: ";
-				for (int i = 0; i < this->capacity; i++)
-				{
-					std::cout << this->nodes[i].next << ' ';
-				}
-
-				std::cout << '\n';
-				std::cout << "prev: ";
-				for (int i = 0; i < this->capacity; i++)
-				{
-					std::cout << this->nodes[i].prev << ' ';
-				}
-
-				std::cout << "\nFirst empty: " << this->firstEmpty << "\nHead: " << this->head << "\nTail: " << this->tail;
-				*/
-
 				return true;
 			}
 
@@ -207,32 +131,6 @@ bool Set::remove(TElem elem) {
 				this->nodes[this->firstEmpty].prev = this->tail;
 
 				this->length -= 1;
-
-
-				/*
-				std::cout << '\n';
-				std::cout << "\n\nelems: ";
-				for (int i = 0; i < this->capacity; i++)
-				{
-					std::cout << this->nodes[i].info << ' ';
-				}
-
-				std::cout << "\nnext: ";
-				for (int i = 0; i < this->capacity; i++)
-				{
-					std::cout << this->nodes[i].next << ' ';
-				}
-
-				std::cout << '\n';
-				std::cout << "prev: ";
-				for (int i = 0; i < this->capacity; i++)
-				{
-					std::cout << this->nodes[i].prev << ' ';
-				}
-
-				std::cout << "\nFirst empty: " << this->firstEmpty << "\nHead: " << this->head << "\nTail: " << this->tail;
-				*/
-
 
 				return true;
 			}
@@ -248,31 +146,6 @@ bool Set::remove(TElem elem) {
 
 			this->length -= 1;
 
-
-			/*
-			std::cout << '\n';
-			std::cout << "\n\nelems: ";
-			for (int i = 0; i < this->capacity; i++)
-			{
-				std::cout << this->nodes[i].info << ' ';
-			}
-
-			std::cout << "\nnext: ";
-			for (int i = 0; i < this->capacity; i++)
-			{
-				std::cout << this->nodes[i].next << ' ';
-			}
-
-			std::cout << '\n';
-			std::cout << "prev: ";
-			for (int i = 0; i < this->capacity; i++)
-			{
-				std::cout << this->nodes[i].prev << ' ';
-			}
-
-			std::cout << "\nFirst empty: " << this->firstEmpty << "\nHead: " << this->head << "\nTail: " << this->tail;
-			*/
-
 			return true;
 		}
 		current = this->nodes[current].next;
@@ -281,6 +154,7 @@ bool Set::remove(TElem elem) {
 	return false;
 }
 
+//O(n) - number of elements in set
 bool Set::search(TElem elem) const {
 	//TODO - Implementation
 	int current = this->head;
@@ -295,25 +169,25 @@ bool Set::search(TElem elem) const {
 	return false;
 }
 
-
+//theta(1)
 int Set::size() const {
 	//TODO - Implementation
 	return this->length;
 }
 
-
+//theta(1)
 bool Set::isEmpty() const {
 	//TODO - Implementation
 	return this->head == -1;
 }
 
-
+//theta(1)
 Set::~Set() {
 	//TODO - Implementation
 	delete[] this->nodes;
 }
 
-
+//theta(1)
 SetIterator Set::iterator() const {
 	return SetIterator(*this);
 }
