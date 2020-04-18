@@ -8,7 +8,6 @@ class CoatService
 {
 private:
 	CSVFileRepository coatRepository;
-	std::vector <TrenchCoat> userCoats;
 	CoatsIterator coatsIterator;
 	CoatValidator* coatsValidator;
 	FileRepository* userRepository;
@@ -26,14 +25,14 @@ public:
 
 	~CoatService();
 
-	//raises an exception if price is not a number
+	//raises an exception if coat fields are invalid
 	void storeCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price);
 
 	void deleteCoatService(const std::string name);
 
-	//raises an exception if price is not a number
+	//raises an exception if coat fields are invalid
 	void updateCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price);
-	
+
 	std::vector<TrenchCoat> listCoats();
 
 	TrenchCoat getCoatFromRepository(int position);
@@ -55,8 +54,10 @@ public:
 
 	TrenchCoat getNextCoatFromIterator();
 
-	void setPath(const std::string& filePath, const std::string& userRepositoryPath="");
+	void setPath(const std::string& filePath, const std::string& userRepositoryPath = "");
 
 	void clearFile();
+
+	void openUserFile();
 };
 

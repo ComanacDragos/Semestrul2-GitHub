@@ -43,6 +43,7 @@ void CommandUserInterface::startProgram()
 
 			commandParameters.erase(commandParameters.begin());
 
+			filePath = "";
 			for (const std::string& string : commandParameters)
 			{
 				filePath += string;
@@ -50,6 +51,7 @@ void CommandUserInterface::startProgram()
 					filePath += ' ';
 			}
 			filePath = filePath.substr(0, filePath.size() - 1);
+			std::cout << "File path set successfully\n";
 			break;
 		}
 	}
@@ -72,6 +74,7 @@ void CommandUserInterface::startProgram()
 		{
 			commandParameters.erase(commandParameters.begin());
 
+			userRepositoryPath = "";
 			for (const std::string& string : commandParameters)
 			{
 				userRepositoryPath += string;
@@ -81,8 +84,11 @@ void CommandUserInterface::startProgram()
 			userRepositoryPath = userRepositoryPath.substr(0, userRepositoryPath.size() - 1);
 			std::string fileType = userRepositoryPath.substr(userRepositoryPath.find('.') + 1, std::string::npos);
 			
-			if (fileType == "html" || fileType == "csv")
+			if (fileType == "html" || fileType == "csv" || fileType == "txt")
+			{ 
+				std::cout << "mylistLocation set successfully\n";
 				break;
+			}
 		}
 	}
 
@@ -363,8 +369,12 @@ void CommandUserInterface::listUsersCoats(std::vector<std::string> parameters, i
 	{
 		std::cout << "Bad command\n";
 	}
+	
+	/*
 	std:: vector<TrenchCoat> userCoats = this->coatService.getUserCoats();
 	
 	for (TrenchCoat coat : userCoats)
 		std::cout << coat;
+	*/
+	this->coatService.openUserFile();
 }

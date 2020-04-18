@@ -1,4 +1,4 @@
-[2020-04-17 21:27:40] [info] Start Program:
+[2020-04-18 14:08:45] [info] Start Program:
 Path:"E:\\Universitate\\Semestrul2-GitHub\\OOP\\Lab8-9\\Debug\\Lab8-9.exe"
 Arguments:
 Working directory: "E:\\Universitate\\Semestrul2-GitHub\\OOP\\Lab8-9\\"
@@ -9,13 +9,13 @@ Cover Children: 0
 Aggregate by file: 1
 Continue after C++ exception: 0
 Optimized build support: 0
-Export: binary C:\Users\Dragos\AppData\Local\Temp\j13aurcj.hd3 
+Export: binary C:\Users\Dragos\AppData\Local\Temp\mrhr31ui.npv 
 Input coverage: 
 Unified diff: 
 Excluded line regular expressions: 
 Substitute pdb source paths: 
 
-[2020-04-17 21:27:40] [info] Module: E:\Universitate\Semestrul2-GitHub\OOP\Lab8-9\Debug\Lab8-9.exe is selected because it matches selected pattern: E:\Universitate\Semestrul2-GitHub\OOP\Lab8-9\Debug\Lab8-9.exe
-[2020-04-17 21:27:44] [info] ----------------------------------------------------
-[2020-04-17 21:27:44] [info] Coverage binary generated in file: C:\Users\Dragos\AppData\Local\Temp\j13aurcj.hd3
-[2020-04-17 21:27:44] [info] ----------------------------------------------------
+[2020-04-18 14:08:46] [info] Module: E:\Universitate\Semestrul2-GitHub\OOP\Lab8-9\Debug\Lab8-9.exe is selected because it matches selected pattern: E:\Universitate\Semestrul2-GitHub\OOP\Lab8-9\Debug\Lab8-9.exe
+[2020-04-18 14:08:52] [info] ----------------------------------------------------
+[2020-04-18 14:08:52] [info] Coverage binary generated in file: C:\Users\Dragos\AppData\Local\Temp\mrhr31ui.npv
+[2020-04-18 14:08:52] [info] ----------------------------------------------------

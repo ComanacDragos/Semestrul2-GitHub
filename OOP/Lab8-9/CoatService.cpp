@@ -19,11 +19,13 @@ CoatService::CoatService(CSVFileRepository& coatRepository)
 CoatService::CoatService(const CoatService& coatService)
 {
 	this->coatRepository = coatService.coatRepository;
-	this->userCoats = coatService.userCoats;
 	this->coatsIterator = coatService.coatsIterator;
 
 	this->coatsValidator = new CoatValidator;
 	*(this->coatsValidator) = *(coatService.coatsValidator);
+
+	this->userRepository = new CSVFileRepository;
+	*(this->userRepository) = *(coatService.userRepository);
 
 }
 
@@ -32,10 +34,11 @@ CoatService& CoatService::operator=(const CoatService& coatService)
 	if (this == &coatService)
 		return *this;
 	this->coatRepository = coatService.coatRepository;
-	this->userCoats = coatService.userCoats;
 	this->coatsIterator = coatService.coatsIterator;
 
 	*(this->coatsValidator) = *(coatService.coatsValidator);
+	*(this->userRepository) = *(coatService.userRepository);
+
 	return *this;
 }
 
@@ -57,16 +60,8 @@ void CoatService::deleteCoatService(const std::string name)
 {
 	this->coatRepository.deleteCoat(name);
 
-	auto iterator = std::remove_if(this->userCoats.begin(), this->userCoats.end(), [name] (const TrenchCoat& coat)->bool {return coat.getName() == name; });
-	//this->userCoats.erase(iterator, this->userCoats.end());
-	try
-	{
+	if (this->userRepository->existentCoat(name))
 		this->userRepository->deleteCoat(name);
-	}
-	catch (InexistentTrenchCoat&)
-	{
-		return;
-	}
 }
 
 void CoatService::updateCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price)
@@ -76,18 +71,8 @@ void CoatService::updateCoatService(const std::string& name, const std::string& 
 	TrenchCoat updatedCoat{ name, size, photographSource, atoi(price.c_str()) };
 	this->coatRepository.updateCoat(updatedCoat);
 
-	/*
-	std::replace_if(this->userCoats.begin(), this->userCoats.end(),
-					[updatedCoat](const TrenchCoat& coat) {return coat.getName() == updatedCoat.getName(); }, updatedCoat);
-	*/
-	try
-	{
+	if (this->userRepository->existentCoat(name))
 		this->userRepository->updateCoat(updatedCoat);
-	}
-	catch (InexistentTrenchCoat&)
-	{
-		return;
-	}
 
 }
 
@@ -116,8 +101,7 @@ CoatsIterator CoatService::getCoatsIterator()
 void CoatService::saveTrenchCoatToUserList(const std::string& name)
 {
 	TrenchCoat newUserCoat = this->coatRepository.findCoatFromRepository(name);
-	this->userCoats.push_back(newUserCoat);
-
+	
 	this->userRepository->storeCoat(newUserCoat);
 }
 
@@ -135,14 +119,14 @@ std:: vector<TrenchCoat> CoatService::listFilteredCoats(const std::string& size,
 
 std::vector<TrenchCoat> CoatService::getUserCoats()
 {
-	//return this->userCoats;
 	return this->userRepository->getAllCoats();
 }
 
 void CoatService::emptyUserCoats()
 {
-	std::vector<TrenchCoat> emptyList;
-	this->userCoats = emptyList;
+	std::vector<TrenchCoat> coats{ this->getUserCoats() };
+	for (auto& coat : coats)
+		this->userRepository->deleteCoat(coat.getName());
 }
 
 void CoatService::setCoatIteratorToFirst()
@@ -166,11 +150,15 @@ void CoatService::setPath(const std::string& filePath, const std::string& userRe
 		std::string fileType = userRepositoryPath.substr(userRepositoryPath.find('.')+1, std::string::npos);
 
 		if (fileType == "html")
+		{
+			delete this->userRepository;
 			this->userRepository = new HTMLFileRepository{ userRepositoryPath };
-		
-		if (fileType == "csv")
+		}
+		if (fileType == "csv" || fileType == "txt")
+		{
+			delete this->userRepository;
 			this->userRepository = new CSVFileRepository{userRepositoryPath};
-
+		}
 	}
 }
 
@@ -179,4 +167,6 @@ void CoatService::clearFile()
 	this->coatRepository.clearFile();
 	this->userRepository->clearFile();
 }
+
+void CoatService::openUserFile(){this->userRepository->openFile();}
 

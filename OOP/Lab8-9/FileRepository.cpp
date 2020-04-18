@@ -56,6 +56,16 @@ TrenchCoat FileRepository::findCoatFromRepository(const std::string& name)
 	return *iterator;
 }
 
+bool FileRepository::existentCoat(const std::string& name)
+{
+	std::vector<TrenchCoat> coats = this->getAllCoats();
+	auto iterator = find(coats.begin(), coats.end(), TrenchCoat(name, "size", "source", 0));
+	if (iterator == coats.end())
+		return false;
+
+	return true;
+}
+
 int FileRepository::getRepositoryLength()
 {
 	return this->loadCoatsFromFile().size();
@@ -78,6 +88,8 @@ void FileRepository::clearFile()
 	std::ofstream fout(this->filePath);
 	fout.close();
 }
+
+void FileRepository::openFile(){system(this->filePath.c_str());}
 
 void CSVFileRepository::storeCoatsToFile(const std::vector<TrenchCoat>& coats)
 {

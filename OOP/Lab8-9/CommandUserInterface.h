@@ -19,7 +19,6 @@ class CommandUserInterface
 private:
 	CoatService coatService;
 
-	
 public:
 	CommandUserInterface(){}
 
@@ -33,6 +32,7 @@ public:
 
 	void startProgram();
 
+private:
 	void initializeRepository();
 
 	//returns 0 if the user exits the program and 1 if the user changes the mode

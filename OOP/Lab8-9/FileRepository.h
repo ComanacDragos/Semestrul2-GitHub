@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -6,6 +7,7 @@
 #include <algorithm>
 #include "TrenchCoat.h"
 #include "Exceptions.h"
+
 
 class FileRepository
 {
@@ -17,7 +19,7 @@ public:
 
 	FileRepository(const std::string& filePath);
 
-	virtual ~FileRepository(){}
+	virtual ~FileRepository() {}
 
 	//throws an exception if the coat already exists
 	void storeCoat(const TrenchCoat& coat);
@@ -34,6 +36,9 @@ public:
 	//returns a coat with a given name and throws an exception if there is no such coat
 	TrenchCoat findCoatFromRepository(const std::string& name);
 
+	//returns true if the coat exists and false otherwise
+	bool existentCoat(const std::string& name);
+
 	int getRepositoryLength();
 
 	std::vector<TrenchCoat> getAllCoats();
@@ -42,11 +47,14 @@ public:
 
 	void clearFile();
 
+	void openFile();
+
 protected:
 
 	virtual void storeCoatsToFile(const std::vector<TrenchCoat>& coats) = 0;
 
 	virtual std::vector<TrenchCoat> loadCoatsFromFile() = 0;
+
 };
 
 class CSVFileRepository : public FileRepository
@@ -62,6 +70,7 @@ protected:
 	void storeCoatsToFile(const std::vector<TrenchCoat>& coats);
 
 	std::vector<TrenchCoat> loadCoatsFromFile();
+
 };
 
 class HTMLFileRepository : public FileRepository

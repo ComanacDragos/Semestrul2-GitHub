@@ -538,7 +538,7 @@ void CoatServiceEmptyUserList_UserListWithOneElement_EmptyList()
 {
 	CSVFileRepository repo;
 	CoatService service{ repo };
-	service.setPath(TestFile);
+	service.setPath(TestFile, UserListTestFileCSV);
 	service.storeCoatService("name", "size", "source", "3");
 	
 	service.saveTrenchCoatToUserList("name");
@@ -546,6 +546,42 @@ void CoatServiceEmptyUserList_UserListWithOneElement_EmptyList()
 	service.emptyUserCoats();
 	assert(service.getUserCoats().size() == 0);
 
+	service.clearFile();
+}
+
+void CoatServiceUpdateCoat_UserListWithOneElement_UpdatedCoatInUserList()
+{
+	CSVFileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile, UserListTestFileCSV);
+	service.storeCoatService("name", "size", "source", "3");
+
+	service.saveTrenchCoatToUserList("name");
+	service.updateCoatService("name", "size2", "source2", "5");
+
+	std::vector<TrenchCoat> userCoats{ service.getUserCoats() };
+	assert(userCoats[0].to_string() == TrenchCoat("name", "size2", "source2", 5).to_string());
+
+	service.clearFile();
+}
+
+void CoatServiceSetPath_HTMlrepository_CorrectRepository()
+{
+	CSVFileRepository repo;
+	CoatService service{ repo };
+	service.setPath(TestFile, UserListTestFileHTML);
+
+	service.storeCoatService("name", "size", "source", "3");
+	service.saveTrenchCoatToUserList("name");
+
+	std::ifstream fin{ UserListTestFileHTML };
+
+	std::string string;
+	std::getline(fin, string);
+
+	assert(string == "<!DOCTYPE html>");
+	
+	fin.close();
 	service.clearFile();
 }
 
@@ -566,6 +602,8 @@ void test_CoatService()
 	CoatServiceGetNextFromCoatService_RepositoryWithOneElement_FirstElement();
 	CoatServiceEmptyUserList_UserListWithOneElement_EmptyList();
 	CoatServiceDeleteCoat_UserListWithOneCoat_DeletesTheCoatFromUserList();
+	CoatServiceSetPath_HTMlrepository_CorrectRepository();
+	CoatServiceUpdateCoat_UserListWithOneElement_UpdatedCoatInUserList();
 }
 
 

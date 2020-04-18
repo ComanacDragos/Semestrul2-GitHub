@@ -6,6 +6,7 @@ class CoatValidator
 {
 public:
 	CoatValidator(){}
+
 	~CoatValidator(){}
 
 	void validateCoat(const std::string& name, const std::string& size, const std::string& source, const std::string& price);

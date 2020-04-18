@@ -26,6 +26,7 @@ public:
 	InexistentTrenchCoat(const std::string& message): Exceptions{message}{}
 };
 
+
 class BadPosition : public Exceptions
 {
 public:
