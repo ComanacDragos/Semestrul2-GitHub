@@ -1,16 +1,3 @@
-﻿  App.cpp
+﻿  Set.cpp
 E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\Set.h(18): warning C4091: 'typedef ': ignored on left of 'Set::DLLANode' when no variable is declared
-  ExtendedTest.cpp
-E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\Set.h(18): warning C4091: 'typedef ': ignored on left of 'Set::DLLANode' when no variable is declared
-E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\ExtendedTest.cpp(165,20): warning C4101: 'e': unreferenced local variable
-E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\ExtendedTest.cpp(172,20): warning C4101: 'ex': unreferenced local variable
-E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\ExtendedTest.cpp(226,20): warning C4101: 'ex': unreferenced local variable
-E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\ExtendedTest.cpp(233,20): warning C4101: 'ex': unreferenced local variable
-  Set.cpp
-E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\Set.h(18): warning C4091: 'typedef ': ignored on left of 'Set::DLLANode' when no variable is declared
-  SetIterator.cpp
-E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\Set.h(18): warning C4091: 'typedef ': ignored on left of 'Set::DLLANode' when no variable is declared
-  ShortTest.cpp
-E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\Set.h(18): warning C4091: 'typedef ': ignored on left of 'Set::DLLANode' when no variable is declared
-  Generating Code...
   Lab3SetOnDLLA.vcxproj -> E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab3SetOnDLLA\Debug\Lab3SetOnDLLA.exe

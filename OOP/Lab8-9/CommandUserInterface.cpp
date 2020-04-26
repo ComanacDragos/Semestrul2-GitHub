@@ -123,6 +123,8 @@ void CommandUserInterface::startProgram()
 		}
 	}
 
+	//this->initializeRepository();
+
 	while (isRunning == AdministratorMode || isRunning == ClientMode)
 	{
 		if (isRunning == AdministratorMode)
@@ -140,16 +142,16 @@ void CommandUserInterface::startProgram()
 
 void CommandUserInterface::initializeRepository()
 {
-	this->coatService.storeCoatService("coat1", "S", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "100");
-	this->coatService.storeCoatService("coat2", "M", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "150");
-	this->coatService.storeCoatService("coat3", "L", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "120");
-	this->coatService.storeCoatService("coat4", "XL", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "130");
-	this->coatService.storeCoatService("coat5", "XXL", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "200");
-	this->coatService.storeCoatService("coat6", "S", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "130");
-	this->coatService.storeCoatService("coat7", "M", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "120");
-	this->coatService.storeCoatService("coat8", "L", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "100");
-	this->coatService.storeCoatService("coat9", "XL", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "100");
-	this->coatService.storeCoatService("coat10", "XXL", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500,500_.jpg", "100");
+	this->coatService.storeCoatService("coat1", "S", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500500_.jpg", "100");
+	this->coatService.storeCoatService("coat2", "M", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500500_.jpg", "150");
+	this->coatService.storeCoatService("coat3", "L", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500500_.jpg", "120");
+	this->coatService.storeCoatService("coat4", "XL", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500500_.jpg", "130");
+	this->coatService.storeCoatService("coat5", "XXL", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500500_.jpg", "200");
+	this->coatService.storeCoatService("coat6", "S", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500500_.jpg", "130");
+	this->coatService.storeCoatService("coat7", "M", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500500_.jpg", "120");
+	this->coatService.storeCoatService("coat8", "L", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500500_.jpg", "100");
+	this->coatService.storeCoatService("coat9", "XL", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500500_.jpg", "100");
+	this->coatService.storeCoatService("coat10", "XXL", "https://m.media-amazon.com/images/I/515R11jmKQL._SR500500_.jpg", "100");
 }
 
 

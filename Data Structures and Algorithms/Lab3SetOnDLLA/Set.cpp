@@ -99,6 +99,7 @@ bool Set::remove(TElem elem) {
 
 		this->length -= 1;
 
+		this->shrink();
 		return true;
 	}
 
@@ -118,6 +119,7 @@ bool Set::remove(TElem elem) {
 
 				this->length -= 1;
 
+				this->shrink();
 				return true;
 			}
 
@@ -132,6 +134,7 @@ bool Set::remove(TElem elem) {
 
 				this->length -= 1;
 
+				this->shrink();
 				return true;
 			}
 
@@ -146,6 +149,7 @@ bool Set::remove(TElem elem) {
 
 			this->length -= 1;
 
+			this->shrink();
 			return true;
 		}
 		current = this->nodes[current].next;
@@ -185,6 +189,37 @@ bool Set::isEmpty() const {
 Set::~Set() {
 	//TODO - Implementation
 	delete[] this->nodes;
+}
+
+
+//Theta(1) amortized - n is the number of elements
+void Set::shrink()
+{
+	if (this->capacity / 2 == this->length && this->capacity > 2)
+	{
+		DLLANode* newNodes = new DLLANode[this->length];
+		for (int i = 1; i < this->length - 1; i++)
+		{
+			newNodes[i].next = i + 1;
+			newNodes[i].prev = i - 1;
+		}
+		newNodes[0].next = 1;  newNodes[this->length - 1].next = -1;
+		newNodes[0].prev = -1; newNodes[this->length - 1].prev = this->length - 2;
+
+		int i = 0, current = this->head;
+		while (i != this->length)
+		{
+			newNodes[i].info = this->nodes[current].info;
+			i++;
+			current = this->nodes[current].next;
+		}
+		delete[] this->nodes;
+		this->nodes = newNodes;
+		this->firstEmpty = -1;
+		this->head = 0;
+		this->tail = this->length - 1;
+		this->capacity = this->length;
+	}
 }
 
 //theta(1)

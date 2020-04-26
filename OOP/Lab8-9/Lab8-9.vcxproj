@@ -159,6 +159,9 @@
     <ClInclude Include="tests.h" />
     <ClInclude Include="TrenchCoat.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="repo.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

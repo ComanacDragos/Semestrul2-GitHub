@@ -174,10 +174,3 @@ def distinct_walks_of_minimum_cost(graph, start, end):
         raise VertexException("Vertex not accessible from start\n")
 
     minimumDistance = distances[end]
-
-g = DoubleDictGraph()
-
-loadGraph(g, "Graphs/Example2.txt")
-print(backwards_dijkstra(g, 0, 1))
-#print(dynamic_programming_minimum_cost_walk(g, 10, 0))
-

@@ -47,6 +47,9 @@ class Set {
         // destructor
         ~Set();
 
+private:
+    void shrink();
+
 };
 
 
