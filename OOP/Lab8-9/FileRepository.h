@@ -47,7 +47,7 @@ public:
 
 	void clearFile();
 
-	void openFile();
+	virtual void openFile();
 
 protected:
 
@@ -66,6 +66,8 @@ public:
 
 	~CSVFileRepository(){}
 
+	void openFile();
+
 protected:
 	void storeCoatsToFile(const std::vector<TrenchCoat>& coats);
 
@@ -81,6 +83,8 @@ public:
 	HTMLFileRepository(const std::string& filePath):FileRepository{filePath}{}
 
 	~HTMLFileRepository(){}
+
+	void openFile();
 
 protected:
 	void storeCoatsToFile(const std::vector<TrenchCoat>& coats);

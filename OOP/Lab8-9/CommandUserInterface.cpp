@@ -34,6 +34,9 @@ void CommandUserInterface::startProgram()
 		if (userInput == "exit")
 			return;
 
+		if (userInput.size() == 0)
+			continue;
+
 		std::vector <std::string> commandParameters{ tokenize(userInput, ',') };
 		int numberOfParameters = commandParameters.size();
 		std::string command = commandParameters[0];
@@ -65,6 +68,9 @@ void CommandUserInterface::startProgram()
 
 		if (userInput == "exit")
 			return;
+
+		if (userInput.size() == 0)
+			continue;
 
 		std::vector <std::string> commandParameters{ tokenize(userInput, ',') };
 		int numberOfParameters = commandParameters.size();
@@ -103,6 +109,9 @@ void CommandUserInterface::startProgram()
 
 		if (userInput == "exit")
 			return;
+
+		if (userInput.size() == 0)
+			continue;
 
 		std::vector <std::string> commandParameters{ tokenize(userInput, ',') };
 		int numberOfParameters = commandParameters.size();
@@ -165,6 +174,9 @@ int CommandUserInterface::startAdministratorMode()
 
 		if (userInput == "exit")
 			return ExitCode;
+
+		if (userInput.size() == 0)
+			continue;
 
 		std::vector<std::string> commandParameters{ tokenize(userInput, ',') };
 		int numberOfParameters = commandParameters.size();
@@ -286,6 +298,9 @@ int CommandUserInterface::startClientUserInterface()
 
 		if (userInput == "exit")
 			return ExitCode;
+
+		if (userInput.size() == 0)
+			continue;
 
 		std::vector<std::string> commandParameters{ tokenize(userInput, ',') };
 		int numberOfParameters = commandParameters.size();

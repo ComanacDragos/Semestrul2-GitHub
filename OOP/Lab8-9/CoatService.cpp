@@ -168,5 +168,8 @@ void CoatService::clearFile()
 	this->userRepository->clearFile();
 }
 
-void CoatService::openUserFile(){this->userRepository->openFile();}
+void CoatService::openUserFile()
+{
+	this->userRepository->openFile();
+}
 

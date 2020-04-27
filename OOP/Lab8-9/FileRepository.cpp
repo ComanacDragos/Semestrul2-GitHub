@@ -89,7 +89,17 @@ void FileRepository::clearFile()
 	fout.close();
 }
 
-void FileRepository::openFile(){system(this->filePath.c_str());}
+void FileRepository::openFile()
+{
+	system(this->filePath.c_str());
+}
+
+void CSVFileRepository::openFile()
+{
+	std::wstring stemp = std::wstring(this->filePath.begin(), this->filePath.end());
+	LPCWSTR sw = stemp.c_str();
+	ShellExecute(0, L"open", L"C:\\Windows\\System32\\notepad.exe", sw, 0, SW_SHOW);
+}
 
 void CSVFileRepository::storeCoatsToFile(const std::vector<TrenchCoat>& coats)
 {
@@ -111,6 +121,13 @@ std::vector<TrenchCoat> CSVFileRepository::loadCoatsFromFile()
 
 	fin.close();
 	return coats;
+}
+
+void HTMLFileRepository::openFile()
+{
+	std::wstring stemp = std::wstring(this->filePath.begin(), this->filePath.end());
+	LPCWSTR sw = stemp.c_str();
+	ShellExecute(0, L"open", L"C:\\Program Files (x86)\\Google\\Chrome\\Application\\Chrome.exe", sw, 0, SW_SHOW);
 }
 
 void HTMLFileRepository::storeCoatsToFile(const std::vector<TrenchCoat>& coats)
