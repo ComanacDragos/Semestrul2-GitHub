@@ -96,9 +96,7 @@ void FileRepository::openFile()
 
 void CSVFileRepository::openFile()
 {
-	std::wstring stemp = std::wstring(this->filePath.begin(), this->filePath.end());
-	LPCWSTR sw = stemp.c_str();
-	ShellExecute(0, L"open", L"C:\\Windows\\System32\\notepad.exe", sw, 0, SW_SHOW);
+	ShellExecuteA(NULL, NULL, "notepad.exe", this->filePath.c_str(), NULL, SW_SHOWMAXIMIZED);
 }
 
 void CSVFileRepository::storeCoatsToFile(const std::vector<TrenchCoat>& coats)
@@ -125,9 +123,7 @@ std::vector<TrenchCoat> CSVFileRepository::loadCoatsFromFile()
 
 void HTMLFileRepository::openFile()
 {
-	std::wstring stemp = std::wstring(this->filePath.begin(), this->filePath.end());
-	LPCWSTR sw = stemp.c_str();
-	ShellExecute(0, L"open", L"C:\\Program Files (x86)\\Google\\Chrome\\Application\\Chrome.exe", sw, 0, SW_SHOW);
+	ShellExecuteA(NULL, NULL, "chrome.exe", this->filePath.c_str(), NULL, SW_SHOWMAXIMIZED);
 }
 
 void HTMLFileRepository::storeCoatsToFile(const std::vector<TrenchCoat>& coats)

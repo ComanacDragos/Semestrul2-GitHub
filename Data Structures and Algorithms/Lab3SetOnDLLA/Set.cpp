@@ -23,7 +23,7 @@ Set::Set() {
 //O(n) - n is the number of elements in the set
 bool Set::add(TElem elem) {
 	//TODO - Implementation
-	if (this->head == -1)
+	if (this->head == -1)//empty list case
 	{
 		this->head = this->firstEmpty;
 		this->tail = this->firstEmpty;
@@ -67,6 +67,8 @@ bool Set::add(TElem elem) {
 
 	}
 
+
+	//add to the end
 	int aux = this->nodes[firstEmpty].next;
 	this->nodes[tail].next = this->firstEmpty;
 
@@ -86,7 +88,7 @@ bool Set::add(TElem elem) {
 bool Set::remove(TElem elem) {
 	//TODO - Implementation
 
-	if (this->length == 1)
+	if (this->length == 1)//case when the list has 1 element
 	{
 		if (this->nodes[this->head].info != elem)
 			return false;
@@ -108,7 +110,7 @@ bool Set::remove(TElem elem) {
 	{
 		if (this->nodes[current].info == elem)
 		{
-			if (current == this->head)
+			if (current == this->head)//removes the head
 			{
 				this->head = this->nodes[this->head].next;
 				this->nodes[this->head].prev = -1;
@@ -123,7 +125,7 @@ bool Set::remove(TElem elem) {
 				return true;
 			}
 
-			if (current == this->tail)
+			if (current == this->tail)//removes the tail
 			{
 				this->tail = this->nodes[this->tail].prev;
 				this->nodes[this->tail].next = -1;
@@ -138,6 +140,7 @@ bool Set::remove(TElem elem) {
 				return true;
 			}
 
+			//removes an element between the head and tail
 			int previous = this->nodes[current].prev;
 			int next = this->nodes[current].next;
 
@@ -223,7 +226,7 @@ void Set::shrink()
 }
 
 //theta(1)
-SetIterator Set::iterator() const {
+SetIterator Set::iterator() {
 	return SetIterator(*this);
 }
 

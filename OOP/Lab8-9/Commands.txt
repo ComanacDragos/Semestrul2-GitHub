@@ -5,9 +5,9 @@ add coat1 a 3 a
 list
 mode B
 save coat1
+save coat7
 save coat2
-save coat3
-save coat4
+save coat5
 mylist
 exit
 
@@ -20,8 +20,8 @@ add coat1 a 3 a
 list
 mode B
 save coat1
+save coat7
 save coat2
-save coat3
-save coat4
+save coat5
 mylist
 exit

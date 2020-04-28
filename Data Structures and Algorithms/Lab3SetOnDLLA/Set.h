@@ -12,10 +12,10 @@ class Set {
 
     private:
 		//TODO - Representation
-        typedef struct DLLANode {
+        typedef struct {
             TElem info;
             int next, prev;
-        };
+        }DLLANode;
 
         DLLANode* nodes;
         int capacity, length, head, tail, firstEmpty;
@@ -42,7 +42,7 @@ class Set {
         bool isEmpty() const;
 
         //return an iterator for the set
-        SetIterator iterator() const;
+        SetIterator iterator();
 
         // destructor
         ~Set();

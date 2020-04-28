@@ -11,6 +11,7 @@ using namespace std;
 
 int main() {
 
+	testExtraOperation();
 	testAll();
 	testAllExtended();	
 	cout << "\n\n";
