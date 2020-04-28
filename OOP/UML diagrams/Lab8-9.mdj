@@ -3709,11 +3709,30 @@
 									"model": {
 										"$ref": "AAAAAAFxjGI+OkvJP6A="
 									},
+									"subViews": [
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAFxwlDB6wKppRA=",
+											"_parent": {
+												"$ref": "AAAAAAFxjGI+O0vRhE4="
+											},
+											"model": {
+												"$ref": "AAAAAAFxwlDBzQKgQCQ="
+											},
+											"font": "Arial;13;0",
+											"left": 941,
+											"top": 142,
+											"width": 508.87890625,
+											"height": 13,
+											"text": "-coatService: CoatService",
+											"horizontalAlignment": 0
+										}
+									],
 									"font": "Arial;13;0",
 									"left": 936,
 									"top": 137,
 									"width": 518.87890625,
-									"height": 10
+									"height": 23
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -3736,7 +3755,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 152,
+											"top": 165,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "+startProgram(): void",
@@ -3753,7 +3772,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 167,
+											"top": 180,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-initializeRepository(): void",
@@ -3770,7 +3789,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 182,
+											"top": 195,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-startAdministratorMode(): int",
@@ -3787,7 +3806,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 197,
+											"top": 210,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-storeCoat(parameters: vector<string>, numberOfParameters: int): void",
@@ -3804,7 +3823,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 212,
+											"top": 225,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-deleteCoat(parameters: vector<string>, numberOfParameters: int): void",
@@ -3821,7 +3840,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 227,
+											"top": 240,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-updateCoat(parameters: vector<string>, numberOfParameters: int): void",
@@ -3838,7 +3857,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 242,
+											"top": 255,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-listCoats(parameters: vector<string>, numberOfParameters: int): void",
@@ -3855,7 +3874,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 257,
+											"top": 270,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-startClientUserInterface(): int",
@@ -3872,7 +3891,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 272,
+											"top": 285,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-setIterator(): void",
@@ -3889,7 +3908,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 287,
+											"top": 300,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-nextCoat(parameters: vector<string>, numberOfParameters: int): void",
@@ -3906,7 +3925,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 302,
+											"top": 315,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-saveTrenchCoatToUserList(parameters: vector<string>, numberOfParameters: int): void",
@@ -3923,7 +3942,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 317,
+											"top": 330,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-listFilteredCoats(parameters: vector<string>, numberOfParameters: int): void",
@@ -3940,7 +3959,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 941,
-											"top": 332,
+											"top": 345,
 											"width": 508.87890625,
 											"height": 13,
 											"text": "-listUserCoats(parameters: vector<string>, numberOfParameters: int): void",
@@ -3949,7 +3968,7 @@
 									],
 									"font": "Arial;13;0",
 									"left": 936,
-									"top": 147,
+									"top": 160,
 									"width": 518.87890625,
 									"height": 203
 								},
@@ -3991,7 +4010,7 @@
 							"left": 936,
 							"top": 112,
 							"width": 518.87890625,
-							"height": 238,
+							"height": 251,
 							"nameCompartment": {
 								"$ref": "AAAAAAFxjGI+O0vM9SY="
 							},
@@ -4030,7 +4049,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 1179,
-									"top": 415,
+									"top": 422,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -4051,7 +4070,7 @@
 									"visible": null,
 									"font": "Arial;13;0",
 									"left": 1164,
-									"top": 415,
+									"top": 422,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -4072,7 +4091,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 1208,
-									"top": 416,
+									"top": 423,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -4156,7 +4175,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 1179,
-									"top": 370,
+									"top": 383,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -4176,7 +4195,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 1165,
-									"top": 372,
+									"top": 385,
 									"height": 13,
 									"alpha": -0.7853981633974483,
 									"distance": 40,
@@ -4196,7 +4215,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 1206,
-									"top": 365,
+									"top": 378,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 25,
@@ -4245,7 +4264,7 @@
 								"$ref": "AAAAAAFxjDwm10Ax1Bs="
 							},
 							"lineStyle": 1,
-							"points": "1195:495;1194:350",
+							"points": "1195:495;1194:363",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFxjGjLfVlOs7Y="
@@ -5766,7 +5785,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 1935,
-									"top": 440,
+									"top": 442,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -5787,7 +5806,7 @@
 									"visible": null,
 									"font": "Arial;13;0",
 									"left": 1939,
-									"top": 426,
+									"top": 428,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -5808,7 +5827,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 1926,
-									"top": 469,
+									"top": 471,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -5826,7 +5845,7 @@
 								"$ref": "AAAAAAFxjGI+O0vLtuE="
 							},
 							"lineStyle": 1,
-							"points": "1455:312;2407:610",
+							"points": "1455:317;2407:610",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFxjHNz8nq7U8U="
@@ -8251,6 +8270,20 @@
 							},
 							"target": {
 								"$ref": "AAAAAAFxjAg+sToAbeU="
+							}
+						}
+					],
+					"attributes": [
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAFxwlDBzQKgQCQ=",
+							"_parent": {
+								"$ref": "AAAAAAFxjGI+OkvJP6A="
+							},
+							"name": "coatService",
+							"visibility": "private",
+							"type": {
+								"$ref": "AAAAAAFxjDwm1kAvJn0="
 							}
 						}
 					],

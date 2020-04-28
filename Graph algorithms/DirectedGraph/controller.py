@@ -183,30 +183,31 @@ class Controller:
         path = []
         distance = -1
 
-        print("Initial state: ")
-        print("Path: " + str(path))
-        print("Distance: " + str(distance))
-        print()
-        count = 0
-
         if start in sucesors.keys():
             current = start
 
-            count += 1
-            print("Step " + str(count))
-            print("Current:  " + str(current))
-            print()
             while current != -1:
                 path.insert(0, current)
                 current = sucesors[current]
 
-                count += 1
-                print("Step " + str(count))
-                print("Current:  " + str(current))
-                print("Path: " + str(path))
-                print()
             distance = distances[start]
-            print(distance)
 
         return (path, distance)
 
+    def Bellman_Ford(self, start, end):
+        end = int(end)
+        start = int(start)
+        output = Bellman_Ford(self._graph, int(start))
+        if output == -1:
+            raise EdgeException("Negative cost cycle")
+        print(output[1])
+        if end not in output[1].keys():
+            raise VertexException("End is not accessible")
+
+        path = []
+        current = end
+        while current != -1:
+            path.insert(0, current)
+            current = output[0][current]
+
+        return (path, output[1][end])

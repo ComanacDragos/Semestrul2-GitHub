@@ -69,6 +69,8 @@ x. Exit traversal menu
 2. Lowest length path using forward breadth first
 3. Forward Dijkstra
 4. Backwards Dijkstra
+5. Bellman_Ford
+x. Exit walks menu
         """
         print(menu)
 
@@ -361,6 +363,20 @@ x. Exit traversal menu
         except VertexException as err:
             print(err)
 
+    def UI_Bellman_Ford(self):
+        start = input("Give start vertex: ")
+        end = input("Give end vertex: ")
+        try:
+            info = self._controller.Bellman_Ford(start, end)
+            path = info[0]
+            print(path[0], end='')
+            path.pop(0)
+            for i in path:
+                print("->", i, end='')
+            print(" Length: ", info[1])
+        except GraphException as err:
+            print(err)
+
 
     def start_information_menu(self):
         commands = {
@@ -435,6 +451,7 @@ x. Exit traversal menu
             "2": self.UI_lowest_length_path_forward_breath_first,
             "3": self.UI_forward_dijkstra,
             "4": self.UI_backwards_dijkstra,
+            "5": self.UI_Bellman_Ford,
         }
 
         while (True):

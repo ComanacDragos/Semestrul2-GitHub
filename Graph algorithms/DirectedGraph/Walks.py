@@ -96,42 +96,13 @@ def backwards_dijkstra(graph, start, end):
     distances[end] = 0
     found = False
 
-    print("Initial state:")
-    print("Queue: ", end=' ')
-    printQueque(queue)
-    print("Successors: " + str(successors))
-    print("Distances: " + str(distances))
-
-    count = 0
-
     while queue.qsize() != 0 and not found:
-        count += 1
-        print()
-        print("Step " + str(count))
-        print("Before changes")
-        print("Queue after change: ", end=' ')
-        printQueque(queue)
-
-        print("Successors: " + str(successors))
-        print("Distances: " + str(distances))
-
-
         x = queue.get()[1]
         for y in graph.parse_inbound(x):
             if y not in distances.keys() or distances[x] + graph.get_cost(y, x) < distances[y]:
                 distances[y] = distances[x] + graph.get_cost(y, x)
                 queue.put((distances[y], y))
                 successors[y] = x
-
-                print()
-                print("After " + str(y) + " is processed")
-                print("Queue after change: ", end=' ')
-                printQueque(queue)
-
-                print("Successors: " + str(successors))
-                print("Distances: " + str(distances))
-
-        print()
 
         if x == start:
             found = True
@@ -161,16 +132,52 @@ def dynamic_programming_minimum_cost_walk(graph, mxLen, start):
             walk[k][x] = min(mn, walk[k-1][x])
     return walk
 
-
-def distinct_walks_of_minimum_cost(graph, start, end):
+def Bellman_Ford(graph, start):
     '''
     :param graph:
-    :param start:
-    :param end:
-    :return: the number of distinct walks between start and end vertices
+    :param start: starting vertex
+    :return:
     '''
-    distances = forward_Dijkstra(graph, start, end)[1]
-    if end not in distances:
-        raise VertexException("Vertex not accessible from start\n")
+    #Step1: initialize
+    prev = {}
+    dist = {}
+    for x in graph.get_vertices():
+        dist[x] = math.inf
+    dist[start] = 0
+    prev[start] = -1
 
-    minimumDistance = distances[end]
+
+    edges = graph.get_costs()
+
+    #Step2: "relax" edges
+    for i in range(graph.vertices-1):
+        for edge in edges.keys():
+            x = edge[0]
+            y = edge[1]
+            if dist[y] > dist[x] + edges[edge]:
+                dist[y] = dist[x] + edges[edge]
+                prev[y] = x
+
+    #Step3: Check for negative cost cycles
+    for edge in edges.keys():
+        x = edge[0]
+        y = edge[1]
+        if dist[y] > dist[x] + edges[edge]:
+            return -1
+
+    return (prev, dist)
+
+g=DoubleDictGraph()
+loadGraph(g, "Graphs/Example2.txt")
+bf = Bellman_Ford(g, 0)
+print(bf)
+for i in bf[0].keys():
+    print(i, bf[0][i])
+
+print()
+
+for i in bf[1].keys():
+    print(i, bf[1][i])
+
+loadGraph(g, "Graphs/graph_negative_cost_cycle.txt")
+print(Bellman_Ford(g, 0))

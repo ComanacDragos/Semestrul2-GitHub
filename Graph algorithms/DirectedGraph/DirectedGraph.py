@@ -368,13 +368,15 @@ def generateRandomUndirectedGraph(vertices, edges):
     return randomGraph
 
 
-
-class AlreadyExists (Exception):
+class GraphException(Exception):
     pass
 
-class VertexException(Exception):
+class AlreadyExists (GraphException):
     pass
 
-class EdgeException(Exception):
+class VertexException(GraphException):
+    pass
+
+class EdgeException(GraphException):
     pass
 
