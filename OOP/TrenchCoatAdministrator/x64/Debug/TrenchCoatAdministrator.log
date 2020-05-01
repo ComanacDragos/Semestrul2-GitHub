@@ -1,0 +1,9 @@
+﻿  uic TrenchCoatAdministrator.ui
+  rcc TrenchCoatAdministrator.qrc
+  moc TrenchCoatAdministrator.h
+   RCC: Warning: No resources in 'E:\Universitate\Semestrul2-GitHub\OOP\TrenchCoatAdministrator\TrenchCoatAdministrator.qrc'.
+  main.cpp
+  TrenchCoatAdministrator.cpp
+  qrc_TrenchCoatAdministrator.cpp
+  moc_TrenchCoatAdministrator.cpp
+  TrenchCoatAdministrator.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\TrenchCoatAdministrator\x64\Debug\TrenchCoatAdministrator.exe

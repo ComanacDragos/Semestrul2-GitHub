@@ -167,6 +167,8 @@ def Bellman_Ford(graph, start):
 
     return (prev, dist)
 
+
+'''
 g=DoubleDictGraph()
 loadGraph(g, "Graphs/Example2.txt")
 bf = Bellman_Ford(g, 0)
@@ -181,3 +183,4 @@ for i in bf[1].keys():
 
 loadGraph(g, "Graphs/graph_negative_cost_cycle.txt")
 print(Bellman_Ford(g, 0))
+'''

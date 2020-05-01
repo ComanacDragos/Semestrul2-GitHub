@@ -323,7 +323,7 @@ x. Exit walks menu
                 path.pop(0)
                 for i in path:
                     print("->", i, end='')
-                print(" Length: ", len(path))
+                print(" Cost: ", len(path))
         except VertexException as err:
             print(err)
         except ValueError:
@@ -342,7 +342,7 @@ x. Exit walks menu
                 path.pop(0)
                 for i in path:
                     print("->", i, end='')
-                print(" Length: ", info[1])
+                print(" Cost: ", info[1])
         except VertexException as err:
             print(err)
 
@@ -359,7 +359,7 @@ x. Exit walks menu
                 path.pop(0)
                 for i in path:
                     print("<-", i, end='')
-                print(" Length: ", info[1])
+                print(" Cost: ", info[1])
         except VertexException as err:
             print(err)
 
@@ -373,7 +373,7 @@ x. Exit walks menu
             path.pop(0)
             for i in path:
                 print("->", i, end='')
-            print(" Length: ", info[1])
+            print(" Cost: ", info[1])
         except GraphException as err:
             print(err)
 
