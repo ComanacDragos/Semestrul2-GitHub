@@ -13,18 +13,23 @@ typedef std::pair<TKey, TValue> TElem;
 #define NULL_TELEM pair<int,int>(-11111, -11111);
 class MultiMapIterator;
 
+typedef struct Node {
+	TElem info;
+	Node* next;
+}Node;
+
 class MultiMap
 {
 	friend class MultiMapIterator;
 
 private:
 	//TODO - Representation
-	typedef struct {
-
-	}Node;
 	
-	int m;
+	int m, length;
+	Node** elems;
 
+
+	int hash(TKey key)const;
 
 public:
 	//constructor

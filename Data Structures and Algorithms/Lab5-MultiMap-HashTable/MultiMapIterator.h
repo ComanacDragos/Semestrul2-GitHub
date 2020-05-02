@@ -10,7 +10,8 @@ class MultiMapIterator
 private:
 	const MultiMap& col;
 	//TODO - Representation
-
+	Node* current;
+	int currentBucket;
 	MultiMapIterator(const MultiMap& c);
 
 public:
