@@ -9,18 +9,18 @@ int main()
 	Helicopter h{ 1,"a","a",4,"private" };
 	std::cout << h.toString() << '\n';
 	Aircraft& a = h;
-	std::unique_ptr<Aircraft> p = std::make_unique<Helicopter>(h);
+	std::shared_ptr<Aircraft> p = std::make_shared<Helicopter>(h);
 	//std::cout << p->toString();
 	
 	Repository repo;
 	
 	repo.add(p);
 
-	std::vector<std::unique_ptr<Aircraft>>& v = repo.getAircraftsActivity("a");
-	for (auto& i : v)
+//	std::vector<std::unique_ptr<Aircraft>>& v = repo.getAircraftsActivity("a");
+	for (auto& i : repo.getAircraftsActivity("a"))
 	{
 		std::cout << "Yes\n";
-		std::cout << i->toString()<<'\n';
+		
 	}
 		//Service srv{ repo };
 

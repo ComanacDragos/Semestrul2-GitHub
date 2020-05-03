@@ -6,14 +6,14 @@
 class Repository
 {
 private:
-	std::vector<std::unique_ptr<Aircraft>> aircrafts;
+	std::vector<std::shared_ptr<Aircraft>> aircrafts;
 
 public:
-	void add(std::unique_ptr<Aircraft>& aircraft);
+	void add(std::shared_ptr<Aircraft>& aircraft);
 
-	std::vector<std::unique_ptr<Aircraft>>& getAircraftsActivity(const std::string activity);
+	std::vector<std::weak_ptr<Aircraft>> const& getAircraftsActivity(const std::string activity);
 
-	std::vector<std::unique_ptr<Aircraft>>& getAircraftsAltitude(int altitude);
+	std::vector<std::shared_ptr<Aircraft>> const& getAircraftsAltitude(int altitude);
 
 };
 
