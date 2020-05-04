@@ -138,12 +138,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HospitalDepartment.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Repository.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HospitalDepartment.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="UI.h" />
