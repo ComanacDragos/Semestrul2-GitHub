@@ -3,6 +3,8 @@
 #include "CoatsIterator.h"
 #include "FileRepository.h"
 #include "CoatValidator.h"
+#include "Action.h"
+#include <memory>
 
 class CoatService
 {
@@ -12,8 +14,13 @@ private:
 	CoatValidator* coatsValidator;
 	FileRepository* userRepository;
 
+	std::vector<std::unique_ptr<Action>> undoStack;
+	std::vector<std::unique_ptr<Action>> redoStack;
+
+	bool duringUndo;
+
 public:
-	CoatService() :coatsValidator{ new CoatValidator }, userRepository{ new CSVFileRepository } {}
+	CoatService() :coatsValidator{ new CoatValidator }, userRepository{ new CSVFileRepository }, duringUndo{ false } {}
 
 	CoatService(CSVFileRepository& coatRepository, CoatValidator* coatsValidator);
 
@@ -59,5 +66,8 @@ public:
 	void clearFile();
 
 	void openUserFile();
+
+	void undo();
+	void redo();
 };
 

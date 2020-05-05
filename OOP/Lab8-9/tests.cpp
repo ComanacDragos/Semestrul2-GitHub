@@ -792,6 +792,7 @@ void testAll()
 	Exceptions_Message_CorrectMessage();
 	tokenize_stringWithourDelimiter_SplitStringWithRespectToSpaces();
 	test_CoatValidator();
+	
 	std::cout << "The tests were successful\n";
 }
 

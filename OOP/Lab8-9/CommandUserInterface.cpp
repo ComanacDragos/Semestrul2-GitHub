@@ -194,6 +194,11 @@ int CommandUserInterface::startAdministratorMode()
 		if (command == "update") 
 			this->updateCoat(commandParameters, numberOfParameters);
 
+		if (command == "undo")
+			this->undo();
+
+		if (command == "redo")
+			this->redo();
 
 		if (numberOfParameters == 2)
 		{
@@ -394,4 +399,30 @@ void CommandUserInterface::listUsersCoats(std::vector<std::string> parameters, i
 		std::cout << coat;
 	*/
 	this->coatService.openUserFile();
+}
+
+void CommandUserInterface::undo()
+{
+	try
+	{
+		this->coatService.undo();
+		std::cout << "Successful undo\n";
+	}
+	catch(UndoException exc)
+	{
+		std::cout << exc.what();
+	}
+}
+
+void CommandUserInterface::redo()
+{
+	try
+	{
+		this->coatService.redo();
+		std::cout << "Successful redo\n";
+	}
+	catch (UndoException exc)
+	{
+		std::cout << exc.what();
+	}
 }

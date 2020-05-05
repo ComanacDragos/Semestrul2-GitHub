@@ -38,3 +38,9 @@ class InvalidCoat : public Exceptions
 public:
 	InvalidCoat(const std::string& message): Exceptions{message}{}
 };
+
+class UndoException :public Exceptions
+{
+public:
+	UndoException(const std::string& message) : Exceptions{ message } {}
+};

@@ -59,5 +59,9 @@ private:
 	void listFilteredCoats(std::vector<std::string> parameters, int numberOfParameters);
 
 	void listUsersCoats(std::vector<std::string> parameters, int numberOfParameters);
+
+	void undo();
+
+	void redo();
 };
 

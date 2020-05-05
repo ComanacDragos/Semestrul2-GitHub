@@ -6,6 +6,7 @@ CoatService::CoatService(CSVFileRepository& coatRepository, CoatValidator* coats
 	this->coatsIterator = this->getCoatsIterator();
 	this->coatsValidator = coatsValidator;
 	this->userRepository = new CSVFileRepository;
+	this->duringUndo = false;
 }
 
 CoatService::CoatService(CSVFileRepository& coatRepository)
@@ -14,6 +15,7 @@ CoatService::CoatService(CSVFileRepository& coatRepository)
 	this->coatsIterator = this->getCoatsIterator();
 	this->coatsValidator = new CoatValidator;
 	this->userRepository = new CSVFileRepository;
+	this->duringUndo = false;
 }
 
 CoatService::CoatService(const CoatService& coatService)
@@ -27,6 +29,8 @@ CoatService::CoatService(const CoatService& coatService)
 	this->userRepository = new CSVFileRepository;
 	*(this->userRepository) = *(coatService.userRepository);
 
+	this->duringUndo = coatService.duringUndo;
+
 }
 
 CoatService& CoatService::operator=(const CoatService& coatService)
@@ -39,6 +43,7 @@ CoatService& CoatService::operator=(const CoatService& coatService)
 	*(this->coatsValidator) = *(coatService.coatsValidator);
 	*(this->userRepository) = *(coatService.userRepository);
 
+	this->duringUndo = coatService.duringUndo;
 	return *this;
 }
 
@@ -54,26 +59,79 @@ void CoatService::storeCoatService(const std::string& name, const std::string& s
 
 	TrenchCoat newCoat{ name, size, photographSource, atoi(price.c_str()) };
 	this->coatRepository.storeCoat(newCoat);
+
+	
+	if(this->duringUndo == false)
+	{
+		std::unique_ptr<Action> addAction = std::make_unique<ActionAdd>(this->coatRepository, newCoat);
+		this->undoStack.push_back(std::move(addAction));
+	}
+	else
+	{
+		std::unique_ptr<Action> addAction = std::make_unique<ActionAdd>(this->coatRepository, newCoat);
+		this->redoStack.clear();
+		this->undoStack.push_back(std::move(addAction));
+		this->duringUndo = true;
+	}
 }
 
 void CoatService::deleteCoatService(const std::string name)
 {
+	TrenchCoat coat;
+	if(this->coatRepository.existentCoat(name))
+	{ 
+	coat = this->coatRepository.findCoatFromRepository(name);
+	}
 	this->coatRepository.deleteCoat(name);
 
 	if (this->userRepository->existentCoat(name))
-		this->userRepository->deleteCoat(name);
+	{
+	this->userRepository->deleteCoat(name);
+	}
+
+	if (this->duringUndo == false)
+	{
+		std::unique_ptr<Action> deleteAction = std::make_unique<ActionDelete>(this->coatRepository, coat);
+		this->undoStack.push_back(std::move(deleteAction));
+	}
+	else
+	{
+		std::unique_ptr<Action> deleteAction = std::make_unique<ActionDelete>(this->coatRepository, coat);
+		this->redoStack.clear();
+		this->undoStack.push_back(std::move(deleteAction));
+		this->duringUndo = true;
+	}
 }
 
 void CoatService::updateCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price)
 {
 	this->coatsValidator->validateCoat(name, size, photographSource, price);
 
+	TrenchCoat oldCoat;
+	if(this->coatRepository.existentCoat(name))
+		oldCoat = this->coatRepository.findCoatFromRepository(name);
+
 	TrenchCoat updatedCoat{ name, size, photographSource, atoi(price.c_str()) };
 	this->coatRepository.updateCoat(updatedCoat);
 
 	if (this->userRepository->existentCoat(name))
+	{
 		this->userRepository->updateCoat(updatedCoat);
-
+	}
+	
+	
+	if (this->duringUndo == false)
+	{
+		std::unique_ptr<Action> updateAction = std::make_unique<ActionUpdate>(this->coatRepository, oldCoat, updatedCoat);
+		this->undoStack.push_back(std::move(updateAction));
+	}
+	else
+	{
+		std::unique_ptr<Action> updateAction = std::make_unique<ActionUpdate>(this->coatRepository, oldCoat, updatedCoat);
+		this->redoStack.clear();
+		this->undoStack.push_back(std::move(updateAction));
+		this->duringUndo = true;
+	}
 }
 
 std:: vector<TrenchCoat> CoatService::listCoats()
@@ -171,5 +229,28 @@ void CoatService::clearFile()
 void CoatService::openUserFile()
 {
 	this->userRepository->openFile();
+}
+
+void CoatService::undo()
+{
+	this->duringUndo = true;
+
+	if (this->undoStack.size() == 0)
+		throw UndoException("Nothing to undo\n");
+
+	this->undoStack[this->undoStack.size() - 1]->executeUndo();
+	this->redoStack.push_back(std::move(this->undoStack[this->undoStack.size() - 1]));
+	this->undoStack.pop_back();
+}
+
+void CoatService::redo()
+{
+	if (this->redoStack.size() == 0)
+		throw UndoException("Nothing to redo\n");
+
+	this->redoStack[this->redoStack.size() - 1]->executeRedo();
+	this->undoStack.push_back(std::move(this->redoStack[this->redoStack.size() - 1]));
+	this->redoStack.pop_back();
+
 }
 

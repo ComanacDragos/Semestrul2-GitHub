@@ -1,7 +1,7 @@
 fileLocation repo.txt
 mylistLocation CSVRepo.csv
 mode A
-add coat11 b 3 a
+add 1 b 3 a
 list
 mode B
 save coat11

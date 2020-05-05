@@ -3,11 +3,12 @@
 #include <crtdbg.h>
 #include "tests.h"
 #include "CommandUserInterface.h"
-
+using namespace std;
 
 int main()
 {
 	{
+
 		testAll();
 		CSVFileRepository coatRepository;
 		CoatValidator* coatsValidator = new CoatValidator;
