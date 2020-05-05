@@ -8,7 +8,6 @@ using namespace std;
 int main()
 {
 	{
-
 		testAll();
 		CSVFileRepository coatRepository;
 		CoatValidator* coatsValidator = new CoatValidator;

@@ -41,7 +41,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.Walks">
     <configuration name="UI" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="First-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -149,8 +149,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.Walks" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.Utility" />
         <item itemvalue="Python.UI" />
         <item itemvalue="Python.controller" />

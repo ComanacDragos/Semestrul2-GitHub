@@ -167,20 +167,44 @@ def Bellman_Ford(graph, start):
 
     return (prev, dist)
 
+def Floyd_Warshall(graph, start, end):
+    PathMatrix = Matrix(graph.vertices, graph.vertices, 0)
+    CostMatrix = Matrix(graph.vertices, graph.vertices, math.inf)
+    for i in range(graph.vertices):
+        CostMatrix[i][i] = 0
 
-'''
+    for i in graph.get_costs():
+        x=i[0]
+        y=i[1]
+        CostMatrix[x][y] = graph.get_costs()[i]
+
+    for i in range(graph.vertices):
+        for j in range(graph.vertices):
+            if i != j and CostMatrix[i][j] != math.inf:
+                PathMatrix[i][j] = i
+
+    for k in range(graph.vertices):
+        for i in range(graph.vertices):
+            for j in range(graph.vertices):
+                if CostMatrix[i][j] > CostMatrix[i][k] + CostMatrix[k][j]:
+                    CostMatrix[i][j] = CostMatrix[i][k] + CostMatrix[k][j]
+                    PathMatrix[i][j] = PathMatrix[k][j]
+
+
+    path = []
+
+    path.insert(0, end)
+
+    while path[0] != start:
+        path.insert(0, PathMatrix[start][path[0]])
+
+    print(path, CostMatrix[start][end])
+
+def MatrixMultiplication(graph, start, end):
+
+
+
 g=DoubleDictGraph()
 loadGraph(g, "Graphs/Example2.txt")
-bf = Bellman_Ford(g, 0)
-print(bf)
-for i in bf[0].keys():
-    print(i, bf[0][i])
 
-print()
-
-for i in bf[1].keys():
-    print(i, bf[1][i])
-
-loadGraph(g, "Graphs/graph_negative_cost_cycle.txt")
-print(Bellman_Ford(g, 0))
-'''
+Floyd_Warshall(g, 0, 1)
