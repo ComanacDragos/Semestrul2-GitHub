@@ -1,10 +1,18 @@
-#include "TrenchCoatAdministrator.h"
+#include "GUI.h"
+#include "tests.h"
 #include <QtWidgets/QApplication>
 #include <qlabel.h>
 int main(int argc, char *argv[])
 {
+	testAll();
 	QApplication a(argc, argv);
-	QLabel l{ "Henlo" };
-	l.show();
+	
+	CSVFileRepository coatsRepository;
+	CoatValidator* coatsValidator = new CoatValidator{};
+	CoatService coatService{ coatsRepository, coatsValidator };
+
+	GUI gui{coatService};
+	gui.show();
+
 	return a.exec();
 }

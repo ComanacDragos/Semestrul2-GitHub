@@ -159,7 +159,7 @@ int GenesGUI::getSelectedIndex()
 	return idx;
 }
 
-void GenesGUI::listItemChanged()
+void GenesGUI::()
 {
 	int idx = this->getSelectedIndex();
 	if (idx == -1)

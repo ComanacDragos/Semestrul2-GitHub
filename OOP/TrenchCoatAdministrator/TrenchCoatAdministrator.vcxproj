@@ -80,13 +80,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Action.cpp" />
+    <ClCompile Include="CoatService.cpp" />
+    <ClCompile Include="CoatsIterator.cpp" />
+    <ClCompile Include="CoatValidator.cpp" />
+    <ClCompile Include="Exceptions.cpp" />
+    <ClCompile Include="FileRepository.cpp" />
+    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="tests.cpp" />
+    <ClCompile Include="TrenchCoat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="TrenchCoatAdministrator.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="TrenchCoatAdministrator.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="GUI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Action.h" />
+    <ClInclude Include="CoatService.h" />
+    <ClInclude Include="CoatsIterator.h" />
+    <ClInclude Include="CoatValidator.h" />
+    <ClInclude Include="Exceptions.h" />
+    <ClInclude Include="FileRepository.h" />
+    <ClInclude Include="tests.h" />
+    <ClInclude Include="TrenchCoat.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
