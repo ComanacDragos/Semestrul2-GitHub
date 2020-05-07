@@ -200,11 +200,6 @@ def Floyd_Warshall(graph, start, end):
 
     print(path, CostMatrix[start][end])
 
-def MatrixMultiplication(graph, start, end):
 
 
 
-g=DoubleDictGraph()
-loadGraph(g, "Graphs/Example2.txt")
-
-Floyd_Warshall(g, 0, 1)

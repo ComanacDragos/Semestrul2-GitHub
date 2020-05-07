@@ -11,6 +11,7 @@ class UI:
 2. Change the graph
 3. Traversals
 4. Walks
+5. DAG
 x. Exit
  """
         print(menu)
@@ -71,6 +72,14 @@ x. Exit traversal menu
 4. Backwards Dijkstra
 5. Bellman_Ford
 x. Exit walks menu
+        """
+        print(menu)
+
+    def DAG_menu(self):
+        menu="""
+1. State of the graph
+2. Topological sort using predecessor counters
+x. Exit DAG menu
         """
         print(menu)
 
@@ -377,6 +386,14 @@ x. Exit walks menu
         except GraphException as err:
             print(err)
 
+    def UI_topological_sort_predecessor_count(self):
+        sort = self._controller.topological_sort_predecessor_counter()
+        if sort == None:
+            print("The graph has cycles")
+            return
+        for i in sort:
+            print(i, end=" ")
+        print()
 
     def start_information_menu(self):
         commands = {
@@ -464,12 +481,29 @@ x. Exit walks menu
             else:
                 print("Invalid command\n")
 
+    def start_DAG_menu(self):
+        commands = {
+            "1":self.UI_print_state,
+            "2":self.UI_topological_sort_predecessor_count,
+        }
+        while (True):
+            self.DAG_menu()
+            choice = input("> ")
+            if choice in commands:
+                commands[choice]()
+            elif choice == "x":
+                return
+            else:
+                print("Invalid command\n")
+
+
     def start(self):
         commands ={
             "1": self.start_information_menu,
             "2": self.start_modify_menu,
             "3": self.start_traversal_menu,
-            "4": self.start_walks_menu
+            "4": self.start_walks_menu,
+            "5": self.start_DAG_menu
         }
         while True:
             self.menu()

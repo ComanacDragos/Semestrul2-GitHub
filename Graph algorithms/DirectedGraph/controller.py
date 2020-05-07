@@ -1,6 +1,7 @@
 from DirectedGraph import *
 from Traversals import *
 from Walks import *
+from DAG import *
 
 class Controller:
     def __init__(self, graph):
@@ -211,3 +212,6 @@ class Controller:
             current = output[0][current]
 
         return (path, output[1][end])
+
+    def topological_sort_predecessor_counter(self):
+        return topological_sort_predecessor_counting(self._graph)
