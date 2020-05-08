@@ -49,6 +49,8 @@ public:
 	//returns an interator over the list of coats
 	CoatsIterator getCoatsIterator();
 
+	void setCoatsIterator();
+
 	void saveTrenchCoatToUserList(const std::string& name);
 
 	std::vector<TrenchCoat> listFilteredCoats(const std::string& size, const std::string& price);

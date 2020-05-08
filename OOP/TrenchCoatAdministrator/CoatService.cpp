@@ -156,6 +156,12 @@ CoatsIterator CoatService::getCoatsIterator()
 	return CoatsIterator(this->listCoats());
 }
 
+void CoatService::setCoatsIterator()
+{
+	//this->coatsIterator = this->getCoatsIterator();
+	this->setCoatIteratorToFirst();
+}
+
 void CoatService::saveTrenchCoatToUserList(const std::string& name)
 {
 	TrenchCoat newUserCoat = this->coatRepository.findCoatFromRepository(name);
@@ -165,6 +171,12 @@ void CoatService::saveTrenchCoatToUserList(const std::string& name)
 
 std:: vector<TrenchCoat> CoatService::listFilteredCoats(const std::string& size, const std::string& price)
 {
+	std::string sizeError = this->coatsValidator->validateSize(size);
+	std::string priceError = this->coatsValidator->validatePrice(price);
+
+	if (sizeError.size() != 0 || priceError.size() != 0)
+		throw InvalidCoat{ sizeError + priceError };
+
 	std::vector<TrenchCoat> coatsFromRepository = this->listCoats();
 	std::vector<TrenchCoat> filteredCoats{ coatsFromRepository.size() };
 	auto iterator = std::copy_if(coatsFromRepository.begin(), coatsFromRepository.end(), filteredCoats.begin(),
@@ -189,7 +201,7 @@ void CoatService::emptyUserCoats()
 
 void CoatService::setCoatIteratorToFirst()
 {
-	this->coatsIterator = this->getCoatsIterator();
+	this->coatsIterator = this->getCoatsIterator();	
 }
 
 TrenchCoat CoatService::getNextCoatFromIterator()

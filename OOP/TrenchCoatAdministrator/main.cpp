@@ -5,6 +5,7 @@
 int main(int argc, char *argv[])
 {
 	testAll();
+
 	QApplication a(argc, argv);
 	
 	CSVFileRepository coatsRepository;

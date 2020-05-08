@@ -23,7 +23,7 @@ private:
 	QHBoxLayout* windowLayout;
 	QListWidget *coatsList, *userList;
 	QLineEdit* nameEdit, * sizeEdit, * priceEdit, * photographSourceEdit, * coatsRepository, * userRepository;
-	QPushButton* addCoat, * deleteCoat, * updateCoat, * filterCoats, * openUserCoats, * nextCoat, * list, * saveToMyList, * showUserList, *undo, *redo, *exit;
+	QPushButton* addCoatButton, * deleteCoatButton, * updateCoatButton, * filterCoatsButton, * openUserCoatsButton, * nextCoatButton, * listButton, * saveToMyListButton, * showUserListButton, * undoButton, * redoButton, * exitButton;
 
 	void initializeGUI();
 	void initializeAdministratorGUI();
@@ -35,13 +35,18 @@ private:
 	bool setCoatRepositoryPath();
 	bool setUserRepositoryPath();
 
-	int getSelectedIndex();
-	void listItemSelected();
+	int getSelectedIndex(QListWidget* list);
+	void listItemSelected(QListWidget* list);
 	
 	void storeCoat();
 	void listCoats();
-
-
-
+	void deleteCoat();
+	void updateCoat();
+	void filterCoats();
+	void undo();
+	void redo();
+	void saveCoatToUserList();
+	void nextCoat();
+	void openUserList();
 };
 

@@ -11,9 +11,9 @@ void GUI::initializeGUI()
 
 	this->initializeAdministratorGUI();
 
-	this->saveToMyList = new QPushButton{ " > " };
+	this->saveToMyListButton = new QPushButton{ " > " };
 
-	this->windowLayout->addWidget(this->saveToMyList);
+	this->windowLayout->addWidget(this->saveToMyListButton);
 	
 	this->initializeUserGUI();
 
@@ -62,27 +62,27 @@ void GUI::initializeAdministratorGUI()
 
 	administratorLayout->addLayout(formLayout);
 
-	this->addCoat = new QPushButton{ "Add Coat" };
-	this->deleteCoat = new QPushButton{ "Delete Coat" };
-	this->updateCoat = new QPushButton{ "Update Coat" };
-	this->list = new QPushButton{ "List Coats" };
-	this->filterCoats = new QPushButton{ "Filter coats" };
+	this->addCoatButton = new QPushButton{ "Add Coat" };
+	this->deleteCoatButton = new QPushButton{ "Delete Coat" };
+	this->updateCoatButton = new QPushButton{ "Update Coat" };
+	this->listButton = new QPushButton{ "List Coats" };
+	this->filterCoatsButton = new QPushButton{ "Filter coats" };
 
-	buttons->addWidget(this->addCoat, 0, 0);
-	buttons->addWidget(this->deleteCoat, 0, 1);
-	buttons->addWidget(this->updateCoat, 0, 2);
-	buttons->addWidget(this->list, 2, 0, 1, 3);
-	buttons->addWidget(this->filterCoats, 3, 0, 1, 3);
+	buttons->addWidget(this->addCoatButton, 0, 0);
+	buttons->addWidget(this->deleteCoatButton, 0, 1);
+	buttons->addWidget(this->updateCoatButton, 0, 2);
+	buttons->addWidget(this->listButton, 2, 0, 1, 3);
+	buttons->addWidget(this->filterCoatsButton, 3, 0, 1, 3);
 
 	administratorLayout->addLayout(buttons);
 
 	QGridLayout* undoRedoButtons = new QGridLayout{};
 
-	this->undo = new QPushButton{ "Undo" };
-	this->redo = new QPushButton{ "Redo" };
+	this->undoButton = new QPushButton{ "Undo" };
+	this->redoButton = new QPushButton{ "Redo" };
 
-	undoRedoButtons->addWidget(this->undo, 0, 1);
-	undoRedoButtons->addWidget(this->redo, 0, 2);
+	undoRedoButtons->addWidget(this->undoButton, 0, 1);
+	undoRedoButtons->addWidget(this->redoButton, 0, 2);
 
 	administratorLayout->addLayout(undoRedoButtons);
 
@@ -104,21 +104,21 @@ void GUI::initializeUserGUI()
 
 	userLayout->addLayout(filePathForm);
 
-	QListWidget* userCoats = new QListWidget{};
+	this->userList = new QListWidget{};
 
-	this->nextCoat = new QPushButton{ "Next" };
-	this->openUserCoats = new QPushButton{ "Open user coats file" };
+	this->nextCoatButton = new QPushButton{ "Next" };
+	this->openUserCoatsButton = new QPushButton{ "Open user coats file" };
 	//this->showUserList = new QPushButton{ "Show user coats" };
-	this->exit = new QPushButton{ "Exit" };
+	this->exitButton = new QPushButton{ "Exit" };
 
 	QGridLayout* buttons = new QGridLayout{};
 
-	buttons->addWidget(this->nextCoat, 0, 0);
-	buttons->addWidget(this->openUserCoats, 0, 1);
+	buttons->addWidget(this->nextCoatButton, 0, 0);
+	buttons->addWidget(this->openUserCoatsButton, 0, 1);
 	//buttons->addWidget(this->showUserList, 1, 0, 1, 2);
-	buttons->addWidget(this->exit, 1, 0, 1, 2);
+	buttons->addWidget(this->exitButton, 1, 0, 1, 2);
 
-	userLayout->addWidget(userCoats);
+	userLayout->addWidget(this->userList);
 	userLayout->addLayout(buttons);
 
 	this->windowLayout->addLayout(userLayout); 
@@ -126,10 +126,31 @@ void GUI::initializeUserGUI()
 
 void GUI::initializeConnections()
 {
-	QObject::connect(this->addCoat, &QPushButton::clicked, this, [this]() {this->storeCoat(); });
-	QObject::connect(this->list, &QPushButton::clicked, this, [this]() {this->listCoats(); });
-	QObject::connect(this->exit, &QPushButton::clicked, [this]() {close(); });
-	QObject::connect(this->coatsList, &QListWidget::itemSelectionChanged, this, [this]() {this->listItemSelected(); });
+	QObject::connect(this->addCoatButton, &QPushButton::clicked, this, [this]() {this->storeCoat(); });
+
+	QObject::connect(this->listButton, &QPushButton::clicked, this, [this]() {this->listCoats(); });
+	
+	QObject::connect(this->exitButton, &QPushButton::clicked, [this]() {close(); });
+	
+	QObject::connect(this->coatsList, &QListWidget::itemSelectionChanged, this, [this]() {this->listItemSelected(this->coatsList); });
+	
+	QObject::connect(this->deleteCoatButton, &QPushButton::clicked, this, [this]() {this->deleteCoat(); });
+	
+	QObject::connect(this->updateCoatButton, &QPushButton::clicked, this, [this]() {this->updateCoat(); });
+	
+	QObject::connect(this->filterCoatsButton, &QPushButton::clicked, this, [this]() {this->filterCoats(); });
+	
+	QObject::connect(this->undoButton, &QPushButton::clicked, this, [this]() {this->undo(); });
+	
+	QObject::connect(this->redoButton, &QPushButton::clicked, this, [this]() {this->redo(); });
+	
+	QObject::connect(this->nextCoatButton, &QPushButton::clicked, this, [this]() {this->nextCoat(); });
+	
+	QObject::connect(this->userList, &QListWidget::itemSelectionChanged, this, [this]() {this->listItemSelected(this->userList); });
+
+	QObject::connect(this->openUserCoatsButton, &QPushButton::clicked, this, [this]() {this->openUserList(); });
+	
+	QObject::connect(this->saveToMyListButton, &QPushButton::clicked, this, [this]() {this->saveCoatToUserList(); });
 }
 
 bool GUI::setCoatRepositoryPath()
@@ -161,12 +182,12 @@ bool GUI::setUserRepositoryPath()
 	return true;
 }
 
-int GUI::getSelectedIndex()
+int GUI::getSelectedIndex(QListWidget* list)
 {
-	if (this->coatsList->count() == 0)
+	if (list->count() == 0)
 		return -1;
 
-	QModelIndexList index = this->coatsList->selectionModel()->selectedIndexes();
+	QModelIndexList index = list->selectionModel()->selectedIndexes();
 
 	if (index.size() == 0)
 	{
@@ -180,14 +201,16 @@ int GUI::getSelectedIndex()
 	return integerIndex;
 }
 
-void GUI::listItemSelected()
+void GUI::listItemSelected(QListWidget* list)
 {
-	int index = this->getSelectedIndex();
-
+	int index = this->getSelectedIndex(list);
+	             
 	if (index == -1 || index >= this->coatService.getRepositoryLenght())
 		return;
-		
+
 	TrenchCoat coat = this->coatService.getCoatFromRepository(index);
+
+	//THIS IS A PROBLEM FIX IT DAMMIT	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	this->nameEdit->setText(QString::fromStdString(coat.getName()));
 	this->sizeEdit->setText(QString::fromStdString(coat.getSize()));
 	this->priceEdit->setText(QString::fromStdString(std::to_string(coat.getPrice())));
@@ -209,13 +232,14 @@ void GUI::storeCoat()
 	{
 		this->coatService.storeCoatService(name, size, source, price);
 		QMessageBox::information(this, "Success", "Coat added successfully");
+		this->listCoats();
+		if (this->userList->count() > 0)
+			this->userList->clear();
 	}
 	catch (Exceptions & exception)
 	{
 		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
 	}
-
-	this->listCoats();
 }
 
 void GUI::listCoats()
@@ -235,4 +259,161 @@ void GUI::listCoats()
 
 	//if (this->coatsList->count() > 0)
 	//	this->coatsList->setCurrentRow(0);
+}
+
+void GUI::deleteCoat()
+{
+	if (this->setCoatRepositoryPath() == false)
+		return;
+
+	std::string name = this->nameEdit->text().toStdString();
+
+	try
+	{
+		this->coatService.deleteCoatService(name);
+		QMessageBox::information(this, "Success", "Coat deleted successfully");
+		this->listCoats();
+		if (this->userList->count() > 0)
+			this->userList->clear();
+	}
+	catch (Exceptions & exception)
+	{
+		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
+	}
+}
+
+void GUI::updateCoat()
+{
+	if (this->setCoatRepositoryPath() == false)
+		return;
+
+	std::string name = this->nameEdit->displayText().toStdString();
+	std::string size = this->sizeEdit->displayText().toStdString();
+	std::string price = this->priceEdit->displayText().toStdString();
+	std::string source = this->photographSourceEdit->displayText().toStdString();
+
+	try
+	{
+		this->coatService.updateCoatService(name, size, source, price);
+		QMessageBox::information(this, "Success", "Coat updated successfully");
+		this->listCoats();
+		if (this->userList->count() > 0)
+			this->userList->clear();
+	}
+	catch (Exceptions & exception)
+	{
+		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
+	}
+}
+
+void GUI::filterCoats()
+{
+	if (this->setCoatRepositoryPath() == false)
+		return;
+
+	std::string size = this->sizeEdit->displayText().toStdString();
+	std::string price = this->priceEdit->displayText().toStdString();
+	std::vector<TrenchCoat> filteredCoats;
+	try
+	{
+		filteredCoats = this->coatService.listFilteredCoats(size, price);
+	}
+	catch (Exceptions & exception)
+	{
+		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
+		return;
+	}
+	if (this->coatsList->count() > 0)
+		this->coatsList->clear();
+
+	for (auto& coat : filteredCoats)
+	{
+		QString itemInList = QString::fromStdString(coat.to_string());
+		QListWidgetItem* item = new QListWidgetItem{ itemInList };
+		this->coatsList->addItem(item);
+	}
+}
+
+void GUI::undo()
+{
+	if (this->setCoatRepositoryPath() == false)
+		return;
+
+	try
+	{
+		this->coatService.undo();
+		QMessageBox::information(this, "Success", "Successful undo");
+		this->listCoats();
+		if (this->userList->count() > 0)
+			this->userList->clear();
+	}
+	catch (Exceptions& exception)
+	{
+		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
+	}
+}
+
+void GUI::redo()
+{
+	if (this->setCoatRepositoryPath() == false)
+		return;
+
+	try
+	{
+		this->coatService.redo();
+		QMessageBox::information(this, "Success", "Successful redo");
+		this->listCoats();
+		if(this->userList->count() > 0)
+			this->userList->clear();
+	}
+	catch (Exceptions& exception)
+	{
+		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
+	}
+}
+
+void GUI::saveCoatToUserList()
+{
+	if (this->setCoatRepositoryPath() == false)
+		return;
+	
+	if (this->setUserRepositoryPath() == false)
+		return;
+
+	std::string name = this->nameEdit->text().toStdString();
+
+	try
+	{
+		this->coatService.saveTrenchCoatToUserList(name);
+		QMessageBox::information(this, "Succes", "Coat saved to user list");
+	}
+	catch (Exceptions & exception)
+	{
+		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
+	}
+}
+
+void GUI::nextCoat()
+{
+	if (this->setCoatRepositoryPath() == false)
+		return;
+
+	if (this->userList->count() > 0)
+		this->userList->clear();
+	else
+		this->coatService.setCoatsIterator();
+
+	std::string coat = this->coatService.getNextCoatFromIterator().to_string();
+
+	QString itemInList = QString::fromStdString(coat);
+	QListWidgetItem* item = new QListWidgetItem{ itemInList };
+	this->userList->addItem(item);
+}
+
+void GUI::openUserList()
+{
+	if (this->setUserRepositoryPath() == false)
+		return;
+
+	this->coatService.openUserFile();
 }
