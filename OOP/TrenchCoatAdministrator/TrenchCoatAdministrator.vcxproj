@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp" />
+    <ClCompile Include="BarChart.cpp" />
     <ClCompile Include="CoatService.cpp" />
     <ClCompile Include="CoatsIterator.cpp" />
     <ClCompile Include="CoatValidator.cpp" />
@@ -102,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Action.h" />
+    <QtMoc Include="BarChart.h" />
     <ClInclude Include="CoatService.h" />
     <ClInclude Include="CoatsIterator.h" />
     <ClInclude Include="CoatValidator.h" />

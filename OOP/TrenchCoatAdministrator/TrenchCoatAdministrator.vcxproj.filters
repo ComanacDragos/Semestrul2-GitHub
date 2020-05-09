@@ -55,6 +55,9 @@
     <ClCompile Include="TrenchCoat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BarChart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="TrenchCoatAdministrator.ui">
@@ -68,6 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GUI.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="BarChart.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

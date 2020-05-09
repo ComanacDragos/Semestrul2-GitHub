@@ -145,9 +145,19 @@ TrenchCoat CoatService::getCoatFromRepository(int position)
 	return this->coatRepository.getCoatFromRepository(position);
 }
 
+TrenchCoat CoatService::getCoatFromUserRepository(int position)
+{
+	return this->userRepository->getCoatFromRepository(position);
+}
+
 int CoatService::getRepositoryLenght()
 {
 	return this->coatRepository.getRepositoryLength();
+}
+
+int CoatService::getUserRepositoryLenght()
+{
+	return this->userRepository->getRepositoryLength();
 }
 
 

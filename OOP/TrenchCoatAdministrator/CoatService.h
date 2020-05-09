@@ -44,7 +44,11 @@ public:
 
 	TrenchCoat getCoatFromRepository(int position);
 
+	TrenchCoat getCoatFromUserRepository(int position);
+
 	int getRepositoryLenght();
+
+	int getUserRepositoryLenght();
 
 	//returns an interator over the list of coats
 	CoatsIterator getCoatsIterator();

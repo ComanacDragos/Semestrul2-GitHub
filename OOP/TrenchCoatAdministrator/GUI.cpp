@@ -7,8 +7,9 @@ GUI::GUI(CoatService& coatService, QWidget* parent):QWidget{ parent }, coatServi
 
 void GUI::initializeGUI()
 {
-	this->windowLayout = new QHBoxLayout{ this };
-
+	
+	this->windowLayout = new QHBoxLayout{this};
+	
 	this->initializeAdministratorGUI();
 
 	this->saveToMyListButton = new QPushButton{ " > " };
@@ -18,6 +19,11 @@ void GUI::initializeGUI()
 	this->initializeUserGUI();
 
 	this->initializeConnections();
+
+	this->setStyleSheet(
+		"QWidget{background-color: black; color: rgb(128, 233, 210);}"
+		"QPushButton{background-color:rgb(128, 233, 210);color: black; border-radius: 15px;padding:10px;box-shadow: 5px 10px;}"
+		"QPushButton:hover{background-color: rgb(0, 153, 120);color: black;}");
 }
 
 void GUI::initializeAdministratorGUI()
@@ -67,12 +73,14 @@ void GUI::initializeAdministratorGUI()
 	this->updateCoatButton = new QPushButton{ "Update Coat" };
 	this->listButton = new QPushButton{ "List Coats" };
 	this->filterCoatsButton = new QPushButton{ "Filter coats" };
+	//this->barChart = new QPushButton{ "Bar chart" };
 
 	buttons->addWidget(this->addCoatButton, 0, 0);
 	buttons->addWidget(this->deleteCoatButton, 0, 1);
 	buttons->addWidget(this->updateCoatButton, 0, 2);
 	buttons->addWidget(this->listButton, 2, 0, 1, 3);
 	buttons->addWidget(this->filterCoatsButton, 3, 0, 1, 3);
+	//buttons->addWidget(this->barChart, 4, 0, 1, 3);
 
 	administratorLayout->addLayout(buttons);
 
@@ -124,6 +132,14 @@ void GUI::initializeUserGUI()
 	this->windowLayout->addLayout(userLayout); 
 }
 
+void GUI::initializeBarChart()
+{
+	if (this->setCoatRepositoryPath() == false)
+		return;
+	BarChart* chart = new BarChart{this->coatService.listCoats()};
+	chart->show();
+}
+
 void GUI::initializeConnections()
 {
 	QObject::connect(this->addCoatButton, &QPushButton::clicked, this, [this]() {this->storeCoat(); });
@@ -132,7 +148,7 @@ void GUI::initializeConnections()
 	
 	QObject::connect(this->exitButton, &QPushButton::clicked, [this]() {close(); });
 	
-	QObject::connect(this->coatsList, &QListWidget::itemSelectionChanged, this, [this]() {this->listItemSelected(this->coatsList); });
+	QObject::connect(this->coatsList, &QListWidget::itemSelectionChanged, this, [this]() {this->listItemSelected(); });
 	
 	QObject::connect(this->deleteCoatButton, &QPushButton::clicked, this, [this]() {this->deleteCoat(); });
 	
@@ -146,11 +162,13 @@ void GUI::initializeConnections()
 	
 	QObject::connect(this->nextCoatButton, &QPushButton::clicked, this, [this]() {this->nextCoat(); });
 	
-	QObject::connect(this->userList, &QListWidget::itemSelectionChanged, this, [this]() {this->listItemSelected(this->userList); });
+	QObject::connect(this->userList, &QListWidget::itemSelectionChanged, this, [this]() {this->listItemSelectedUserList(); });
 
 	QObject::connect(this->openUserCoatsButton, &QPushButton::clicked, this, [this]() {this->openUserList(); });
 	
 	QObject::connect(this->saveToMyListButton, &QPushButton::clicked, this, [this]() {this->saveCoatToUserList(); });
+
+	//QObject::connect(this->barChart, &QPushButton::clicked, this, [this]() {this->initializeBarChart(); });
 }
 
 bool GUI::setCoatRepositoryPath()
@@ -201,21 +219,38 @@ int GUI::getSelectedIndex(QListWidget* list)
 	return integerIndex;
 }
 
-void GUI::listItemSelected(QListWidget* list)
+void GUI::listItemSelected()
 {
-	int index = this->getSelectedIndex(list);
+	int index = this->getSelectedIndex(this->coatsList);
 	             
 	if (index == -1 || index >= this->coatService.getRepositoryLenght())
 		return;
 
 	TrenchCoat coat = this->coatService.getCoatFromRepository(index);
 
-	//THIS IS A PROBLEM FIX IT DAMMIT	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	this->nameEdit->setText(QString::fromStdString(coat.getName()));
 	this->sizeEdit->setText(QString::fromStdString(coat.getSize()));
 	this->priceEdit->setText(QString::fromStdString(std::to_string(coat.getPrice())));
 	this->photographSourceEdit->setText(QString::fromStdString(coat.getPhotographSource()));
 
+}
+
+void GUI::listItemSelectedUserList()
+{
+	auto selectedCoat = this->userList->currentItem();
+
+	std::vector<std::string> coatFields = tokenize(selectedCoat->text().toStdString(), ' ');
+
+	std::string name = coatFields[0];
+	std::string size = coatFields[1];
+	std::string price = coatFields[2];
+	std::string source = coatFields[3];
+
+	this->nameEdit->setText(QString::fromStdString(name));
+	this->sizeEdit->setText(QString::fromStdString(size));
+	this->priceEdit->setText(QString::fromStdString(price));
+	this->photographSourceEdit->setText(QString::fromStdString(source));
+	
 }
 
 void GUI::storeCoat()
@@ -398,6 +433,7 @@ void GUI::nextCoat()
 	if (this->setCoatRepositoryPath() == false)
 		return;
 
+	int i = this->userList->count();
 	if (this->userList->count() > 0)
 		this->userList->clear();
 	else
