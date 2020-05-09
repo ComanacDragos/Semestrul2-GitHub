@@ -215,3 +215,33 @@ class Controller:
 
     def topological_sort_predecessor_counter(self):
         return topological_sort_predecessor_counting(self._graph)
+
+    def highest_cost_path(self, start, end):
+        start = int(start)
+        end = int(end)
+
+        info = highest_cost_path(self._graph, start, end)
+
+        if info == None:
+            raise GraphException("The graph has a cycle")
+
+        if end not in info[0]:
+            raise GraphException("The end node is not accesible")
+
+        path = [end]
+        prev = info[0]
+        dist = info[1]
+
+        current = prev[end]
+
+        while current != -1:
+            path.insert(0, current)
+            current = prev[current]
+
+        return (path, dist[end])
+
+    def distinct_paths(self, start, end):
+        info = number_of_distinct_paths_in_DAG(self._graph, int(start), int(end))
+        if info == None:
+            raise GraphException("The graph has a cycle")
+        return info

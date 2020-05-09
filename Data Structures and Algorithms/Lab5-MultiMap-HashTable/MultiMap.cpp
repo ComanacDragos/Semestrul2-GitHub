@@ -5,12 +5,13 @@
 
 using namespace std;
 
-
+//Theta(1)
 int MultiMap::hash(TKey key)const
 {
 	return abs(key)%m;
 }
 
+//Theta(1)
 MultiMap::MultiMap() {
 	//TODO - Implementation
 	this->m = 2;
@@ -18,7 +19,7 @@ MultiMap::MultiMap() {
 	this->elems = new Node*[this->m]();
 }
 
-
+//Theta(1) - amortized
 void MultiMap::add(TKey c, TValue v) {
 	//TODO - Implementation
 	if ((float)this->length / this->m >= 1)
@@ -69,7 +70,7 @@ void MultiMap::add(TKey c, TValue v) {
 	this->length += 1;
 }
 
-
+//O(n)
 bool MultiMap::remove(TKey c, TValue v) {
 	//TODO - Implementation
 	int bucket = this->hash(c);
@@ -102,6 +103,7 @@ bool MultiMap::remove(TKey c, TValue v) {
 }
 
 
+//O(n)
 vector<TValue> MultiMap::search(TKey c) const {
 	//TODO - Implementation
 	vector<TValue> values;
@@ -115,13 +117,13 @@ vector<TValue> MultiMap::search(TKey c) const {
 	return values;
 }
 
-
+//Theta(1)
 int MultiMap::size() const {
 	//TODO - Implementation
 	return this->length;
 }
 
-
+//Theta(1)
 bool MultiMap::isEmpty() const {
 	//TODO - Implementation
 	return this->length == 0;
@@ -132,6 +134,7 @@ MultiMapIterator MultiMap::iterator() const {
 }
 
 
+//Theta(m)
 MultiMap::~MultiMap() {
 	//TODO - Implementation
 	for(int i=0;i<this->m;i++)

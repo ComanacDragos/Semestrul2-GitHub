@@ -79,6 +79,8 @@ x. Exit walks menu
         menu="""
 1. State of the graph
 2. Topological sort using predecessor counters
+3. Highest cost path
+4. Number of distinct paths
 x. Exit DAG menu
         """
         print(menu)
@@ -395,6 +397,28 @@ x. Exit DAG menu
             print(i, end=" ")
         print()
 
+    def UI_highest_cost_path(self):
+        start = input("Give start vertex: ")
+        end = input("Give end vertex: ")
+        try:
+            info = self._controller.highest_cost_path(start, end)
+            path = info[0]
+            print(path[0], end='')
+            path.pop(0)
+            for i in path:
+                print("->", i, end='')
+            print(" Cost: ", info[1])
+        except GraphException as err:
+            print(err)
+
+    def UI_distinct_paths(self):
+        start = input("Give start vertex: ")
+        end = input("Give end vertex: ")
+        try:
+            print("Number of paths: " + str(self._controller.distinct_paths(start, end)))
+        except GraphException as err:
+            print(err)
+
     def start_information_menu(self):
         commands = {
             "1": self.UI_get_nr_vertices,
@@ -485,6 +509,8 @@ x. Exit DAG menu
         commands = {
             "1":self.UI_print_state,
             "2":self.UI_topological_sort_predecessor_count,
+            "3":self.UI_highest_cost_path,
+            "4":self.UI_distinct_paths,
         }
         while (True):
             self.DAG_menu()
