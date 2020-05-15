@@ -1,4 +1,5 @@
 #include "GUI.h"
+#include "GraphicalUserInterface.h"
 #include "tests.h"
 #include <QtWidgets/QApplication>
 #include <qlabel.h>
@@ -8,11 +9,9 @@ int main(int argc, char *argv[])
 
 	QApplication a(argc, argv);
 	
-	CSVFileRepository coatsRepository;
-	CoatValidator* coatsValidator = new CoatValidator{};
-	CoatService coatService{ coatsRepository, coatsValidator };
-
-	GUI gui{coatService};
+	//GUI gui{};
+	//gui.show();
+	GraphicalUserInterface gui{};
 	gui.show();
 
 	return a.exec();

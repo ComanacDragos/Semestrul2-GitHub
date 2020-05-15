@@ -1,13 +1,13 @@
 #pragma once
-#include "FileRepository.h"
+#include "AbstractRepository.h"
 
 class Action
 {
 protected:
-	FileRepository& repository;
+	AbstractRepository* repository;
 
 public:
-	Action(FileRepository& repo):repository{repo}{}
+	Action(AbstractRepository* repo):repository{repo}{}
 	virtual void executeUndo() = 0;
 	virtual void executeRedo() = 0;
 
@@ -20,7 +20,7 @@ private:
 	TrenchCoat coat;
 
 public:
-	ActionAdd(FileRepository& repo, const TrenchCoat& coat) :Action{ repo }, coat{ coat }{}
+	ActionAdd(AbstractRepository* repo, const TrenchCoat& coat) :Action{ repo }, coat{ coat }{}
 
 	void executeUndo();
 	void executeRedo();
@@ -34,7 +34,7 @@ private:
 	TrenchCoat coat;
 
 public:
-	ActionDelete(FileRepository& repo, const TrenchCoat& coat) :Action{ repo }, coat{ coat }{}
+	ActionDelete(AbstractRepository* repo, const TrenchCoat& coat) :Action{ repo }, coat{ coat }{}
 
 	void executeUndo();
 	void executeRedo();
@@ -49,7 +49,7 @@ private:
 	TrenchCoat newCoat;
 
 public:
-	ActionUpdate(FileRepository& repo, const TrenchCoat& oldCoat, const TrenchCoat& newCoat) :Action{ repo }, oldCoat{ oldCoat }, newCoat{ newCoat }{}
+	ActionUpdate(AbstractRepository* repo, const TrenchCoat& oldCoat, const TrenchCoat& newCoat) :Action{ repo }, oldCoat{ oldCoat }, newCoat{ newCoat }{}
 
 	void executeUndo();
 	void executeRedo();

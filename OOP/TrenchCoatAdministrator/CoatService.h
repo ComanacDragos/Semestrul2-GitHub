@@ -4,12 +4,13 @@
 #include "FileRepository.h"
 #include "CoatValidator.h"
 #include "Action.h"
+#include "InMemoryRepository.h"
 #include <memory>
 
 class CoatService
 {
 private:
-	CSVFileRepository coatRepository;
+	AbstractRepository* coatRepository;
 	CoatsIterator coatsIterator;
 	CoatValidator* coatsValidator;
 	FileRepository* userRepository;
@@ -20,7 +21,7 @@ private:
 	bool duringUndo;
 
 public:
-	CoatService() :coatsValidator{ new CoatValidator }, userRepository{ new CSVFileRepository }, duringUndo{ false } {}
+	CoatService() :coatRepository{ new CSVFileRepository }, coatsValidator { new CoatValidator }, userRepository{ new CSVFileRepository }, duringUndo{ false } {}
 
 	CoatService(CSVFileRepository& coatRepository, CoatValidator* coatsValidator);
 
@@ -72,8 +73,6 @@ public:
 	void setCoatRepositoryPath(const std::string& filePath);
 
 	void setUserRepositoryPath(const std::string& userRepositoryPath);
-
-	void clearFile();
 
 	void openUserFile();
 

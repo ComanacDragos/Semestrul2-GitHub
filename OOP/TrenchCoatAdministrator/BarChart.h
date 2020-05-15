@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include "TrenchCoat.h"
 #include <vector>
+//#include <QtCharts>
 
 class BarChart: public QWidget
 {

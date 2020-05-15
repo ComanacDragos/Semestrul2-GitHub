@@ -33,7 +33,7 @@ void CoatsIterator::first()
 
 bool CoatsIterator::valid()
 {
-	if (this->currentPosition < 0 || this->currentPosition >= (int)this->coats.size())
+	if (this->coats.size() == 0)
 		return false;
 	return true;
 }
@@ -47,10 +47,17 @@ void CoatsIterator::next()
 		else
 			this->currentPosition += 1;
 	}
+	else
+		throw BadPosition("There are no coats in the repository");
 }
 
 TrenchCoat CoatsIterator::getCurrent()
 {
+	if(valid())
+	{
 	return this->coats[this->currentPosition];
+	}
+	else
+		throw BadPosition("There are no coats in the repository");
 }
 

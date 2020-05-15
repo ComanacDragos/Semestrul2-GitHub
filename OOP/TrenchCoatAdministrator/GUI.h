@@ -13,20 +13,21 @@
 #include <QObject>
 #include <QtQuick/QQuickPaintedItem>
 #include <QPainter>
+#include <qchar.h>
 
 class GUI : public QWidget
 {
 	Q_OBJECT
 
 public:
-	GUI(CoatService& coatService, QWidget* parent = 0);
+	GUI(QWidget* parent = 0);
 	~GUI() {}
 
 private:
 	CoatService coatService;
 	QHBoxLayout* windowLayout;
 	QListWidget *coatsList, *userList;
-	QLineEdit* nameEdit, * sizeEdit, * priceEdit, * photographSourceEdit, * coatsRepository, * userRepository;
+	QLineEdit* nameEdit, * sizeEdit, * priceEdit, * photographSourceEdit;
 	QPushButton* addCoatButton, * deleteCoatButton, * updateCoatButton, * filterCoatsButton, * openUserCoatsButton, * nextCoatButton, * listButton, * saveToMyListButton, * showUserListButton, * undoButton, * redoButton, * exitButton, * barChart;
 
 	void initializeGUI();
@@ -36,9 +37,7 @@ private:
 
 	void initializeConnections();
 
-	//returns true if the paths were set successfully or false otherwise
-	bool setCoatRepositoryPath();
-	bool setUserRepositoryPath();
+	void readSettings();
 
 	int getSelectedIndex(QListWidget* list);
 	void listItemSelected();

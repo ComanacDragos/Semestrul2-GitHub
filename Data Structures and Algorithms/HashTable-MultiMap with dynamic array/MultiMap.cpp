@@ -132,11 +132,13 @@ bool MultiMap::remove(TKey c, TValue v) {
 				if (previous == nullptr)
 				{
 					this->elems[bucket] = current->next;
+					delete[] current->values;
 					delete current;
 					this->length -= 1;
 					return true;
 				}
 				previous->next = current->next;
+				delete[] current->values;
 				delete current;
 				this->length -= 1;
 				return true;
@@ -185,7 +187,47 @@ MultiMapIterator MultiMap::iterator() const {
 	return MultiMapIterator(*this);
 }
 
-//Theta(m)
+
+//Best case: Theta(1) - key has 1 value
+//Worst case: Theta(n) - key has all values
+//Ovarall: O(n) 
+vector<TValue> MultiMap::removeKey(TKey key)
+{
+	std::vector<TValue> values;
+	int bucket = this->hash(key);
+	Node* previous = nullptr;
+	Node* current = this->elems[bucket];
+	if (current == nullptr)
+		return values;
+
+	while (current != nullptr && current->key != key)
+	{
+		previous = current;
+		current = current->next;
+	}
+	if (current == nullptr)
+		return values;
+
+	for (int i = 0; i < current->length; i++)
+		values.push_back(current->values[i]);
+
+	if (previous == nullptr)
+	{
+		this->elems[bucket] = current->next;
+		this->length -= current->length;
+		delete[] current->values;
+		delete current;
+		return values;
+	}
+	previous->next = current->next;
+	this->length -= current->length;
+	delete[] current->values;
+	delete current;
+	return values;
+
+}
+
+//O(m+nr_keys)
 MultiMap::~MultiMap() {
 	//TODO - Implementation
 	for (int i = 0; i < this->m; i++)

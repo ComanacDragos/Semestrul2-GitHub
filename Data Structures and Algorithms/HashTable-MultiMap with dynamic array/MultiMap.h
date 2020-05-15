@@ -58,6 +58,10 @@ public:
 	//returns an iterator for the multimap
 	MultiMapIterator iterator() const;
 
+	//removes a key together with all its values
+	//returns a vector with the values that were previously associated to this value (and were removed)
+	vector<TValue> removeKey(TKey key);
+
 	//descturctor
 	~MultiMap();
 

@@ -35,6 +35,7 @@ void BarChart::paintEvent(QPaintEvent* event)
         painter.drawText(p, "coat" + QString::fromStdString(std::to_string(map["S"])));
 
     }
+
     // Rect
     //painter.drawRect(10, 10, 60, 80);
     // 110-160 170-220 230

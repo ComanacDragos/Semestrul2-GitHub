@@ -7,15 +7,15 @@
 #include <algorithm>
 #include "TrenchCoat.h"
 #include "Exceptions.h"
+#include "AbstractRepository.h"
 
-
-class FileRepository
+class FileRepository : public AbstractRepository
 {
 protected:
 	std::string filePath;
 
 public:
-	FileRepository() {}
+	FileRepository():AbstractRepository() {}
 
 	FileRepository(const std::string& filePath);
 

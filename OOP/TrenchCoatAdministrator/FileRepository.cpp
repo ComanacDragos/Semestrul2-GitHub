@@ -1,6 +1,6 @@
 #include "FileRepository.h"
 
-FileRepository::FileRepository(const std::string& filePath)
+FileRepository::FileRepository(const std::string& filePath) :AbstractRepository()
 {
 	this->filePath = filePath;
 }

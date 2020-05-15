@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractRepository.cpp" />
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="BarChart.cpp" />
     <ClCompile Include="CoatService.cpp" />
@@ -87,13 +88,17 @@
     <ClCompile Include="CoatValidator.cpp" />
     <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="FileRepository.cpp" />
+    <ClCompile Include="GraphicalUserInterface.cpp" />
     <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="InMemoryRepository.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="tests.cpp" />
     <ClCompile Include="TrenchCoat.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="GraphicalUserInterface.ui" />
     <QtUic Include="TrenchCoatAdministrator.ui" />
+    <QtUic Include="UserMode.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="TrenchCoatAdministrator.qrc" />
@@ -102,15 +107,23 @@
     <QtMoc Include="GUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractRepository.h" />
     <ClInclude Include="Action.h" />
+    <ClInclude Include="x64\Debug\uic\ui_GraphicalUserInterface.h" />
+    <ClInclude Include="x64\Debug\uic\ui_UserMode.h" />
     <QtMoc Include="BarChart.h" />
     <ClInclude Include="CoatService.h" />
     <ClInclude Include="CoatsIterator.h" />
     <ClInclude Include="CoatValidator.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="FileRepository.h" />
+    <QtMoc Include="GraphicalUserInterface.h" />
+    <ClInclude Include="InMemoryRepository.h" />
     <ClInclude Include="tests.h" />
     <ClInclude Include="TrenchCoat.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="settings.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

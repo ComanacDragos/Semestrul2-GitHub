@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "TrenchCoat.h"
+#include "Exceptions.h"
 
 class CoatsIterator
 {

@@ -2,7 +2,7 @@
 
 CoatService::CoatService(CSVFileRepository& coatRepository, CoatValidator* coatsValidator)
 {
-	this->coatRepository = coatRepository;
+	*(this->coatRepository) = coatRepository;
 	this->coatsIterator = this->getCoatsIterator();
 	this->coatsValidator = coatsValidator;
 	this->userRepository = new CSVFileRepository;
@@ -11,7 +11,8 @@ CoatService::CoatService(CSVFileRepository& coatRepository, CoatValidator* coats
 
 CoatService::CoatService(CSVFileRepository& coatRepository)
 {
-	this->coatRepository = coatRepository;
+	//this->coatRepository = new CSVFileRepository;
+	this->coatRepository = &coatRepository;
 	this->coatsIterator = this->getCoatsIterator();
 	this->coatsValidator = new CoatValidator;
 	this->userRepository = new CSVFileRepository;
@@ -20,6 +21,7 @@ CoatService::CoatService(CSVFileRepository& coatRepository)
 
 CoatService::CoatService(const CoatService& coatService)
 {
+
 	this->coatRepository = coatService.coatRepository;
 	this->coatsIterator = coatService.coatsIterator;
 
@@ -51,6 +53,7 @@ CoatService::~CoatService()
 {
 	delete this->coatsValidator;
 	delete this->userRepository;
+	delete this->coatRepository;
 }
 
 void CoatService::storeCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price)
@@ -58,7 +61,7 @@ void CoatService::storeCoatService(const std::string& name, const std::string& s
 	this->coatsValidator->validateCoat(name, size, photographSource, price);
 
 	TrenchCoat newCoat{ name, size, photographSource, atoi(price.c_str()) };
-	this->coatRepository.storeCoat(newCoat);
+	this->coatRepository->storeCoat(newCoat);
 
 	
 	if(this->duringUndo == false)
@@ -78,11 +81,11 @@ void CoatService::storeCoatService(const std::string& name, const std::string& s
 void CoatService::deleteCoatService(const std::string name)
 {
 	TrenchCoat coat;
-	if(this->coatRepository.existentCoat(name))
+	if(this->coatRepository->existentCoat(name))
 	{ 
-	coat = this->coatRepository.findCoatFromRepository(name);
+	coat = this->coatRepository->findCoatFromRepository(name);
 	}
-	this->coatRepository.deleteCoat(name);
+	this->coatRepository->deleteCoat(name);
 
 	if (this->userRepository->existentCoat(name))
 	{
@@ -108,11 +111,11 @@ void CoatService::updateCoatService(const std::string& name, const std::string& 
 	this->coatsValidator->validateCoat(name, size, photographSource, price);
 
 	TrenchCoat oldCoat;
-	if(this->coatRepository.existentCoat(name))
-		oldCoat = this->coatRepository.findCoatFromRepository(name);
+	if(this->coatRepository->existentCoat(name))
+		oldCoat = this->coatRepository->findCoatFromRepository(name);
 
 	TrenchCoat updatedCoat{ name, size, photographSource, atoi(price.c_str()) };
-	this->coatRepository.updateCoat(updatedCoat);
+	this->coatRepository->updateCoat(updatedCoat);
 
 	if (this->userRepository->existentCoat(name))
 	{
@@ -136,13 +139,13 @@ void CoatService::updateCoatService(const std::string& name, const std::string& 
 
 std:: vector<TrenchCoat> CoatService::listCoats()
 {
-	return this->coatRepository.getAllCoats();
+	return this->coatRepository->getAllCoats();
 }
 
 
 TrenchCoat CoatService::getCoatFromRepository(int position)
 {
-	return this->coatRepository.getCoatFromRepository(position);
+	return this->coatRepository->getCoatFromRepository(position);
 }
 
 TrenchCoat CoatService::getCoatFromUserRepository(int position)
@@ -152,7 +155,7 @@ TrenchCoat CoatService::getCoatFromUserRepository(int position)
 
 int CoatService::getRepositoryLenght()
 {
-	return this->coatRepository.getRepositoryLength();
+	return this->coatRepository->getRepositoryLength();
 }
 
 int CoatService::getUserRepositoryLenght()
@@ -174,7 +177,7 @@ void CoatService::setCoatsIterator()
 
 void CoatService::saveTrenchCoatToUserList(const std::string& name)
 {
-	TrenchCoat newUserCoat = this->coatRepository.findCoatFromRepository(name);
+	TrenchCoat newUserCoat = this->coatRepository->findCoatFromRepository(name);
 	
 	this->userRepository->storeCoat(newUserCoat);
 }
@@ -223,28 +226,31 @@ TrenchCoat CoatService::getNextCoatFromIterator()
 
 void CoatService::setPath(const std::string& filePath, const std::string& userRepositoryPath)
 {
-	this->coatRepository.setPath(filePath);
-
-	if (userRepositoryPath.size() != 0)
-	{
-		std::string fileType = userRepositoryPath.substr(userRepositoryPath.find('.')+1, std::string::npos);
-
-		if (fileType == "html")
-		{
-			delete this->userRepository;
-			this->userRepository = new HTMLFileRepository{ userRepositoryPath };
-		}
-		if (fileType == "csv" || fileType == "txt")
-		{
-			delete this->userRepository;
-			this->userRepository = new CSVFileRepository{userRepositoryPath};
-		}
-	}
+	this->setCoatRepositoryPath(filePath);
+	this->setUserRepositoryPath(userRepositoryPath);
 }
 
 void CoatService::setCoatRepositoryPath(const std::string& filePath)
 {
-	this->coatRepository.setPath(filePath);
+	if (filePath.size() != 0)
+	{
+		std::string fileType = filePath.substr(filePath.find('.') + 1, std::string::npos);
+		if (fileType == "html")
+		{
+			delete this->coatRepository;
+			this->coatRepository = new HTMLFileRepository{ filePath };
+		}
+		if (fileType == "csv" || fileType == "txt")
+		{
+			delete this->coatRepository;
+			this->coatRepository = new CSVFileRepository{ filePath };
+		}
+		if (filePath == "memory")
+		{
+			delete this->coatRepository;
+			this->coatRepository = new InMemoryRepository{};
+		}
+	}
 }
 
 void CoatService::setUserRepositoryPath(const std::string& userRepositoryPath)
@@ -264,12 +270,6 @@ void CoatService::setUserRepositoryPath(const std::string& userRepositoryPath)
 			this->userRepository = new CSVFileRepository{ userRepositoryPath };
 		}
 	}
-}
-
-void CoatService::clearFile()
-{
-	this->coatRepository.clearFile();
-	this->userRepository->clearFile();
 }
 
 void CoatService::openUserFile()

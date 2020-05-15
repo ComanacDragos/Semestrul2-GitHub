@@ -1,8 +1,10 @@
 #include "GUI.h"
 
-GUI::GUI(CoatService& coatService, QWidget* parent):QWidget{ parent }, coatService{coatService}
+GUI::GUI(QWidget* parent) :QWidget{ parent }
 {
+	this->readSettings();
 	this->initializeGUI();
+	this->listCoats();
 }
 
 void GUI::initializeGUI()
@@ -32,10 +34,10 @@ void GUI::initializeAdministratorGUI()
 
 
 	QFormLayout* filePathForm = new QFormLayout{};
-	QLabel* coatsLabel = new QLabel{ "&Coats file path:" };
-	this->coatsRepository = new QLineEdit{};
-	coatsLabel->setBuddy(this->coatsRepository);
-	filePathForm->addRow(coatsLabel, this->coatsRepository);
+	//QLabel* coatsLabel = new QLabel{ "&Coats file path:" };
+	//this->coatsRepository = new QLineEdit{};
+	//coatsLabel->setBuddy(this->coatsRepository);
+	//filePathForm->addRow(coatsLabel, this->coatsRepository);
 
 	administratorLayout->addLayout(filePathForm);
 
@@ -102,15 +104,15 @@ void GUI::initializeUserGUI()
 {
 	QVBoxLayout* userLayout = new QVBoxLayout{};
 
-	QFormLayout* filePathForm = new QFormLayout{};
+	//QFormLayout* filePathForm = new QFormLayout{};
 
-	this->userRepository = new QLineEdit{};
-	QLabel* userCoatsLabel = new QLabel{ "&User coats file path:" };
-	userCoatsLabel->setBuddy(this->userRepository);
+	//this->userRepository = new QLineEdit{};
+	//QLabel* userCoatsLabel = new QLabel{ "&User coats file path:" };
+	//userCoatsLabel->setBuddy(this->userRepository);
 
-	filePathForm->addRow(userCoatsLabel, this->userRepository);
+	//filePathForm->addRow(userCoatsLabel, this->userRepository);
 
-	userLayout->addLayout(filePathForm);
+	//userLayout->addLayout(filePathForm);
 
 	this->userList = new QListWidget{};
 
@@ -134,8 +136,6 @@ void GUI::initializeUserGUI()
 
 void GUI::initializeBarChart()
 {
-	if (this->setCoatRepositoryPath() == false)
-		return;
 	BarChart* chart = new BarChart{this->coatService.listCoats()};
 	chart->show();
 }
@@ -171,33 +171,17 @@ void GUI::initializeConnections()
 	//QObject::connect(this->barChart, &QPushButton::clicked, this, [this]() {this->initializeBarChart(); });
 }
 
-bool GUI::setCoatRepositoryPath()
+void GUI::readSettings()
 {
-	std::string repoFilePath = this->coatsRepository->displayText().toStdString();
-	
-	if (repoFilePath == "")
-	{
-		QMessageBox::warning(this, "Warning", "Provide a path for the repository");
-		return false;
-	}
+	std::ifstream fileOut{ "settings.txt" };
+	std::string coats, userCoats;
+	std::getline(fileOut, coats, '=');
+	std::getline(fileOut, coats);
 
-	this->coatService.setCoatRepositoryPath(repoFilePath);
+	std::getline(fileOut, userCoats, '=');
+	std::getline(fileOut, userCoats);
 
-	return true;
-}
-
-bool GUI::setUserRepositoryPath()
-{
-	std::string userRepoFilePath = this->userRepository->displayText().toStdString();
-
-	if (userRepoFilePath == "")
-	{
-		QMessageBox::warning(this, "Warning", "Provide a path for the user repository");
-		return false;
-	}
-
-	this->coatService.setUserRepositoryPath(userRepoFilePath);
-	return true;
+	this->coatService.setPath(coats, userCoats);
 }
 
 int GUI::getSelectedIndex(QListWidget* list)
@@ -254,10 +238,7 @@ void GUI::listItemSelectedUserList()
 }
 
 void GUI::storeCoat()
-{
-	if (this->setCoatRepositoryPath() == false)
-		return;
-	
+{	
 	std::string name = this->nameEdit->displayText().toStdString();
 	std::string size = this->sizeEdit->displayText().toStdString();
 	std::string price = this->priceEdit->displayText().toStdString();
@@ -279,9 +260,6 @@ void GUI::storeCoat()
 
 void GUI::listCoats()
 {
-	if (this->setCoatRepositoryPath() == false)
-		return;
-
 	if(this->coatsList->count() > 0)
 		this->coatsList->clear();
 
@@ -298,9 +276,6 @@ void GUI::listCoats()
 
 void GUI::deleteCoat()
 {
-	if (this->setCoatRepositoryPath() == false)
-		return;
-
 	std::string name = this->nameEdit->text().toStdString();
 
 	try
@@ -319,9 +294,6 @@ void GUI::deleteCoat()
 
 void GUI::updateCoat()
 {
-	if (this->setCoatRepositoryPath() == false)
-		return;
-
 	std::string name = this->nameEdit->displayText().toStdString();
 	std::string size = this->sizeEdit->displayText().toStdString();
 	std::string price = this->priceEdit->displayText().toStdString();
@@ -343,9 +315,6 @@ void GUI::updateCoat()
 
 void GUI::filterCoats()
 {
-	if (this->setCoatRepositoryPath() == false)
-		return;
-
 	std::string size = this->sizeEdit->displayText().toStdString();
 	std::string price = this->priceEdit->displayText().toStdString();
 	std::vector<TrenchCoat> filteredCoats;
@@ -371,9 +340,6 @@ void GUI::filterCoats()
 
 void GUI::undo()
 {
-	if (this->setCoatRepositoryPath() == false)
-		return;
-
 	try
 	{
 		this->coatService.undo();
@@ -390,9 +356,6 @@ void GUI::undo()
 
 void GUI::redo()
 {
-	if (this->setCoatRepositoryPath() == false)
-		return;
-
 	try
 	{
 		this->coatService.redo();
@@ -409,12 +372,6 @@ void GUI::redo()
 
 void GUI::saveCoatToUserList()
 {
-	if (this->setCoatRepositoryPath() == false)
-		return;
-	
-	if (this->setUserRepositoryPath() == false)
-		return;
-
 	std::string name = this->nameEdit->text().toStdString();
 
 	try
@@ -430,26 +387,28 @@ void GUI::saveCoatToUserList()
 
 void GUI::nextCoat()
 {
-	if (this->setCoatRepositoryPath() == false)
-		return;
-
 	int i = this->userList->count();
 	if (this->userList->count() > 0)
 		this->userList->clear();
 	else
 		this->coatService.setCoatsIterator();
 
+	try
+	{	
 	std::string coat = this->coatService.getNextCoatFromIterator().to_string();
 
 	QString itemInList = QString::fromStdString(coat);
 	QListWidgetItem* item = new QListWidgetItem{ itemInList };
 	this->userList->addItem(item);
+	}
+	catch (Exceptions & exception)
+	{
+		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
+	}
+
 }
 
 void GUI::openUserList()
 {
-	if (this->setUserRepositoryPath() == false)
-		return;
-
 	this->coatService.openUserFile();
 }
