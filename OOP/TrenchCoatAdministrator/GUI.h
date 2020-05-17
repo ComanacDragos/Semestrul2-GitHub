@@ -14,8 +14,12 @@
 #include <QtQuick/QQuickPaintedItem>
 #include <QPainter>
 #include <qchar.h>
+#include <QWidget>
+#include <QMainWindow>
+#include <QMenuBar>
+#include <QMenu>
 
-class GUI : public QWidget
+class GUI : public QMainWindow
 {
 	Q_OBJECT
 
@@ -24,11 +28,16 @@ public:
 	~GUI() {}
 
 private:
+	QWidget* administratorLayout, * userLayout;
 	CoatService coatService;
 	QHBoxLayout* windowLayout;
 	QListWidget *coatsList, *userList;
-	QLineEdit* nameEdit, * sizeEdit, * priceEdit, * photographSourceEdit;
+	QLineEdit* nameEdit, * sizeEdit, * priceEdit, * photographSourceEdit, * userCoatEdit;
 	QPushButton* addCoatButton, * deleteCoatButton, * updateCoatButton, * filterCoatsButton, * openUserCoatsButton, * nextCoatButton, * listButton, * saveToMyListButton, * showUserListButton, * undoButton, * redoButton, * exitButton, * barChart;
+
+	QAction* toUserMenu;
+	QAction* toAdministratorMenu;
+
 
 	void initializeGUI();
 	void initializeAdministratorGUI();

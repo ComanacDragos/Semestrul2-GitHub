@@ -1,2 +1,2 @@
 coatRepository=repo.txt
-userCoatRepository=HTMLRepo.html
+userCoatRepository=CSVRepo.csv

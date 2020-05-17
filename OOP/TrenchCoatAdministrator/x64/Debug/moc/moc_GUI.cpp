@@ -64,7 +64,7 @@ void GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
 }
 
 QT_INIT_METAOBJECT const QMetaObject GUI::staticMetaObject = { {
-    QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
+    QMetaObject::SuperData::link<QMainWindow::staticMetaObject>(),
     qt_meta_stringdata_GUI.data,
     qt_meta_data_GUI,
     qt_static_metacall,
@@ -83,12 +83,12 @@ void *GUI::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_GUI.stringdata0))
         return static_cast<void*>(this);
-    return QWidget::qt_metacast(_clname);
+    return QMainWindow::qt_metacast(_clname);
 }
 
 int GUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QWidget::qt_metacall(_c, _id, _a);
+    _id = QMainWindow::qt_metacall(_c, _id, _a);
     return _id;
 }
 QT_WARNING_POP

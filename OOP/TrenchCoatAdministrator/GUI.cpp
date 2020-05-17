@@ -1,45 +1,67 @@
 #include "GUI.h"
 
-GUI::GUI(QWidget* parent) :QWidget{ parent }
+GUI::GUI(QWidget* parent) :QMainWindow{ parent }
 {
 	this->readSettings();
 	this->initializeGUI();
 	this->listCoats();
+
 }
 
 void GUI::initializeGUI()
 {
+	QWidget* centralWidget = new QWidget{};
+	this->administratorLayout = new QWidget{};
+	this->userLayout = new QWidget{};
+
+	this->windowLayout = new QHBoxLayout{centralWidget};
 	
-	this->windowLayout = new QHBoxLayout{this};
-	
+	this->windowLayout->addWidget(this->administratorLayout);
+
+	this->windowLayout->addWidget(this->userLayout);
+
 	this->initializeAdministratorGUI();
 
-	this->saveToMyListButton = new QPushButton{ " > " };
-
-	this->windowLayout->addWidget(this->saveToMyListButton);
-	
 	this->initializeUserGUI();
+	
+	this->setCentralWidget(centralWidget);
+
+	/*
+	QMenu* Menu = this->menuBar()->addMenu("&Menu");
+
+	this->toUserMenu = new QAction{ "&User Mode", this };
+	this->toAdministratorMenu = new QAction{ "&Administrator Mode", this };
+
+	Menu->addAction(toUserMenu);
+	Menu->addAction(toAdministratorMenu);
+	*/
 
 	this->initializeConnections();
 
 	this->setStyleSheet(
 		"QWidget{background-color: black; color: rgb(128, 233, 210);}"
 		"QPushButton{background-color:rgb(128, 233, 210);color: black; border-radius: 15px;padding:10px;box-shadow: 5px 10px;}"
-		"QPushButton:hover{background-color: rgb(0, 153, 120);color: black;}");
+		"QPushButton:hover{background-color: rgb(0, 153, 120);color: black;}"
+		"QMenu{background-color:rgb(128, 233, 210);color: black;}"
+		"QMenu::item:selected{background-color: rgb(0, 153, 120);color: black;}"
+		"QMenuBar{background-color:black;color: rgb(128, 233, 210);}"
+		"QMenuBar::item:selected{background-color: rgb(0, 153, 120);color: black;}"
+	);
+
 }
 
 void GUI::initializeAdministratorGUI()
 {
-	QVBoxLayout* administratorLayout = new QVBoxLayout{};
+	QVBoxLayout* administratorLayout = new QVBoxLayout{ this->administratorLayout };
 
 
-	QFormLayout* filePathForm = new QFormLayout{};
+	//QFormLayout* filePathForm = new QFormLayout{};
 	//QLabel* coatsLabel = new QLabel{ "&Coats file path:" };
 	//this->coatsRepository = new QLineEdit{};
 	//coatsLabel->setBuddy(this->coatsRepository);
 	//filePathForm->addRow(coatsLabel, this->coatsRepository);
 
-	administratorLayout->addLayout(filePathForm);
+	//administratorLayout->addLayout(filePathForm);
 
 	this->coatsList = new QListWidget{};
 	QGridLayout* buttons = new QGridLayout{};
@@ -102,7 +124,7 @@ void GUI::initializeAdministratorGUI()
 
 void GUI::initializeUserGUI()
 {
-	QVBoxLayout* userLayout = new QVBoxLayout{};
+	QVBoxLayout* userLayout = new QVBoxLayout{ this->userLayout };
 
 	//QFormLayout* filePathForm = new QFormLayout{};
 
@@ -129,6 +151,20 @@ void GUI::initializeUserGUI()
 	buttons->addWidget(this->exitButton, 1, 0, 1, 2);
 
 	userLayout->addWidget(this->userList);
+
+	QFormLayout* formLayout = new QFormLayout{};
+
+	QLabel* userCoatNameLabel = new QLabel{ "&Name: " };
+	this->userCoatEdit = new QLineEdit{};
+	userCoatNameLabel->setBuddy(this->userCoatEdit);
+	formLayout->addRow(userCoatNameLabel, this->userCoatEdit);
+
+	userLayout->addLayout(formLayout);
+
+	this->saveToMyListButton = new QPushButton{ "Save " };
+
+	userLayout->addWidget(this->saveToMyListButton);
+
 	userLayout->addLayout(buttons);
 
 	this->windowLayout->addLayout(userLayout); 
@@ -169,6 +205,14 @@ void GUI::initializeConnections()
 	QObject::connect(this->saveToMyListButton, &QPushButton::clicked, this, [this]() {this->saveCoatToUserList(); });
 
 	//QObject::connect(this->barChart, &QPushButton::clicked, this, [this]() {this->initializeBarChart(); });
+
+	/*
+	QObject::connect(this->toAdministratorMenu, &QAction::triggered, this, [this]() {
+		*(this->userLayout) = *(this->centralWidget());
+		this->setCentralWidget(this->administratorLayout); });
+
+	QObject::connect(this->toUserMenu, &QAction::triggered, this, [this]() {this->setCentralWidget(this->userLayout); });
+	*/
 }
 
 void GUI::readSettings()
@@ -226,14 +270,14 @@ void GUI::listItemSelectedUserList()
 	std::vector<std::string> coatFields = tokenize(selectedCoat->text().toStdString(), ' ');
 
 	std::string name = coatFields[0];
-	std::string size = coatFields[1];
-	std::string price = coatFields[2];
-	std::string source = coatFields[3];
+	//std::string size = coatFields[1];
+	//std::string price = coatFields[2];
+	//std::string source = coatFields[3];
 
-	this->nameEdit->setText(QString::fromStdString(name));
-	this->sizeEdit->setText(QString::fromStdString(size));
-	this->priceEdit->setText(QString::fromStdString(price));
-	this->photographSourceEdit->setText(QString::fromStdString(source));
+	this->userCoatEdit->setText(QString::fromStdString(name));
+	//this->sizeEdit->setText(QString::fromStdString(size));
+	//this->priceEdit->setText(QString::fromStdString(price));
+	//this->photographSourceEdit->setText(QString::fromStdString(source));
 	
 }
 
@@ -372,8 +416,19 @@ void GUI::redo()
 
 void GUI::saveCoatToUserList()
 {
-	std::string name = this->nameEdit->text().toStdString();
+	if (this->userCoatEdit->text().size() == 0)
+	{
+		QMessageBox::warning(this, "Warning", "Select a coat");
+		return;
+	}
 
+	std::string name = this->userCoatEdit->text().toStdString();
+	/*
+	std::string name;
+	std::string coat{ this->userList->item(0)->text().toStdString() };
+	std::stringstream stringStream{ coat };
+	std::getline(stringStream, name, ' ');
+	*/
 	try
 	{
 		this->coatService.saveTrenchCoatToUserList(name);
@@ -395,11 +450,13 @@ void GUI::nextCoat()
 
 	try
 	{	
-	std::string coat = this->coatService.getNextCoatFromIterator().to_string();
+	TrenchCoat trenchCoat = this->coatService.getNextCoatFromIterator();
+	std::string coat = trenchCoat.to_string();
 
 	QString itemInList = QString::fromStdString(coat);
 	QListWidgetItem* item = new QListWidgetItem{ itemInList };
 	this->userList->addItem(item);
+	this->userCoatEdit->setText(QString::fromStdString(trenchCoat.getName()));
 	}
 	catch (Exceptions & exception)
 	{
