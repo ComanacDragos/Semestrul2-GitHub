@@ -13,7 +13,7 @@ private:
 	AbstractRepository* coatRepository;
 	CoatsIterator coatsIterator;
 	CoatValidator* coatsValidator;
-	FileRepository* userRepository;
+	AbstractRepository* userRepository;
 
 	std::vector<std::unique_ptr<Action>> undoStack;
 	std::vector<std::unique_ptr<Action>> redoStack;

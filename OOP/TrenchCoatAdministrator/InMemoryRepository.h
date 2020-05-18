@@ -33,5 +33,7 @@ public:
 	int getRepositoryLength();
 
 	std::vector<TrenchCoat> getAllCoats();
+
+	void openFile(){}
 };
 

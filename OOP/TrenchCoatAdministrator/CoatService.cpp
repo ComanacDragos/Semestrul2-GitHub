@@ -269,6 +269,11 @@ void CoatService::setUserRepositoryPath(const std::string& userRepositoryPath)
 			delete this->userRepository;
 			this->userRepository = new CSVFileRepository{ userRepositoryPath };
 		}
+		if (userRepositoryPath == "memory")
+		{
+			delete this->userRepository;
+			this->userRepository = new InMemoryRepository{};
+		}
 	}
 }
 

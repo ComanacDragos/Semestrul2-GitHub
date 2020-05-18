@@ -32,5 +32,6 @@ public:
 
 	virtual std::vector<TrenchCoat> getAllCoats() = 0;
 
+	virtual void openFile() = 0;
 };
 

@@ -32,7 +32,7 @@ private:
 	CoatService coatService;
 	QHBoxLayout* windowLayout;
 	QListWidget *coatsList, *userList;
-	QLineEdit* nameEdit, * sizeEdit, * priceEdit, * photographSourceEdit, * userCoatEdit;
+	QLineEdit* nameEdit, * sizeEdit, * priceEdit, * photographSourceEdit, * userCoatEdit, * userCoatSizeEdit, * userCoatPriceEdit;
 	QPushButton* addCoatButton, * deleteCoatButton, * updateCoatButton, * filterCoatsButton, * openUserCoatsButton, * nextCoatButton, * listButton, * saveToMyListButton, * showUserListButton, * undoButton, * redoButton, * exitButton, * barChart;
 
 	QAction* toUserMenu;
