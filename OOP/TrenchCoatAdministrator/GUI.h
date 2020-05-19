@@ -18,6 +18,10 @@
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QMenu>
+#include <QStackedWidget>
+
+#define AdministratorMenu 0
+#define UserMenu 1
 
 class GUI : public QMainWindow
 {
@@ -28,12 +32,12 @@ public:
 	~GUI() {}
 
 private:
+	QStackedWidget* stackedWidgets;
 	QWidget* administratorLayout, * userLayout;
 	CoatService coatService;
-	QHBoxLayout* windowLayout;
 	QListWidget *coatsList, *userList;
 	QLineEdit* nameEdit, * sizeEdit, * priceEdit, * photographSourceEdit, * userCoatEdit, * userCoatSizeEdit, * userCoatPriceEdit;
-	QPushButton* addCoatButton, * deleteCoatButton, * updateCoatButton, * filterCoatsButton, * openUserCoatsButton, * nextCoatButton, * listButton, * saveToMyListButton, * showUserListButton, * undoButton, * redoButton, * exitButton, * barChart;
+	QPushButton* addCoatButton, * deleteCoatButton, * updateCoatButton, * filterCoatsButton, * openUserCoatsButton, * nextCoatButton, * listButton, * saveToMyListButton, * showUserListButton, * undoButton, * redoButton, * exitButton, * barChart, * exitAdministratorMode;
 
 	QAction* toUserMenu;
 	QAction* toAdministratorMenu;

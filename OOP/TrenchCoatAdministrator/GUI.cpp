@@ -5,7 +5,6 @@ GUI::GUI(QWidget* parent) :QMainWindow{ parent }
 	this->readSettings();
 	this->initializeGUI();
 	this->listCoats();
-
 }
 
 void GUI::initializeGUI()
@@ -14,22 +13,20 @@ void GUI::initializeGUI()
 	this->administratorLayout = new QWidget{};
 	this->userLayout = new QWidget{};
 
-	//this->windowLayout = new QHBoxLayout{centralWidget};
-	
-	//this->windowLayout->addWidget(this->administratorLayout);
-
-	//this->windowLayout->addWidget(this->userLayout);
-
 	this->initializeAdministratorGUI();
 
+	this->initializeUserGUI();
+
+	this->stackedWidgets = new QStackedWidget{};
+
+	this->stackedWidgets->addWidget(this->administratorLayout);
+	this->stackedWidgets->addWidget(this->userLayout);
+	
 	this->toUserMenu = new QAction{ "&User Mode", this };
 	this->toAdministratorMenu = new QAction{ "&Administrator Mode", this };
 
-
 	this->menuBar()->addAction(this->toAdministratorMenu);
 	this->menuBar()->addAction(this->toUserMenu);
-
-	this->initializeConnections();
 
 	this->setStyleSheet(
 		"QWidget{background-color: black; color: rgb(128, 233, 210);}"
@@ -38,24 +35,17 @@ void GUI::initializeGUI()
 		"QMenu{background-color:rgb(128, 233, 210);color: black;}"
 		"QMenu::item:selected{background-color: rgb(0, 153, 120);color: black;}"
 		"QMenuBar{background-color:black;color: rgb(128, 233, 210);}"
-		"QMenuBar::item:selected{background-color: rgb(0, 153, 120);color: black;}"
+		"QMenuBar::item:selected{background-color: rgb(128, 233, 210);color: black;}"
 	);
 
-	this->setCentralWidget(this->administratorLayout);
+	this->setCentralWidget(this->stackedWidgets);
+
+	this->initializeConnections();
 }
 
 void GUI::initializeAdministratorGUI()
 {
 	QVBoxLayout* administratorLayout = new QVBoxLayout{ this->administratorLayout };
-
-
-	//QFormLayout* filePathForm = new QFormLayout{};
-	//QLabel* coatsLabel = new QLabel{ "&Coats file path:" };
-	//this->coatsRepository = new QLineEdit{};
-	//coatsLabel->setBuddy(this->coatsRepository);
-	//filePathForm->addRow(coatsLabel, this->coatsRepository);
-
-	//administratorLayout->addLayout(filePathForm);
 
 	this->coatsList = new QListWidget{};
 	QGridLayout* buttons = new QGridLayout{};
@@ -90,55 +80,36 @@ void GUI::initializeAdministratorGUI()
 	this->deleteCoatButton = new QPushButton{ "Delete Coat" };
 	this->updateCoatButton = new QPushButton{ "Update Coat" };
 	this->listButton = new QPushButton{ "List Coats" };
-	//this->barChart = new QPushButton{ "Bar chart" };
-	
 
 	buttons->addWidget(this->addCoatButton, 0, 0);
 	buttons->addWidget(this->deleteCoatButton, 0, 1);
 	buttons->addWidget(this->updateCoatButton, 0, 2);
 	buttons->addWidget(this->listButton, 2, 0, 1, 3);
-	//buttons->addWidget(this->filterCoatsButton, 3, 0, 1, 3);
-	//buttons->addWidget(this->barChart, 4, 0, 1, 3);
-
+	
 	administratorLayout->addLayout(buttons);
 
 	QGridLayout* undoRedoButtons = new QGridLayout{};
 
 	this->undoButton = new QPushButton{ "Undo" };
 	this->redoButton = new QPushButton{ "Redo" };
-	this->exitButton = new QPushButton{ "Exit" };
+	this->exitAdministratorMode = new QPushButton{ "Exit" };
 
 	undoRedoButtons->addWidget(this->undoButton, 0, 1);
 	undoRedoButtons->addWidget(this->redoButton, 0, 2);
-	//undoRedoButtons->addWidget(this->exitButton, 1, 0, 1, 2);
 
 	administratorLayout->addLayout(undoRedoButtons);
 
-	administratorLayout->addWidget(this->exitButton);
-
-	//this->windowLayout->addLayout(administratorLayout);
-
+	administratorLayout->addWidget(this->exitAdministratorMode);
 }
 
 void GUI::initializeUserGUI()
 {
 	QVBoxLayout* userLayout = new QVBoxLayout{ this->userLayout };
 
-	//QFormLayout* filePathForm = new QFormLayout{};
-
-	//this->userRepository = new QLineEdit{};
-	//QLabel* userCoatsLabel = new QLabel{ "&User coats file path:" };
-	//userCoatsLabel->setBuddy(this->userRepository);
-
-	//filePathForm->addRow(userCoatsLabel, this->userRepository);
-
-	//userLayout->addLayout(filePathForm);
-
 	this->userList = new QListWidget{};
 
 	this->nextCoatButton = new QPushButton{ "Next" };
 	this->openUserCoatsButton = new QPushButton{ "Open user coats file" };
-	//this->showUserList = new QPushButton{ "Show user coats" };
 	this->exitButton = new QPushButton{ "Exit" };
 	this->filterCoatsButton = new QPushButton{ "Filter coats" };
 
@@ -146,7 +117,6 @@ void GUI::initializeUserGUI()
 
 	buttons->addWidget(this->nextCoatButton, 0, 0);
 	buttons->addWidget(this->openUserCoatsButton, 0, 1);
-	//buttons->addWidget(this->showUserList, 1, 0, 1, 2);
 	buttons->addWidget(this->filterCoatsButton, 1, 0, 1, 2);
 	buttons->addWidget(this->exitButton, 2, 0, 1, 2);
 
@@ -176,8 +146,6 @@ void GUI::initializeUserGUI()
 	userLayout->addWidget(this->saveToMyListButton);
 
 	userLayout->addLayout(buttons);
-
-	//this->windowLayout->addLayout(userLayout); 
 }
 
 void GUI::initializeBarChart()
@@ -192,7 +160,9 @@ void GUI::initializeConnections()
 
 	QObject::connect(this->listButton, &QPushButton::clicked, this, [this]() {this->listCoats(); });
 	
-	QObject::connect(this->exitButton, &QPushButton::clicked, [this]() {close(); });
+	QObject::connect(this->exitButton, &QPushButton::clicked, this, [this]() {close(); });
+
+	QObject::connect(this->exitAdministratorMode, &QPushButton::clicked, this, [this]() {close(); });
 	
 	QObject::connect(this->coatsList, &QListWidget::itemSelectionChanged, this, [this]() {this->listItemSelected(); });
 	
@@ -213,23 +183,21 @@ void GUI::initializeConnections()
 	QObject::connect(this->openUserCoatsButton, &QPushButton::clicked, this, [this]() {this->openUserList(); });
 	
 	QObject::connect(this->saveToMyListButton, &QPushButton::clicked, this, [this]() {this->saveCoatToUserList(); });
-
-	//QObject::connect(this->barChart, &QPushButton::clicked, this, [this]() {this->initializeBarChart(); });
-
 	
 	QObject::connect(this->toAdministratorMenu, &QAction::triggered, this, [this]() {
-		this->administratorLayout = new QWidget();
-		this->initializeAdministratorGUI();
-		this->initializeConnections();
+		this->stackedWidgets->setCurrentIndex(AdministratorMenu);
 		this->listCoats();
-		this->setCentralWidget(this->administratorLayout); });
+		});
 
 	QObject::connect(this->toUserMenu, &QAction::triggered, this, [this]() {
-		this->userLayout = new QWidget();
-		this->initializeUserGUI();
-		this->initializeConnections();
+		this->stackedWidgets->setCurrentIndex(UserMenu);
 		this->coatService.setCoatsIterator();
-		this->setCentralWidget(this->userLayout); 
+		if (this->userList->count() > 0)
+			this->userList->clear();
+
+		this->userCoatEdit->setText(QString::fromStdString(""));
+		this->userCoatSizeEdit->setText(QString::fromStdString(""));
+		this->userCoatPriceEdit->setText(QString::fromStdString(""));
 		});
 }
 
@@ -290,13 +258,10 @@ void GUI::listItemSelectedUserList()
 	std::string name = coatFields[0];
 	std::string size = coatFields[1];
 	std::string price = coatFields[2];
-	//std::string source = coatFields[3];
 
 	this->userCoatEdit->setText(QString::fromStdString(name));
 	this->userCoatSizeEdit->setText(QString::fromStdString(size));
 	this->userCoatPriceEdit->setText(QString::fromStdString(price));
-	//this->photographSourceEdit->setText(QString::fromStdString(source));
-	
 }
 
 void GUI::storeCoat()
@@ -311,8 +276,6 @@ void GUI::storeCoat()
 		this->coatService.storeCoatService(name, size, source, price);
 		QMessageBox::information(this, "Success", "Coat added successfully");
 		this->listCoats();
-		//if (this->userList->count() > 0)
-		//	this->userList->clear();
 	}
 	catch (Exceptions & exception)
 	{
@@ -331,9 +294,6 @@ void GUI::listCoats()
 		QListWidgetItem* item = new QListWidgetItem{ itemInList };
 		this->coatsList->addItem(item);
 	}
-
-	//if (this->coatsList->count() > 0)
-	//	this->coatsList->setCurrentRow(0);
 }
 
 void GUI::deleteCoat()
@@ -345,8 +305,6 @@ void GUI::deleteCoat()
 		this->coatService.deleteCoatService(name);
 		QMessageBox::information(this, "Success", "Coat deleted successfully");
 		this->listCoats();
-		//if (this->userList->count() > 0)
-		//	this->userList->clear();
 	}
 	catch (Exceptions & exception)
 	{
@@ -366,8 +324,6 @@ void GUI::updateCoat()
 		this->coatService.updateCoatService(name, size, source, price);
 		QMessageBox::information(this, "Success", "Coat updated successfully");
 		this->listCoats();
-		//if (this->userList->count() > 0)
-		//	this->userList->clear();
 	}
 	catch (Exceptions & exception)
 	{
@@ -379,24 +335,23 @@ void GUI::filterCoats()
 {
 	std::string size = this->userCoatSizeEdit->displayText().toStdString();
 	std::string price = this->userCoatPriceEdit->displayText().toStdString();
-	std::vector<TrenchCoat> filteredCoats;
+	
 	try
 	{
-		filteredCoats = this->coatService.listFilteredCoats(size, price);
+		std::vector<TrenchCoat> filteredCoats = this->coatService.listFilteredCoats(size, price);
+		if (this->userList->count() > 0)
+			this->userList->clear();
+
+		for (auto& coat : filteredCoats)
+		{
+			QString itemInList = QString::fromStdString(coat.to_string());
+			QListWidgetItem* item = new QListWidgetItem{ itemInList };
+			this->userList->addItem(item);
+		}
 	}
 	catch (Exceptions & exception)
 	{
 		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
-		return;
-	}
-	if (this->userList->count() > 0)
-		this->userList->clear();
-
-	for (auto& coat : filteredCoats)
-	{
-		QString itemInList = QString::fromStdString(coat.to_string());
-		QListWidgetItem* item = new QListWidgetItem{ itemInList };
-		this->userList->addItem(item);
 	}
 }
 
@@ -407,8 +362,6 @@ void GUI::undo()
 		this->coatService.undo();
 		QMessageBox::information(this, "Success", "Successful undo");
 		this->listCoats();
-		//if (this->userList->count() > 0)
-		//	this->userList->clear();
 	}
 	catch (Exceptions& exception)
 	{
@@ -423,8 +376,6 @@ void GUI::redo()
 		this->coatService.redo();
 		QMessageBox::information(this, "Success", "Successful redo");
 		this->listCoats();
-		//if(this->userList->count() > 0)
-		//	this->userList->clear();
 	}
 	catch (Exceptions& exception)
 	{
@@ -441,12 +392,7 @@ void GUI::saveCoatToUserList()
 	}
 
 	std::string name = this->userCoatEdit->text().toStdString();
-	/*
-	std::string name;
-	std::string coat{ this->userList->item(0)->text().toStdString() };
-	std::stringstream stringStream{ coat };
-	std::getline(stringStream, name, ' ');
-	*/
+
 	try
 	{
 		this->coatService.saveTrenchCoatToUserList(name);
