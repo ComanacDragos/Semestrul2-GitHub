@@ -92,11 +92,10 @@ TElem Matrix::modify(int i, int j, TElem e) {
 	}
 
 	Node* current = this->root;
-	Node* parent = nullptr;
 
 	while (current != nullptr)
 	{
-
+		
 	}
 }
 

@@ -1,0 +1,8 @@
+﻿  moc GUI.h
+  GUI.cpp
+  Meci.cpp
+  Repo.cpp
+  Service.cpp
+  main.cpp
+  moc_GUI.cpp
+  SecondTest.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\SecondTest\x64\Debug\SecondTest.exe
