@@ -43,7 +43,7 @@ TElem Matrix::element(int i, int j) const {
 	
 	while (stackSize != 0)
 	{
-		Node* current = stack[stackSize];
+		Node* current = stack[stackSize-1];
 		stackSize -= 1;
 		if (current->line == i && current->column == j)
 		{
@@ -62,10 +62,16 @@ TElem Matrix::element(int i, int j) const {
 			stack = largerStack;
 		}
 
-		stack[stackSize] = current->leftChild;
-		stack[stackSize + 1] = current->rightChild;
-
-		stackSize += 2;		
+		if(current->leftChild != nullptr)
+		{ 
+			stack[stackSize] = current->leftChild;
+			stackSize += 1;
+		}
+		if(current->rightChild != nullptr)
+		{
+			stack[stackSize] = current->rightChild;
+			stackSize += 1;
+		}
 	}
 
 	delete[] stack;
@@ -85,18 +91,116 @@ TElem Matrix::modify(int i, int j, TElem e) {
 		newNode->value = e;
 		newNode->leftChild = nullptr;
 		newNode->rightChild = nullptr;
-		newNode->parent = nullptr;
-
+		
 		this->root = newNode;
 		return NULL_TELEM;
 	}
 
+	Node* parent = nullptr;
 	Node* current = this->root;
 
 	while (current != nullptr)
 	{
-		
+		if (current->value == e && current->line == i && current->column == j)
+		{
+			TElem old = current->value;
+
+			if (e == NULL_TELEM) // delete
+			{
+				//first case: node is a leaf
+				if (current->leftChild == nullptr && current->rightChild == nullptr)
+				{
+					if (parent == nullptr)//when the root is the only node
+					{
+						delete current;
+						this->root = nullptr;
+						return old;
+					}
+
+					if (parent->value < current->value)
+						parent->rightChild = nullptr;
+					else
+						parent->leftChild = nullptr;
+					delete current;
+					return old;
+				}
+				//second case: node has one child
+				if (current->leftChild == nullptr)
+				{
+					if (parent == nullptr) // delete root
+					{
+						this->root = current->rightChild;
+						delete this->root;
+						return old;
+					}
+					parent->rightChild = current->rightChild;
+					delete current;
+					return old;
+				}
+				if (current->rightChild == nullptr)
+				{
+					if (parent == nullptr) // delete root
+					{
+						this->root = current->leftChild;
+						delete this->root;
+						return old;
+					}
+					parent->leftChild = current->rightChild;
+					delete current;
+					return old;
+				}
+				//third case: node has 2 childred
+				Node* succesor = current->rightChild;
+				while (succesor->leftChild != nullptr)
+					succesor = succesor->leftChild;
+
+				current->value = succesor->value;
+				current->line = succesor->line;
+				current->column = succesor->column;
+				
+				delete succesor;
+				return old;
+			}
+			//update
+			if (current->leftChild->value <= e && e <= current->rightChild->value)
+			{
+				current->value = e;
+				return old;
+			}
+			while(current->leftChild->value > e)
+			{
+
+			}
+			
+		}
+		if (current->value < e)
+		{
+			parent = current;
+			current = current->rightChild;
+		}
+		else
+		{
+			parent = current;
+			current = current->leftChild;
+		}
 	}
+	if (e == NULL_TELEM)
+		return NULL_TELEM;
+
+	//add
+	Node* newNode = new Node;
+	newNode->line = i;
+	newNode->column = j;
+	newNode->value = e;
+	newNode->leftChild = nullptr;
+	newNode->rightChild = nullptr;
+	
+	if (parent->value < e)
+		parent->rightChild = newNode;
+	else
+		parent->leftChild = newNode;
+
+	return NULL_TELEM;
 }
 
 

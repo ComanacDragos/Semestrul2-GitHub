@@ -1,7 +1,2 @@
-﻿  App.cpp
-  ExtendedTest.cpp
-  Matrix.cpp
-  ShortTest.cpp
-  Generating Code...
-E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab6-MatrixOnBST\Matrix.cpp(101): warning C4715: 'Matrix::modify': not all control paths return a value
+﻿  Matrix.cpp
   Lab6-MatrixOnBST.vcxproj -> E:\Universitate\Semestrul2-GitHub\Data Structures and Algorithms\Lab6-MatrixOnBST\Debug\Lab6-MatrixOnBST.exe

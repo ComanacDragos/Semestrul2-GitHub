@@ -11,7 +11,6 @@ private:
 	typedef struct Node {
 		TElem value;
 		int line, column;
-		Node* parent;
 		Node* leftChild;
 		Node* rightChild;
 	}Node;
