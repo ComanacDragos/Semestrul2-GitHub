@@ -2,7 +2,7 @@
 #include <exception>
 using namespace std;
 
-
+//Theta(1)
 Matrix::Matrix(int nrLines, int nrCols) {
 	   
 	//TODO - Implementation
@@ -11,19 +11,19 @@ Matrix::Matrix(int nrLines, int nrCols) {
 	this->root = nullptr;
 }
 
-
+//Theta(1)
 int Matrix::nrLines() const {
 	//TODO - Implementation
 	return this->lines;
 }
 
-
+//Theta(1)
 int Matrix::nrColumns() const {
 	//TODO - Implementation
 	return this->columns;
 }
 
-
+//O(n) - n - height of the tree
 TElem Matrix::element(int i, int j) const {
 	//TODO - Implementation
 	if (i < 0 || j < 0 || j >= this->columns || i >= this->lines)
@@ -47,8 +47,12 @@ TElem Matrix::element(int i, int j) const {
 	return NULL_TELEM;
 }
 
+//O(n) - n - height of the tree
 TElem Matrix::modify(int i, int j, TElem e) {
 	//TODO - Implementation
+
+	if (i < 0 || j < 0 || j >= this->columns || i >= this->lines)
+		throw std::exception("Invalid position");
 
 	int index = i * this->columns + j;
 	if (this->root == nullptr)
@@ -127,14 +131,39 @@ TElem Matrix::modify(int i, int j, TElem e) {
 				}
 				//third case: node has 2 childred
 				Node* succesor = current->rightChild;
+				parent = current;
 				while (succesor->leftChild != nullptr)
+				{
+					parent = succesor;
 					succesor = succesor->leftChild;
+				}
+				
+				if(succesor->rightChild == nullptr) //if the succesor is a leaf
+				{
+					if (parent->index < succesor->index)
+						parent->rightChild = nullptr;
+					else
+						parent->leftChild = nullptr;
 
-				current->value = succesor->value;
-				current->index = succesor->index;
+					current->value = succesor->value;
+					current->index = succesor->index;
 
-				delete succesor;
-				return old;
+					delete succesor;
+					return old;
+				}
+				else // succesor has only one child(the right child)
+				{
+					if (parent->index < succesor->index)
+						parent->rightChild = succesor->rightChild;
+					else
+						parent->leftChild = succesor->rightChild;
+
+					current->value = succesor->value;
+					current->index = succesor->index;
+
+					delete succesor;
+					return old;
+				}
 			}
 			//update
 			current->value = e;
@@ -170,6 +199,7 @@ TElem Matrix::modify(int i, int j, TElem e) {
 	return NULL_TELEM;
 }
 
+//O(n) - n - number of nodes
 Matrix::~Matrix()
 {
 	if (this->root == nullptr)
