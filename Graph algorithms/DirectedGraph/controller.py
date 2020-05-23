@@ -245,3 +245,9 @@ class Controller:
         if info == None:
             raise GraphException("The graph has a cycle")
         return info
+
+    def TSP(self):
+        info = TSP_bkt(self._graph)
+        if info[0] == []:
+            raise GraphException("The graph does not have a hamiltonian cycle")
+        return info

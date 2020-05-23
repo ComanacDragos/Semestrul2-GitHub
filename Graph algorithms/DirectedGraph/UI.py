@@ -71,6 +71,7 @@ x. Exit traversal menu
 3. Forward Dijkstra
 4. Backwards Dijkstra
 5. Bellman_Ford
+6. Minimum cost hamiltonian cycle
 x. Exit walks menu
         """
         print(menu)
@@ -419,6 +420,18 @@ x. Exit DAG menu
         except GraphException as err:
             print(err)
 
+    def UI_TSP(self):
+        try:
+            info = self._controller.TSP()
+            path = info[0]
+            print(path[0],end='')
+            path.pop(0)
+            for i in path:
+                print("->", i, end='')
+            print(" Cost: ", info[1])
+        except GraphException as err:
+            print(err)
+
     def start_information_menu(self):
         commands = {
             "1": self.UI_get_nr_vertices,
@@ -493,6 +506,7 @@ x. Exit DAG menu
             "3": self.UI_forward_dijkstra,
             "4": self.UI_backwards_dijkstra,
             "5": self.UI_Bellman_Ford,
+            "6": self.UI_TSP,
         }
 
         while (True):

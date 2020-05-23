@@ -200,6 +200,54 @@ def Floyd_Warshall(graph, start, end):
 
     print(path, CostMatrix[start][end])
 
+def save_sol(graph, path, history):
+    cost=0
+    for i in range(len(path)):
+        if(i!= len(path)-1):
+            cost += graph.get_cost(path[i], path[i+1])
+    #    print(path[i], end=' ')
+    #print(cost)
+    #print()
+    if cost < history[1]:
+        history[0] =path[:]
+        history[1] = cost
 
+def consistent(graph, path, k):
+    if len(path) > graph.vertices+1:
+        return False
+    if len(path) == 0 or (len(path) == 1 and path[0] == 0):
+        return True
 
+    if path[0] != 0:
+        return False
 
+    if len(path) != graph.vertices +1:
+        return graph.is_edge(path[-2], k) and k not in path[:-1]
+    else:
+        return graph.is_edge(path[-2], k)
+
+def sol(graph, path):
+    if len(path) < 3:
+        return False
+    if path[0] == path[-1] and len(path) == graph.vertices+1:
+        return True
+    return False
+
+def bkt(graph, path, history):
+    path.append(0)
+    for i in graph.get_vertices():
+        path[-1] = i
+        if consistent(graph, path, i):
+            if sol(graph, path):
+                save_sol(graph, path[:], history)
+            else:
+                bkt(graph, path[:], history)
+
+def TSP_bkt(graph):
+    history = [[],math.inf]
+    bkt(graph, [], history)
+    return history
+
+g = DoubleDictGraph()
+loadGraph(g, "Graphs/Hamiltonian3.txt")
+#rint(TSP_bkt(g))
