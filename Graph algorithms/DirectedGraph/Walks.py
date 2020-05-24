@@ -248,6 +248,6 @@ def TSP_bkt(graph):
     bkt(graph, [], history)
     return history
 
-g = DoubleDictGraph()
-loadGraph(g, "Graphs/Hamiltonian3.txt")
+#g = DoubleDictGraph()
+#loadGraph(g, "Graphs/Hamiltonian3.txt")
 #rint(TSP_bkt(g))
