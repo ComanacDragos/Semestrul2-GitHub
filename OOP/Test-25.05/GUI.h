@@ -14,4 +14,8 @@ public:
 private:
     Ui::GUIClass ui;
     Service& srv;
+
+    void list();
+
+    void nrCars();
 };

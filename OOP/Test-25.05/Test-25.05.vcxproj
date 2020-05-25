@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClCompile Include="Domain.cpp" />
     <ClCompile Include="Service.cpp" />
+    <ClCompile Include="Test.cpp" />
     <QtRcc Include="GUI.qrc" />
     <QtUic Include="GUI.ui" />
     <QtMoc Include="GUI.h" />
@@ -93,6 +94,8 @@
   <ItemGroup>
     <ClInclude Include="Domain.h" />
     <ClInclude Include="Service.h" />
+    <ClInclude Include="Test.h" />
+    <ClInclude Include="x64\Debug\uic\ui_GUI.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="file.txt" />
