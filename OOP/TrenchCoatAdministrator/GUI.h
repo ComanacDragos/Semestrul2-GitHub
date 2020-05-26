@@ -1,6 +1,7 @@
 #pragma once
 #include "CoatService.h"
 #include "BarChart.h"
+#include "UserListTableView.h"
 #include <qwidget.h>
 #include <QListWidget>
 #include <QFormLayout>
@@ -19,9 +20,13 @@
 #include <QMenuBar>
 #include <QMenu>
 #include <QStackedWidget>
+#include <QShortcut>
+#include <QKeySequence>
+#include <QModelIndex>
 
 #define AdministratorMenu 0
 #define UserMenu 1
+#define TableView 2
 
 class GUI : public QMainWindow
 {
@@ -41,7 +46,9 @@ private:
 
 	QAction* toUserMenu;
 	QAction* toAdministratorMenu;
-
+	QAction* toTableView;
+	
+	UserListTableView* userTableViewWidget;
 
 	void initializeGUI();
 	void initializeAdministratorGUI();

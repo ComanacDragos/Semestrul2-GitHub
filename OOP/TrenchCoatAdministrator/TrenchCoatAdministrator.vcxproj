@@ -85,20 +85,20 @@
     <ClCompile Include="BarChart.cpp" />
     <ClCompile Include="CoatService.cpp" />
     <ClCompile Include="CoatsIterator.cpp" />
+    <ClCompile Include="CoatsTableModel.cpp" />
     <ClCompile Include="CoatValidator.cpp" />
     <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="FileRepository.cpp" />
-    <ClCompile Include="GraphicalUserInterface.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="InMemoryRepository.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="tests.cpp" />
     <ClCompile Include="TrenchCoat.cpp" />
+    <ClCompile Include="UserListTableView.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="GraphicalUserInterface.ui" />
     <QtUic Include="TrenchCoatAdministrator.ui" />
-    <QtUic Include="UserMode.ui" />
+    <QtUic Include="UserListTableView.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="TrenchCoatAdministrator.qrc" />
@@ -109,7 +109,9 @@
   <ItemGroup>
     <ClInclude Include="AbstractRepository.h" />
     <ClInclude Include="Action.h" />
-    <ClInclude Include="x64\Debug\uic\ui_GraphicalUserInterface.h" />
+    <ClInclude Include="CoatsTableModel.h" />
+    <QtMoc Include="UserListTableView.h" />
+    <ClInclude Include="x64\Debug\uic\ui_UserListTableView.h" />
     <ClInclude Include="x64\Debug\uic\ui_UserMode.h" />
     <QtMoc Include="BarChart.h" />
     <ClInclude Include="CoatService.h" />
@@ -117,7 +119,6 @@
     <ClInclude Include="CoatValidator.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="FileRepository.h" />
-    <QtMoc Include="GraphicalUserInterface.h" />
     <ClInclude Include="InMemoryRepository.h" />
     <ClInclude Include="tests.h" />
     <ClInclude Include="TrenchCoat.h" />

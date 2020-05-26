@@ -382,7 +382,7 @@ void CoatServiceDeleteCoat_ValidCoat_CoatDeleted()
 
 	service.deleteCoatService("name");
 	assert(service.getCoatFromRepository(0) == TrenchCoat("name1", "size", "photoSource", 3)
-			&& service.getRepositoryLenght() == 1);
+			&& service.getRepositoryLength() == 1);
 
 	clearFiles();
 }

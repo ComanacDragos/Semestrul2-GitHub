@@ -64,7 +64,10 @@
     <ClCompile Include="InMemoryRepository.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicalUserInterface.cpp">
+    <ClCompile Include="CoatsTableModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UserListTableView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -72,10 +75,7 @@
     <QtUic Include="TrenchCoatAdministrator.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="GraphicalUserInterface.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="UserMode.ui">
+    <QtUic Include="UserListTableView.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -91,7 +91,7 @@
     <QtMoc Include="BarChart.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="GraphicalUserInterface.h">
+    <QtMoc Include="UserListTableView.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -126,10 +126,13 @@
     <ClInclude Include="InMemoryRepository.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="x64\Debug\uic\ui_GraphicalUserInterface.h">
+    <ClInclude Include="x64\Debug\uic\ui_UserMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="x64\Debug\uic\ui_UserMode.h">
+    <ClInclude Include="CoatsTableModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\uic\ui_UserListTableView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,6 +5,8 @@ GUI::GUI(QWidget* parent) :QMainWindow{ parent }
 	this->readSettings();
 	this->initializeGUI();
 	this->listCoats();
+	this->setMinimumHeight(500);
+	this->setMinimumWidth(600);
 }
 
 void GUI::initializeGUI()
@@ -17,16 +19,21 @@ void GUI::initializeGUI()
 
 	this->initializeUserGUI();
 
+	this->userTableViewWidget = new UserListTableView{ this->coatService };
+
 	this->stackedWidgets = new QStackedWidget{};
 
 	this->stackedWidgets->addWidget(this->administratorLayout);
 	this->stackedWidgets->addWidget(this->userLayout);
+	this->stackedWidgets->addWidget(this->userTableViewWidget);
 	
 	this->toUserMenu = new QAction{ "&User Mode", this };
 	this->toAdministratorMenu = new QAction{ "&Administrator Mode", this };
+	this->toTableView = new QAction{ "&Table view", this };
 
 	this->menuBar()->addAction(this->toAdministratorMenu);
 	this->menuBar()->addAction(this->toUserMenu);
+	this->menuBar()->addAction(this->toTableView);
 
 	this->setStyleSheet(
 		"QWidget{background-color: black; color: rgb(128, 233, 210);}"
@@ -36,6 +43,9 @@ void GUI::initializeGUI()
 		"QMenu::item:selected{background-color: rgb(0, 153, 120);color: black;}"
 		"QMenuBar{background-color:black;color: rgb(128, 233, 210);}"
 		"QMenuBar::item:selected{background-color: rgb(128, 233, 210);color: black;}"
+		"QTableView{gridline-color:black;background:black;}"
+		"QTableView::item{background:black;}"
+		"QHeaderView::section{background:black;}"
 	);
 
 	this->setCentralWidget(this->stackedWidgets);
@@ -199,6 +209,19 @@ void GUI::initializeConnections()
 		this->userCoatSizeEdit->setText(QString::fromStdString(""));
 		this->userCoatPriceEdit->setText(QString::fromStdString(""));
 		});
+
+	QObject::connect(this->toTableView, &QAction::triggered, this, [this]() {
+		this->stackedWidgets->setCurrentIndex(TableView);
+		});
+
+	QKeySequence undoKey{ Qt::CTRL + Qt::Key_Z };
+	QShortcut* undoShortcut = new QShortcut{ undoKey, this};
+
+	QKeySequence redoKey{ Qt::CTRL + Qt::Key_Y };
+	QShortcut* redoShortcut = new QShortcut{ redoKey, this };
+
+	QObject::connect(undoShortcut, &QShortcut::activated, this, [this]() {this->undo(); });
+	QObject::connect(redoShortcut, &QShortcut::activated, this, [this]() {this->redo(); });
 }
 
 void GUI::readSettings()
@@ -237,7 +260,7 @@ void GUI::listItemSelected()
 {
 	int index = this->getSelectedIndex(this->coatsList);
 	             
-	if (index == -1 || index >= this->coatService.getRepositoryLenght())
+	if (index == -1 || index >= this->coatService.getRepositoryLength())
 		return;
 
 	TrenchCoat coat = this->coatService.getCoatFromRepository(index);

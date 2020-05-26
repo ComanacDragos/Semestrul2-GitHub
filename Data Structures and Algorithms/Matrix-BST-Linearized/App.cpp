@@ -9,7 +9,7 @@ using namespace std;
 #include <assert.h>
 
 int main() {
-
+	testExtra();
 	testAll();
 	testAllExtended();
 	cout << "Test End" << endl;

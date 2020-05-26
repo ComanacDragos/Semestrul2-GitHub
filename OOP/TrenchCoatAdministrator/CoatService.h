@@ -47,7 +47,7 @@ public:
 
 	TrenchCoat getCoatFromUserRepository(int position);
 
-	int getRepositoryLenght();
+	int getRepositoryLength();
 
 	int getUserRepositoryLenght();
 

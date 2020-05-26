@@ -199,7 +199,66 @@ TElem Matrix::modify(int i, int j, TElem e) {
 	return NULL_TELEM;
 }
 
-//O(n) - n - number of nodes
+
+//Best Case- Theta(1) - elem is the root
+//Worst Case - Theta(n) - n is the number of elements - when the elem does not exist
+//Overall O(n) - n is the number of elements
+pair<int, int> Matrix::positionOf(TElem elem) const
+{
+
+	if (this->root == nullptr)
+		return std::pair<int, int>{-1, -1};
+
+	Node* current = this->root;
+
+	int stackSize = 1;
+	int stackCapacity = 2;
+	Node** stack = new Node * [stackCapacity];
+
+	stack[0] = this->root;
+
+
+	while (stackSize != 0)
+	{
+		Node* current = stack[stackSize - 1];
+		stackSize -= 1;
+
+		if (current->value == elem)
+		{
+			int i = current->index / this->columns;
+			int j = current->index % this->columns;
+			delete[] stack;
+			return std::pair<int, int>{i, j};
+		}
+		if (stackCapacity - 1 <= stackSize)
+		{
+			stackCapacity *= 2;
+			Node** largerStack = new Node * [stackCapacity];
+			for (int i = 0; i < stackSize; i++)
+				largerStack[i] = stack[i];
+
+			delete[] stack;
+			stack = largerStack;
+		}
+
+		if (current->leftChild != nullptr)
+		{
+			stack[stackSize] = current->leftChild;
+			stackSize += 1;
+		}
+		if (current->rightChild != nullptr)
+		{
+			stack[stackSize] = current->rightChild;
+			stackSize += 1;
+		}
+
+	}
+
+	delete[] stack;
+	return std::pair<int, int>{-1, -1};
+}
+
+//Theta(n) - n - number of nodes
 Matrix::~Matrix()
 {
 	if (this->root == nullptr)

@@ -1,5 +1,4 @@
 #include "GUI.h"
-#include "GraphicalUserInterface.h"
 #include "tests.h"
 #include <QtWidgets/QApplication>
 #include <qlabel.h>

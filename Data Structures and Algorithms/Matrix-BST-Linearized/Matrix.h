@@ -1,9 +1,11 @@
 #pragma once
 
+
 //DO NOT CHANGE THIS PART
 typedef int TElem;
 #define NULL_TELEM 0
 
+#include <utility>
 class Matrix {
 
 private:
@@ -35,6 +37,11 @@ public:
 	//returns the previous value from the position
 	//throws exception if (i,j) is not a valid position in the Matrix
 	TElem modify(int i, int j, TElem e);
+
+
+	//returns the position of element elem from the Matrix (as a line, column pair).
+	//If elem occurs multiple times, any position where it appears is fine. If elem is not in the Matrix, return the pair <-1, -1>.
+	std::pair<int, int> positionOf(TElem elem) const;
 
 	~Matrix();
 };
