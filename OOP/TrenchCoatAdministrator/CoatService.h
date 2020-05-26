@@ -49,7 +49,7 @@ public:
 
 	int getRepositoryLength();
 
-	int getUserRepositoryLenght();
+	int getUserRepositoryLength();
 
 	//returns an interator over the list of coats
 	CoatsIterator getCoatsIterator();

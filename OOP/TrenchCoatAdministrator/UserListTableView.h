@@ -14,8 +14,12 @@ public:
 	UserListTableView(CoatService& service, QWidget *parent = Q_NULLPTR);
 	~UserListTableView();
 
+	void beginAddRow();
+	void endAddRow();
+
 private:
 	CoatService& service;
 	CoatsTableModel* tableModel;
 	Ui::UserListTableView ui;
+
 };

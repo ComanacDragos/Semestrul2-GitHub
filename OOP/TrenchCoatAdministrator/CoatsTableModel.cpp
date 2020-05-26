@@ -2,7 +2,7 @@
 
 int CoatsTableModel::rowCount(const QModelIndex& parent) const
 {
-	return this->service.getUserCoats().size();
+	return this->service.getUserRepositoryLength();
 }
 
 int CoatsTableModel::columnCount(const QModelIndex& parent) const
@@ -15,7 +15,7 @@ QVariant CoatsTableModel::data(const QModelIndex& index, int role) const
 	int row = index.row();
 	int column = index.column();
 
-	if (row == this->service.getUserCoats().size())
+	if (row == this->service.getUserRepositoryLength())
 		return QVariant();
 
 	TrenchCoat coat = this->service.getUserCoats()[row];
@@ -77,13 +77,13 @@ QVariant CoatsTableModel::headerData(int section, Qt::Orientation orientation, i
 	return QVariant();
 }
 
-
+/*
 bool CoatsTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
 
 	if (!index.isValid() || role != Qt::EditRole)
 		return false;
-	/*
+	
 	int coatIndex = index.row();
 
 	if (coatIndex == this->service.getRepositoryLength())
@@ -95,11 +95,23 @@ bool CoatsTableModel::setData(const QModelIndex& index, const QVariant& value, i
 
 		}
 	}
-*/
+
 	emit dataChanged(index, index);
 }
 
 Qt::ItemFlags CoatsTableModel::flags(const QModelIndex& index)
 {
 	return Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemIsEnabled;
+}
+*/
+void CoatsTableModel::beginAddRow()
+{
+	int repositoryLength = this->service.getUserRepositoryLength();
+	this->beginInsertRows(QModelIndex(), repositoryLength, repositoryLength);
+}
+
+void CoatsTableModel::endAddRow()
+{
+	int repositoryLength = this->service.getUserRepositoryLength();
+	this->endInsertRows();
 }

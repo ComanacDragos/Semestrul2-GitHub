@@ -158,7 +158,7 @@ int CoatService::getRepositoryLength()
 	return this->coatRepository->getRepositoryLength();
 }
 
-int CoatService::getUserRepositoryLenght()
+int CoatService::getUserRepositoryLength()
 {
 	return this->userRepository->getRepositoryLength();
 }

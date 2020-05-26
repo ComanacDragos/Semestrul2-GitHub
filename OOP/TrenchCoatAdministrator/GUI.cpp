@@ -418,12 +418,16 @@ void GUI::saveCoatToUserList()
 
 	try
 	{
+		this->userTableViewWidget->beginAddRow();
 		this->coatService.saveTrenchCoatToUserList(name);
+		this->userTableViewWidget->endAddRow();
 		QMessageBox::information(this, "Succes", "Coat saved to user list");
 	}
 	catch (Exceptions & exception)
 	{
 		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
+
+		this->userTableViewWidget->endAddRow();
 	}
 }
 

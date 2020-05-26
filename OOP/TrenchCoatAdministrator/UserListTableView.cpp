@@ -14,3 +14,13 @@ UserListTableView::~UserListTableView()
 {
 }
 
+void UserListTableView::beginAddRow()
+{
+	this->tableModel->beginAddRow();
+}
+
+void UserListTableView::endAddRow()
+{
+	this->tableModel->endAddRow();
+}
+

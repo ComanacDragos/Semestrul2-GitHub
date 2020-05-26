@@ -1,7 +1,2 @@
-﻿  moc UserListTableView.h
-  GUI.cpp
-  UserListTableView.cpp
-  main.cpp
-  moc_GUI.cpp
-  moc_UserListTableView.cpp
+﻿  GUI.cpp
   TrenchCoatAdministrator.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\TrenchCoatAdministrator\x64\Debug\TrenchCoatAdministrator.exe
