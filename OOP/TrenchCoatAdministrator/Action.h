@@ -1,5 +1,6 @@
 #pragma once
 #include "AbstractRepository.h"
+#include <memory>
 
 class Action
 {
@@ -7,11 +8,28 @@ protected:
 	AbstractRepository* repository;
 
 public:
+	Action() :repository{ nullptr } {}
 	Action(AbstractRepository* repo):repository{repo}{}
 	virtual void executeUndo() = 0;
 	virtual void executeRedo() = 0;
 
 	virtual ~Action(){}
+};
+
+class CompositeAction : public Action
+{
+protected:
+	std::vector<std::unique_ptr<Action>> actions;
+
+public:
+	CompositeAction(){}
+
+	void attachAction(std::unique_ptr<Action> action);
+	void executeUndo();
+	void executeRedo();
+
+	~CompositeAction(){}
+
 };
 
 class ActionAdd : public Action

@@ -74,7 +74,7 @@ void CoatService::storeCoatService(const std::string& name, const std::string& s
 		std::unique_ptr<Action> addAction = std::make_unique<ActionAdd>(this->coatRepository, newCoat);
 		this->redoStack.clear();
 		this->undoStack.push_back(std::move(addAction));
-		this->duringUndo = true;
+		this->duringUndo = false;
 	}
 }
 
@@ -83,13 +83,13 @@ void CoatService::deleteCoatService(const std::string name)
 	TrenchCoat coat;
 	if(this->coatRepository->existentCoat(name))
 	{ 
-	coat = this->coatRepository->findCoatFromRepository(name);
+		coat = this->coatRepository->findCoatFromRepository(name);
 	}
 	this->coatRepository->deleteCoat(name);
-
+	
 	if (this->userRepository->existentCoat(name))
 	{
-	this->userRepository->deleteCoat(name);
+		this->userRepository->deleteCoat(name);
 	}
 
 	if (this->duringUndo == false)
@@ -102,8 +102,11 @@ void CoatService::deleteCoatService(const std::string name)
 		std::unique_ptr<Action> deleteAction = std::make_unique<ActionDelete>(this->coatRepository, coat);
 		this->redoStack.clear();
 		this->undoStack.push_back(std::move(deleteAction));
-		this->duringUndo = true;
+		this->duringUndo = false;
 	}
+
+	this->userUndoStack.clear();
+	this->userRedoStack.clear();
 }
 
 void CoatService::updateCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price)
@@ -133,8 +136,11 @@ void CoatService::updateCoatService(const std::string& name, const std::string& 
 		std::unique_ptr<Action> updateAction = std::make_unique<ActionUpdate>(this->coatRepository, oldCoat, updatedCoat);
 		this->redoStack.clear();
 		this->undoStack.push_back(std::move(updateAction));
-		this->duringUndo = true;
+		this->duringUndo = false;
 	}
+
+	this->userUndoStack.clear();
+	this->userRedoStack.clear();
 }
 
 std:: vector<TrenchCoat> CoatService::listCoats()
@@ -180,6 +186,19 @@ void CoatService::saveTrenchCoatToUserList(const std::string& name)
 	TrenchCoat newUserCoat = this->coatRepository->findCoatFromRepository(name);
 	
 	this->userRepository->storeCoat(newUserCoat);
+
+	if (this->duringUserUndo == false)
+	{
+		std::unique_ptr<Action> addAction = std::make_unique<ActionAdd>(this->userRepository, newUserCoat);
+		this->userUndoStack.push_back(std::move(addAction));
+	}
+	else
+	{
+		std::unique_ptr<Action> addAction = std::make_unique<ActionAdd>(this->userRepository, newUserCoat);
+		this->userRedoStack.clear();
+		this->userRedoStack.push_back(std::move(addAction));
+		this->duringUserUndo = false;
+	}
 }
 
 std:: vector<TrenchCoat> CoatService::listFilteredCoats(const std::string& size, const std::string& price)
@@ -303,5 +322,28 @@ void CoatService::redo()
 	this->undoStack.push_back(std::move(this->redoStack[this->redoStack.size() - 1]));
 	this->redoStack.pop_back();
 
+}
+
+void CoatService::undoUser()
+{
+	this->duringUserUndo = true;
+
+	if (this->userUndoStack.size() == 0)
+		throw UndoException("Nothing to undo\n");
+
+	this->userUndoStack[this->userUndoStack.size() - 1]->executeUndo();
+	this->userRedoStack.push_back(std::move(this->userUndoStack[this->userUndoStack.size() - 1]));
+	this->userUndoStack.pop_back();
+
+}
+
+void CoatService::redoUser()
+{
+	if (this->userRedoStack.size() == 0)
+		throw UndoException("Nothing to redo\n");
+
+	this->userRedoStack[this->userRedoStack.size() - 1]->executeRedo();
+	this->userUndoStack.push_back(std::move(this->userRedoStack[this->userRedoStack.size() - 1]));
+	this->userRedoStack.pop_back();
 }
 

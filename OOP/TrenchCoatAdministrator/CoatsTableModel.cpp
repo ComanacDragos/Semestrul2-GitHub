@@ -7,7 +7,7 @@ int CoatsTableModel::rowCount(const QModelIndex& parent) const
 
 int CoatsTableModel::columnCount(const QModelIndex& parent) const
 {
-	return 4;
+	return 5;
 }
 
 QVariant CoatsTableModel::data(const QModelIndex& index, int role) const
@@ -65,6 +65,8 @@ QVariant CoatsTableModel::headerData(int section, Qt::Orientation orientation, i
 				return QString{ "Price" };
 			case 3:
 				return QString{ "Photograph source" };
+			case 4:
+				return QString{ "Picture" };
 			default:
 				break;
 			}

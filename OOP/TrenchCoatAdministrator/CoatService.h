@@ -18,7 +18,11 @@ private:
 	std::vector<std::unique_ptr<Action>> undoStack;
 	std::vector<std::unique_ptr<Action>> redoStack;
 
-	bool duringUndo;
+
+	std::vector<std::unique_ptr<Action>> userUndoStack;
+	std::vector<std::unique_ptr<Action>> userRedoStack;
+
+	bool duringUndo = false, duringUserUndo = false;
 
 public:
 	CoatService() :coatRepository{ new CSVFileRepository }, coatsValidator { new CoatValidator }, userRepository{ new CSVFileRepository }, duringUndo{ false } {}
@@ -78,5 +82,8 @@ public:
 
 	void undo();
 	void redo();
+
+	void undoUser();
+	void redoUser();
 };
 

@@ -70,6 +70,9 @@
     <ClCompile Include="UserListTableView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PictureDelegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="TrenchCoatAdministrator.ui">
@@ -133,6 +136,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="x64\Debug\uic\ui_UserListTableView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PictureDelegate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

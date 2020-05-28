@@ -20,7 +20,7 @@ void GUI::initializeGUI()
 	this->initializeUserGUI();
 
 	this->userTableViewWidget = new UserListTableView{ this->coatService };
-
+	
 	this->stackedWidgets = new QStackedWidget{};
 
 	this->stackedWidgets->addWidget(this->administratorLayout);
@@ -122,13 +122,17 @@ void GUI::initializeUserGUI()
 	this->openUserCoatsButton = new QPushButton{ "Open user coats file" };
 	this->exitButton = new QPushButton{ "Exit" };
 	this->filterCoatsButton = new QPushButton{ "Filter coats" };
+	this->undoUserButton = new QPushButton{ "Undo" };
+	this->redoUserButton = new QPushButton{ "Redo" };
 
 	QGridLayout* buttons = new QGridLayout{};
 
 	buttons->addWidget(this->nextCoatButton, 0, 0);
 	buttons->addWidget(this->openUserCoatsButton, 0, 1);
-	buttons->addWidget(this->filterCoatsButton, 1, 0, 1, 2);
-	buttons->addWidget(this->exitButton, 2, 0, 1, 2);
+	buttons->addWidget(this->undoUserButton, 1, 0);
+	buttons->addWidget(this->redoUserButton, 1, 1);
+	buttons->addWidget(this->filterCoatsButton, 2, 0, 1, 2);
+	buttons->addWidget(this->exitButton, 3, 0, 1, 2);
 
 	userLayout->addWidget(this->userList);
 
@@ -212,6 +216,7 @@ void GUI::initializeConnections()
 
 	QObject::connect(this->toTableView, &QAction::triggered, this, [this]() {
 		this->stackedWidgets->setCurrentIndex(TableView);
+		//this->userTableViewWidget->show();
 		});
 
 	QKeySequence undoKey{ Qt::CTRL + Qt::Key_Z };
@@ -222,6 +227,10 @@ void GUI::initializeConnections()
 
 	QObject::connect(undoShortcut, &QShortcut::activated, this, [this]() {this->undo(); });
 	QObject::connect(redoShortcut, &QShortcut::activated, this, [this]() {this->redo(); });
+
+	QObject::connect(this->undoUserButton, &QPushButton::clicked, this, [this]() {this->userUndo(); });
+
+	QObject::connect(this->redoUserButton, &QPushButton::clicked, this, [this]() {this->userRedo(); });
 }
 
 void GUI::readSettings()
@@ -401,6 +410,32 @@ void GUI::redo()
 		this->listCoats();
 	}
 	catch (Exceptions& exception)
+	{
+		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
+	}
+}
+
+void GUI::userUndo()
+{
+	try
+	{
+		this->coatService.undoUser();
+		QMessageBox::information(this, "Success", "Successful undo");	
+	}
+	catch (Exceptions & exception)
+	{
+		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
+	}
+}
+
+void GUI::userRedo()
+{
+	try
+	{
+		this->coatService.redoUser();
+		QMessageBox::information(this, "Success", "Successful redo");
+	}
+	catch (Exceptions & exception)
 	{
 		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
 	}

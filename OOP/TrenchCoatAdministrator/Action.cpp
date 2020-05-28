@@ -29,3 +29,20 @@ void ActionUpdate::executeRedo()
 {
 	this->repository->updateCoat(this->newCoat);
 }
+
+void CompositeAction::attachAction(std::unique_ptr<Action> action)
+{
+	this->actions.push_back(std::move(action));
+}
+
+void CompositeAction::executeUndo()
+{
+	for (int i = 0; i < this->actions.size(); i++)
+		this->actions[i]->executeUndo();
+}
+
+void CompositeAction::executeRedo()
+{
+	for (int i = 0; i < this->actions.size(); i++)
+		this->actions[i]->executeRedo();
+}

@@ -1,2 +1,2 @@
-coatRepository=memory
-userCoatRepository=memory
+coatRepository=repo.txt
+userCoatRepository=CSVRepo.csv

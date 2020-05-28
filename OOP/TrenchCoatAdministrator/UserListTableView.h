@@ -4,7 +4,7 @@
 #include "ui_UserListTableView.h"
 #include "CoatService.h"
 #include "CoatsTableModel.h"
-
+#include "PictureDelegate.h"
 
 class UserListTableView : public QWidget
 {

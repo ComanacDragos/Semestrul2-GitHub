@@ -13,3 +13,15 @@ Qt designer: https://www.youtube.com/watch?v=bh6wpDG9M_w
 
 Seminar 6 
 https://www.youtube.com/watch?v=ziKj8FE7OaA
+
+
+Lecture week 12
+https://www.youtube.com/watch?v=2nw1KrFtI00
+
+Lecture week 13
+https://www.youtube.com/watch?v=cC6DRwtvTPg
+
+Iterator pattern https://www.youtube.com/watch?v=OdBi0BsWPeU
+Composite pattern https://www.youtube.com/watch?v=a1xzHcXrnZ0
+Strategy pattern https://www.youtube.com/watch?v=hbnbiebUrhk
+Command pattern https://www.youtube.com/watch?v=_U_gOql-AS4

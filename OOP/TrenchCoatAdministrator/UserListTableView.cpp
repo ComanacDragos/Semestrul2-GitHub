@@ -6,8 +6,12 @@ UserListTableView::UserListTableView(CoatService& service, QWidget *parent)
 	ui.setupUi(this);
 	this->tableModel = new CoatsTableModel{ this->service };
 	ui.userTableView->setModel(this->tableModel);
+	ui.userTableView->setItemDelegate(new PictureDelegate{});
+
+	//ui.userTableView->resizeRowsToContents();
 	ui.userTableView->resizeColumnsToContents();
 	ui.userTableView->verticalHeader()->hide();	
+
 }
 
 UserListTableView::~UserListTableView()

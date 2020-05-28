@@ -43,6 +43,7 @@ private:
 	QListWidget *coatsList, *userList;
 	QLineEdit* nameEdit, * sizeEdit, * priceEdit, * photographSourceEdit, * userCoatEdit, * userCoatSizeEdit, * userCoatPriceEdit;
 	QPushButton* addCoatButton, * deleteCoatButton, * updateCoatButton, * filterCoatsButton, * openUserCoatsButton, * nextCoatButton, * listButton, * saveToMyListButton, * showUserListButton, * undoButton, * redoButton, * exitButton, * barChart, * exitAdministratorMode;
+	QPushButton* undoUserButton, * redoUserButton;
 
 	QAction* toUserMenu;
 	QAction* toAdministratorMenu;
@@ -70,6 +71,8 @@ private:
 	void filterCoats();
 	void undo();
 	void redo();
+	void userUndo();
+	void userRedo();
 	void saveCoatToUserList();
 	void nextCoat();
 	void openUserList();

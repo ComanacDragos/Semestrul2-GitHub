@@ -92,6 +92,7 @@
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="InMemoryRepository.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PictureDelegate.cpp" />
     <ClCompile Include="tests.cpp" />
     <ClCompile Include="TrenchCoat.cpp" />
     <ClCompile Include="UserListTableView.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="Action.h" />
     <ClInclude Include="CoatsTableModel.h" />
     <QtMoc Include="UserListTableView.h" />
+    <ClInclude Include="PictureDelegate.h" />
     <ClInclude Include="x64\Debug\uic\ui_UserListTableView.h" />
     <ClInclude Include="x64\Debug\uic\ui_UserMode.h" />
     <QtMoc Include="BarChart.h" />
