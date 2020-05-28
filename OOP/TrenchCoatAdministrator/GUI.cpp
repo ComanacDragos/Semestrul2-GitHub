@@ -21,11 +21,13 @@ void GUI::initializeGUI()
 
 	this->userTableViewWidget = new UserListTableView{ this->coatService };
 	
+	this->coatService.addObserver(this->userTableViewWidget);
+
 	this->stackedWidgets = new QStackedWidget{};
 
 	this->stackedWidgets->addWidget(this->administratorLayout);
 	this->stackedWidgets->addWidget(this->userLayout);
-	this->stackedWidgets->addWidget(this->userTableViewWidget);
+	//this->stackedWidgets->addWidget(this->userTableViewWidget);
 	
 	this->toUserMenu = new QAction{ "&User Mode", this };
 	this->toAdministratorMenu = new QAction{ "&Administrator Mode", this };
@@ -215,8 +217,8 @@ void GUI::initializeConnections()
 		});
 
 	QObject::connect(this->toTableView, &QAction::triggered, this, [this]() {
-		this->stackedWidgets->setCurrentIndex(TableView);
-		//this->userTableViewWidget->show();
+		//this->stackedWidgets->setCurrentIndex(TableView);
+		this->userTableViewWidget->show();
 		});
 
 	QKeySequence undoKey{ Qt::CTRL + Qt::Key_Z };
@@ -450,20 +452,19 @@ void GUI::saveCoatToUserList()
 	}
 
 	std::string name = this->userCoatEdit->text().toStdString();
-
+	
+	this->userTableViewWidget->beginAddRow();
 	try
 	{
-		this->userTableViewWidget->beginAddRow();
 		this->coatService.saveTrenchCoatToUserList(name);
-		this->userTableViewWidget->endAddRow();
 		QMessageBox::information(this, "Succes", "Coat saved to user list");
 	}
 	catch (Exceptions & exception)
 	{
 		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
 
-		this->userTableViewWidget->endAddRow();
 	}
+	this->userTableViewWidget->endAddRow();
 }
 
 void GUI::nextCoat()

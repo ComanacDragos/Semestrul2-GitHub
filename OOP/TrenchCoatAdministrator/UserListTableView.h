@@ -6,7 +6,7 @@
 #include "CoatsTableModel.h"
 #include "PictureDelegate.h"
 
-class UserListTableView : public QWidget
+class UserListTableView : public QWidget, public Observer
 {
 	Q_OBJECT
 
@@ -16,6 +16,11 @@ public:
 
 	void beginAddRow();
 	void endAddRow();
+
+	void beginRemoveRow();
+	void endRemoveRow();
+
+	void update() override;
 
 private:
 	CoatService& service;

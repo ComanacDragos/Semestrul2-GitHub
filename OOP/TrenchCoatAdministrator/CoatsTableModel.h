@@ -26,5 +26,8 @@ public:
 
 	void beginAddRow();
 	void endAddRow();
+
+	void beginRemoveRow();
+	void endRemoveRow();
 };
 

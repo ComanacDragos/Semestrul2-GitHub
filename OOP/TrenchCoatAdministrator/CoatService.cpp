@@ -107,6 +107,8 @@ void CoatService::deleteCoatService(const std::string name)
 
 	this->userUndoStack.clear();
 	this->userRedoStack.clear();
+
+	this->notify();
 }
 
 void CoatService::updateCoatService(const std::string& name, const std::string& size, const std::string& photographSource, const std::string& price)
@@ -141,6 +143,8 @@ void CoatService::updateCoatService(const std::string& name, const std::string& 
 
 	this->userUndoStack.clear();
 	this->userRedoStack.clear();
+
+	this->notify();
 }
 
 std:: vector<TrenchCoat> CoatService::listCoats()
@@ -199,6 +203,7 @@ void CoatService::saveTrenchCoatToUserList(const std::string& name)
 		this->userRedoStack.push_back(std::move(addAction));
 		this->duringUserUndo = false;
 	}
+	this->notify();
 }
 
 std:: vector<TrenchCoat> CoatService::listFilteredCoats(const std::string& size, const std::string& price)
@@ -335,6 +340,7 @@ void CoatService::undoUser()
 	this->userRedoStack.push_back(std::move(this->userUndoStack[this->userUndoStack.size() - 1]));
 	this->userUndoStack.pop_back();
 
+	this->notify();
 }
 
 void CoatService::redoUser()
@@ -345,5 +351,7 @@ void CoatService::redoUser()
 	this->userRedoStack[this->userRedoStack.size() - 1]->executeRedo();
 	this->userUndoStack.push_back(std::move(this->userRedoStack[this->userRedoStack.size() - 1]));
 	this->userRedoStack.pop_back();
+
+	this->notify();
 }
 

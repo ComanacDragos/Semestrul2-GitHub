@@ -112,6 +112,7 @@
     <ClInclude Include="Action.h" />
     <ClInclude Include="CoatsTableModel.h" />
     <QtMoc Include="UserListTableView.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="PictureDelegate.h" />
     <ClInclude Include="x64\Debug\uic\ui_UserListTableView.h" />
     <ClInclude Include="x64\Debug\uic\ui_UserMode.h" />

@@ -5,9 +5,10 @@
 #include "CoatValidator.h"
 #include "Action.h"
 #include "InMemoryRepository.h"
+#include "Observer.h"
 #include <memory>
 
-class CoatService
+class CoatService: public Observable
 {
 private:
 	AbstractRepository* coatRepository;

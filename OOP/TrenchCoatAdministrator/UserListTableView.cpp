@@ -12,6 +12,16 @@ UserListTableView::UserListTableView(CoatService& service, QWidget *parent)
 	ui.userTableView->resizeColumnsToContents();
 	ui.userTableView->verticalHeader()->hide();	
 
+	/*
+	this->setStyleSheet(
+		"QWidget{background-color: black; color: rgb(128, 233, 210);}"
+		"QTableView{gridline-color:black;background:black;}"
+		"QTableView::item{background:black;}"
+		"QHeaderView::section{background:black;}"
+	);*/
+
+	this->setMinimumHeight(200);
+	this->setMinimumWidth(800);
 }
 
 UserListTableView::~UserListTableView()
@@ -26,5 +36,24 @@ void UserListTableView::beginAddRow()
 void UserListTableView::endAddRow()
 {
 	this->tableModel->endAddRow();
+}
+
+void UserListTableView::beginRemoveRow()
+{
+	this->tableModel->beginRemoveRow();
+}
+
+void UserListTableView::endRemoveRow()
+{
+	this->tableModel->endRemoveRow();
+}
+
+void UserListTableView::update()
+{
+	int rows = ui.userTableView->height();
+	int actualRows = this->service.getUserRepositoryLength();
+	for (int i = rows; i < actualRows; i++)
+		ui.userTableView;
+	ui.userTableView->viewport()->update();
 }
 
