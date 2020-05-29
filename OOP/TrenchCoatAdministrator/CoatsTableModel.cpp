@@ -114,17 +114,17 @@ void CoatsTableModel::beginAddRow()
 
 void CoatsTableModel::endAddRow()
 {
-	//int repositoryLength = this->service.getUserRepositoryLength();
 	this->endInsertRows();
 }
 
 void CoatsTableModel::beginRemoveRow()
 {
 	int repositoryLength = this->service.getUserRepositoryLength();
-	this->beginRemoveRows(QModelIndex(), repositoryLength, repositoryLength);
+
+	this->beginRemoveRows(QModelIndex(), repositoryLength-1, repositoryLength-1);
 }
 
 void CoatsTableModel::endRemoveRow()
 {
-	this->endRemoveRows();
+	this->endRemoveRows();	
 }

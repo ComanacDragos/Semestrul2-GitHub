@@ -200,7 +200,7 @@ void CoatService::saveTrenchCoatToUserList(const std::string& name)
 	{
 		std::unique_ptr<Action> addAction = std::make_unique<ActionAdd>(this->userRepository, newUserCoat);
 		this->userRedoStack.clear();
-		this->userRedoStack.push_back(std::move(addAction));
+		this->userUndoStack.push_back(std::move(addAction));
 		this->duringUserUndo = false;
 	}
 	this->notify();

@@ -1,10 +1,2 @@
-﻿  moc UserListTableView.h
-  CoatsTableModel.cpp
-  GUI.cpp
-  UserListTableView.cpp
-  main.cpp
-E:\Universitate\Semestrul2-GitHub\OOP\TrenchCoatAdministrator\CoatsTableModel.cpp(129): warning C4717: 'CoatsTableModel::endRemoveRows': recursive on all control paths, function will cause runtime stack overflow
-E:\Universitate\Semestrul2-GitHub\OOP\TrenchCoatAdministrator\CoatsTableModel.cpp(124): warning C4717: 'CoatsTableModel::beginRemoveRows': recursive on all control paths, function will cause runtime stack overflow
-  moc_GUI.cpp
-  moc_UserListTableView.cpp
+﻿  CoatService.cpp
   TrenchCoatAdministrator.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\TrenchCoatAdministrator\x64\Debug\TrenchCoatAdministrator.exe

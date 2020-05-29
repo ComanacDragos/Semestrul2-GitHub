@@ -333,7 +333,6 @@ void GUI::listCoats()
 void GUI::deleteCoat()
 {
 	std::string name = this->nameEdit->text().toStdString();
-
 	try
 	{
 		this->coatService.deleteCoatService(name);
@@ -422,10 +421,11 @@ void GUI::userUndo()
 	try
 	{
 		this->coatService.undoUser();
-		QMessageBox::information(this, "Success", "Successful undo");	
+		QMessageBox::information(this, "Success", "Successful undo");
 	}
 	catch (Exceptions & exception)
 	{
+		this->userTableViewWidget->beginAddRow();
 		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
 	}
 }
@@ -452,7 +452,7 @@ void GUI::saveCoatToUserList()
 	}
 
 	std::string name = this->userCoatEdit->text().toStdString();
-	
+
 	this->userTableViewWidget->beginAddRow();
 	try
 	{
@@ -462,8 +462,8 @@ void GUI::saveCoatToUserList()
 	catch (Exceptions & exception)
 	{
 		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
-
 	}
+
 	this->userTableViewWidget->endAddRow();
 }
 
