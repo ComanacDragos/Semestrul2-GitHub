@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWidget>
+#include <QModelIndex>
 #include "ui_UserListTableView.h"
 #include "CoatService.h"
 #include "CoatsTableModel.h"

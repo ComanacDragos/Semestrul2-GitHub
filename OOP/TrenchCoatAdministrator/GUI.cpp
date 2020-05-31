@@ -335,7 +335,13 @@ void GUI::deleteCoat()
 	std::string name = this->nameEdit->text().toStdString();
 	try
 	{
+		this->userTableViewWidget->beginRemoveRow();
+		int initialSize = this->coatService.getUserRepositoryLength();
 		this->coatService.deleteCoatService(name);
+		int finalSize = this->coatService.getUserRepositoryLength();
+
+		if(finalSize < initialSize)
+			this->userTableViewWidget->endRemoveRow();
 		QMessageBox::information(this, "Success", "Coat deleted successfully");
 		this->listCoats();
 	}
@@ -420,12 +426,18 @@ void GUI::userUndo()
 {
 	try
 	{
+		this->userTableViewWidget->beginRemoveRow();
+		int initialSize = this->coatService.getUserRepositoryLength();
 		this->coatService.undoUser();
+		int finalSize = this->coatService.getUserRepositoryLength();
+		
+		if (finalSize < initialSize)
+			this->userTableViewWidget->endRemoveRow();
+
 		QMessageBox::information(this, "Success", "Successful undo");
 	}
 	catch (Exceptions & exception)
 	{
-		this->userTableViewWidget->beginAddRow();
 		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
 	}
 }
@@ -434,7 +446,9 @@ void GUI::userRedo()
 {
 	try
 	{
+		this->userTableViewWidget->beginAddRow();
 		this->coatService.redoUser();
+		this->userTableViewWidget->endAddRow();
 		QMessageBox::information(this, "Success", "Successful redo");
 	}
 	catch (Exceptions & exception)
@@ -453,18 +467,17 @@ void GUI::saveCoatToUserList()
 
 	std::string name = this->userCoatEdit->text().toStdString();
 
-	this->userTableViewWidget->beginAddRow();
 	try
 	{
+		this->userTableViewWidget->beginAddRow();
 		this->coatService.saveTrenchCoatToUserList(name);
+		this->userTableViewWidget->endAddRow();
 		QMessageBox::information(this, "Succes", "Coat saved to user list");
 	}
 	catch (Exceptions & exception)
 	{
 		QMessageBox::warning(this, "Warning", QString::fromStdString(exception.what()));
 	}
-
-	this->userTableViewWidget->endAddRow();
 }
 
 void GUI::nextCoat()

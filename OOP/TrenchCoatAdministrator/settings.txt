@@ -1,2 +1,2 @@
-coatRepository=memory
+coatRepository=repo.txt
 userCoatRepository=memory
