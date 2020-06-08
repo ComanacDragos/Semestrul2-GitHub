@@ -22,6 +22,7 @@ UserListTableView::UserListTableView(CoatService& service, QWidget *parent)
 	
 	this->setMinimumHeight(250);
 	this->setMinimumWidth(800);
+	
 }
 
 UserListTableView::~UserListTableView()
