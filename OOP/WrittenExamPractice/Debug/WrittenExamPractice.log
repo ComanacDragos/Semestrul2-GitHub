@@ -1,0 +1,10 @@
+﻿  main.cpp
+E:\Universitate\Semestrul2-GitHub\OOP\WrittenExamPractice\Telephone.h(73,27): warning C4101: 'exc': unreferenced local variable
+E:\Universitate\Semestrul2-GitHub\OOP\WrittenExamPractice\Telephone.h(84,28): warning C4101: 'exc': unreferenced local variable
+E:\Universitate\Semestrul2-GitHub\OOP\WrittenExamPractice\Telephone.h(113,28): warning C4101: 'exc': unreferenced local variable
+E:\Universitate\Semestrul2-GitHub\OOP\WrittenExamPractice\Telephone.h(122,28): warning C4101: 'exc': unreferenced local variable
+E:\Universitate\Semestrul2-GitHub\OOP\WrittenExamPractice\Telephone.h(131,28): warning C4101: 'exc': unreferenced local variable
+E:\Universitate\Semestrul2-GitHub\OOP\WrittenExamPractice\Pepene.h(96,53): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\Universitate\Semestrul2-GitHub\OOP\WrittenExamPractice\Pepene.h(97,46): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\Universitate\Semestrul2-GitHub\OOP\WrittenExamPractice\Pepene.h(99,56): warning C4305: 'argument': truncation from 'double' to 'float'
+  WrittenExamPractice.vcxproj -> E:\Universitate\Semestrul2-GitHub\OOP\WrittenExamPractice\Debug\WrittenExamPractice.exe

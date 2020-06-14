@@ -23,7 +23,7 @@ int GenesTableModel::rowCount(const QModelIndex & parent) const
 
 int GenesTableModel::columnCount(const QModelIndex & parent) const
 {
-	return 3;
+	return 1;
 }
 
 QVariant GenesTableModel::data(const QModelIndex & index, int role) const
@@ -46,17 +46,7 @@ QVariant GenesTableModel::data(const QModelIndex & index, int role) const
 
 	if (role == Qt::DisplayRole || role == Qt::EditRole)
 	{
-		switch (column)
-		{
-		case 0:
-			return QString::fromStdString(g.getName());
-		case 1:
-			return QString::fromStdString(g.getOrganismName());
-		case 2:
-			return QString::fromStdString(g.getGeneFunction());
-		default:
-			break;
-		}
+		return QString::fromStdString(g.getName()+' '+ g.getOrganismName() + ' '+g.getGeneFunction());	
 	}
 	if (role == Qt::FontRole) 
 	{
