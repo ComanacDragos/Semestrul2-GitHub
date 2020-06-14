@@ -142,6 +142,7 @@
     <ClCompile Include="Results.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Adder.h" />
     <ClInclude Include="CarList.h" />
     <ClInclude Include="Expresie.h" />
     <ClInclude Include="Pepene.h" />

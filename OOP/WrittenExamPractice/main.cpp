@@ -8,10 +8,11 @@
 #include "CarList.h"
 #include "Sales.h"
 #include "Pepene.h"
+#include "Adder.h"
 #include <crtdbg.h>
 int main()
 {
-	tipareste();
+	adder();
 	_CrtDumpMemoryLeaks();
 	return 0;
 }

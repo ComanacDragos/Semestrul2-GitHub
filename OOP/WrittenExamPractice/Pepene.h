@@ -10,6 +10,8 @@ public:
 		return false;
 	}
 	virtual void tipareste() = 0;
+
+	virtual ~Fruct(){}
 };
 
 class Pepene : public Fruct
