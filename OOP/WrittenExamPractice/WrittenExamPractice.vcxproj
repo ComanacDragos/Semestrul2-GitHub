@@ -142,10 +142,14 @@
     <ClCompile Include="Results.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Action.h" />
     <ClInclude Include="Adder.h" />
+    <ClInclude Include="Beverages.h" />
     <ClInclude Include="CarList.h" />
+    <ClInclude Include="Catalog.h" />
     <ClInclude Include="Expresie.h" />
     <ClInclude Include="Pepene.h" />
+    <ClInclude Include="RationalVector.h" />
     <ClInclude Include="Results.h" />
     <ClInclude Include="Sales.h" />
     <ClInclude Include="Stack.h" />
