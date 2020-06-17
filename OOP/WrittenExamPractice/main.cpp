@@ -16,37 +16,18 @@
 #include "Action.h"
 int main()
 {
+	
 	{
-		MenuBar bar;
-		
-		Action* exit = new ExitAction;
-		Action* createText = new CreateAction;
-		Action* createC = new CreateAction;
-		MenuItem* textItem = new MenuItem{ "Text", createText };
-		MenuItem* textC = new MenuItem{ "C++", createC };
-		
-		Menu* New = new Menu{ "New" };
-		Menu* Exit = new Menu{ "Exit" , exit};
+		BeverageMachine m;
+		m.prepare("Tea", 0);
+		m.prepare("Coffee", 0);
 
-		New->add(textItem);
-		New->add(textC);
 
-		Menu* File = new Menu{ "File" };
-		File->add(New);
-		File->add(Exit);
+		m.prepare("Tea", 1);
+		m.prepare("Coffee", 1);
 
-		Menu* About = new Menu{ "About" };
-
-		bar.add(File);
-		bar.add(About);
-
-		bar.print();
-
-		File->clicked();
-		New->clicked();
-		textC->clicked();
-		Exit->clicked();
-
+		m.prepare("Tea", 2);
+		m.prepare("Coffee", 2);
 
 	}
 	_CrtDumpMemoryLeaks();
