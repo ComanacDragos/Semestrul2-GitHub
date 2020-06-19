@@ -17,11 +17,15 @@
 #include "Mancare.h"
 #include "Carnet.h"
 #include "Complex.h"
+#include "ChannelWithUnique.h"
+#include "Encoder.h"
+#include "AdderRow2.h"
+#include "MenuItemUniquePointers.h"
 int main()
 {
 	
 	{
-		complex();
+		function2();
 	}
 	_CrtDumpMemoryLeaks();
 	return 0;

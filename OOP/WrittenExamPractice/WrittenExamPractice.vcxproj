@@ -144,13 +144,16 @@
   <ItemGroup>
     <ClInclude Include="Action.h" />
     <ClInclude Include="Adder.h" />
+    <ClInclude Include="AdderRow2.h" />
     <ClInclude Include="Beverages.h" />
     <ClInclude Include="CarList.h" />
     <ClInclude Include="Carnet.h" />
     <ClInclude Include="Catalog.h" />
     <ClInclude Include="ChannelWithUnique.h" />
+    <ClInclude Include="Encoder.h" />
     <ClInclude Include="Expresie.h" />
     <ClInclude Include="Mancare.h" />
+    <ClInclude Include="MenuItemUniquePointers.h" />
     <ClInclude Include="Pepene.h" />
     <ClInclude Include="RationalVector.h" />
     <ClInclude Include="Results.h" />

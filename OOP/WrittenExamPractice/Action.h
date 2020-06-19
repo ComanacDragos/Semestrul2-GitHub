@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 
+/*
 class Action
 {
 public:
@@ -105,7 +106,7 @@ public:
 		for (Menu* m : this->menus)
 			delete m;
 	}
-};
+};*/
 
 
 /*
