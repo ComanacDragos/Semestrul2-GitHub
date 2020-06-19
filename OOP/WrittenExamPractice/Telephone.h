@@ -4,15 +4,14 @@
 #include <stdlib.h>
 #include <time.h>
 #include <iostream>
-
+/*
 class Channel
 {
 public:
-	Channel()
-	{
-
-	}
+	Channel(){}
 	virtual void send(const std::string& message) = 0;
+
+	virtual ~Channel(){}
 };
 
 class Telefon: public Channel
@@ -24,7 +23,7 @@ public:
 		
 	}
 	virtual void send(const std::string& message)override {
-		int r = rand() % 2;
+		int r =rand() % 2;
 		if (r == 0)
 			throw std::exception{ "Eroare" };
 	std::cout << "dial " << nrTel << ' ';
@@ -86,8 +85,10 @@ public:
 				std::cout << "c2 is occupied\n";
 			}
 		}
+		if (isSent == false)
+			throw std::exception{ "Error" };
 	}
-	~Failover()
+	virtual ~Failover()
 	{
 		delete c1;
 		delete c2;
@@ -104,8 +105,10 @@ public:
 	Contact(Channel* c1, Channel* c2, Channel* c3):c1{c1}, c2{c2}, c3{c3}{}
 
 	void sendAlarm(const std::string& msg) {
+		
 		while (true)
 		{
+			
 			try {
 				c1->send(msg);
 				break;
@@ -145,10 +148,20 @@ public:
 
 Contact* f()
 {
-	Telefon* t = new Telefon{ 1 };
-	Fax* f = new Fax{ 2 };
-	SMS* s = new SMS{ 3 };
+	Channel* t = new Telefon{ 1 };
+	Channel* f = new Fax{ 2 };
+	Channel* s = new SMS{ 3 };
 
-	Contact* c = new Contact{ t,f,s };
+	Channel* failover = new Failover{ f, s };
+
+	Channel* t2 = new Telefon{ 4 };
+	Channel* f2 = new Fax{5 };
+	Channel* s2 = new SMS{ 6 };
+
+	Channel* failover2 = new Failover{ t2,f2 };
+	Channel* failover3 = new Failover{ failover2, s2 };
+
+
+	Contact* c = new Contact{ t,failover,failover3 };
 	return c;
-}
+}*/

@@ -2,6 +2,7 @@
 #include <stack>
 #include <iostream>
 
+/*
 template <typename TElem>
 class Adder
 {
@@ -55,6 +56,7 @@ public:
 
 void adder()
 {
+
 	Adder<int> add{ 1 };
 	add = add + 7 + 3;
 	add + 8;
@@ -63,4 +65,6 @@ void adder()
 	std::cout << add.suma() << '\n';
 	--add--;
 	std::cout << add.suma() << '\n';
-}
+
+
+}	*/

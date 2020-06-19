@@ -146,12 +146,16 @@
     <ClInclude Include="Adder.h" />
     <ClInclude Include="Beverages.h" />
     <ClInclude Include="CarList.h" />
+    <ClInclude Include="Carnet.h" />
     <ClInclude Include="Catalog.h" />
+    <ClInclude Include="ChannelWithUnique.h" />
     <ClInclude Include="Expresie.h" />
+    <ClInclude Include="Mancare.h" />
     <ClInclude Include="Pepene.h" />
     <ClInclude Include="RationalVector.h" />
     <ClInclude Include="Results.h" />
     <ClInclude Include="Sales.h" />
+    <ClInclude Include="Complex.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="Telephone.h" />
     <ClInclude Include="TestAndSpecify.h" />

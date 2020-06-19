@@ -54,6 +54,7 @@ std::ostream& operator<<(std::ostream& o, Rational& r)
 	return o;
 }
 
+/*
 template <typename T>
 class Vector
 {
@@ -69,6 +70,7 @@ public:
 		o << '\n';
 	}
 };
+
 
 void rational()
 {
@@ -94,4 +96,4 @@ void rational()
 	Vector<Rational> v2{ std::vector<Rational>{a,b,c,d} };
 	v2.printAll(std::cout);
 
-}
+}*/

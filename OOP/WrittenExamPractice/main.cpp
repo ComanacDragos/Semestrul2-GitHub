@@ -14,21 +14,14 @@
 #include "RationalVector.h"
 #include "Beverages.h"
 #include "Action.h"
+#include "Mancare.h"
+#include "Carnet.h"
+#include "Complex.h"
 int main()
 {
 	
 	{
-		BeverageMachine m;
-		m.prepare("Tea", 0);
-		m.prepare("Coffee", 0);
-
-
-		m.prepare("Tea", 1);
-		m.prepare("Coffee", 1);
-
-		m.prepare("Tea", 2);
-		m.prepare("Coffee", 2);
-
+		complex();
 	}
 	_CrtDumpMemoryLeaks();
 	return 0;
