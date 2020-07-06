@@ -82,8 +82,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FilterModel.cpp" />
+    <ClCompile Include="Painter.cpp" />
     <ClCompile Include="Repository.cpp" />
     <ClCompile Include="Service.cpp" />
+    <ClCompile Include="TableModel.cpp" />
     <ClCompile Include="Tests.cpp" />
     <QtRcc Include="GUI.qrc" />
     <QtUic Include="GUI.ui" />
@@ -91,18 +94,22 @@
     <ClCompile Include="Domain.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="Painter.ui" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Domain.h" />
+    <ClInclude Include="FilterModel.h" />
     <ClInclude Include="Observer.h" />
+    <QtMoc Include="Painter.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="Service.h" />
+    <ClInclude Include="TableModel.h" />
     <ClInclude Include="Tests.h" />
     <ClInclude Include="x64\Debug\uic\ui_GUI.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Domain1.txt" />
-    <Text Include="Domain2.txt" />
+    <Text Include="Astronomers.txt" />
+    <Text Include="Stars.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -9,8 +9,36 @@
 #include <algorithm>
 #include <fstream>
 
-class Domain
+class Astronomer
 {
+private:
+	std::string name, constelation;
+public:
+	Astronomer(const std::string& name, const std::string& constelation):name{name},constelation{constelation}{}
+
+	std::string getName() { return this->name; }
+	std::string getConstelation() { return this->constelation; }
+};
+
+class Star
+{
+private:
+	std::string name, constelation;
+	int RA, Dec, diameter;
+
+public:
+	Star(const std::string& name, const std::string& constelation, int RA, int Dec, int diameter):name{name}, constelation{constelation}, RA{RA}, Dec{Dec}, diameter{diameter}{}
+
+	std::string getName() { return this->name; }
+	std::string getConstelation() { return this->constelation; }
+
+	std::string to_string(char delim)
+	{
+		return this->name + delim + this->constelation + delim + std::to_string(this->RA) + delim + std::to_string(this->Dec) + delim + std::to_string(this->diameter);
+	}
+	int getRA() { return this->RA; }
+	int getDec() { return this->Dec; }
+	int getDiameter() { return this->diameter; }
 };
 
 class Exceptions : public std::exception
